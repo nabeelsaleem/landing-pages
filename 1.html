@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gentle & Modern Dental Care | Clinic Name</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Gentle, modern dental care with a focus on comfort and long-term oral health. Book your appointment today." />
+  <style>
+    /* Basic reset and layout – replace with your design system / CSS framework */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      color: #1f2933;
+      background-color: #f7fafc;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    header,
+    section,
+    footer {
+      padding: 60px 16px;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* Hero */
+
+    .hero {
+      background: linear-gradient(135deg, #1c7ed6, #4dabf7);
+      color: #ffffff;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 3vw + 1rem, 3rem);
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      max-width: 32rem;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .btn-primary {
+      background-color: #ffffff;
+      color: #1c7ed6;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-contact {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .hero-contact strong {
+      font-weight: 600;
+    }
+
+    .hero-tagline {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    .badge {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    /* Sections */
+
+    .section-title {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .section-subtitle {
+      font-size: 0.98rem;
+      color: #6b7280;
+      margin-bottom: 32px;
+      max-width: 32rem;
+    }
+
+    /* About */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .about-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .about-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    /* Services */
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background-color: #ffffff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .service-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1c7ed6;
+      font-weight: 600;
+    }
+
+    .service-card h3 {
+      font-size: 1.05rem;
+    }
+
+    .service-card p {
+      font-size: 0.92rem;
+      color: #4b5563;
+    }
+
+    /* Testimonials */
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .testimonial-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+      font-size: 0.95rem;
+    }
+
+    .testimonial-name {
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .rating {
+      color: #f59e0b;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    /* Gallery */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .gallery-item {
+      background-color: #e5e7eb;
+      border-radius: 10px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    /* Booking */
+
+    .booking-wrapper {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: flex-start;
+    }
+
+    .booking-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .booking-card form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font: inherit;
+      background-color: #ffffff;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .helper-text {
+      font-size: 0.82rem;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    /* Safety */
+
+    .safety-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .safety-list li::before {
+      content: "•";
+      color: #1c7ed6;
+      font-weight: 700;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+
+    /* Contact / Map */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .map-placeholder {
+      background-color: #e5e7eb;
+      border-radius: 16px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .contact-details {
+      font-size: 0.95rem;
+      color: #4b5563;
+      display: grid;
+      gap: 8px;
+    }
+
+    .contact-label {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    /* Footer */
+
+    footer {
+      background-color: #0b1120;
+      color: #e5e7eb;
+      padding: 32px 16px;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: #9ca3af;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 768px) {
+      .hero-inner,
+      .about-grid,
+      .booking-wrapper,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      header,
+      section {
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+
+      .hero {
+        padding-top: 56px;
+        padding-bottom: 56px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero" id="top">
+    <div class="container hero-inner">
+      <div>
+        <p class="hero-tagline">Family • Cosmetic • Emergency</p>
+        <h1>Gentle, Modern Dental Care in Your City</h1>
+        <p>
+          We combine advanced technology with a calm, friendly atmosphere to keep you and your family smiling with confidence.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#booking" class="btn-primary">Book an Appointment</a>
+          <a href="https://wa.me/000000000000" class="btn-outline">WhatsApp Us</a>
+        </div>
+
+        <p class="hero-contact">
+          <strong>Call:</strong> <a href="tel:+1234567890">+1 (234) 567-890</a> •
+          <strong>Visit:</strong> Clinic Address, Your City
+        </p>
+
+        <div class="hero-badge-row">
+          <span class="badge">10+ Years Experience</span>
+          <span class="badge">5★ Rated on Google</span>
+          <span class="badge">Same-Day Emergency Slots</span>
+        </div>
+      </div>
+
+      <div>
+        <!-- Replace with real image -->
+        <img src="https://via.placeholder.com/520x360?text=Dentist+Hero+Image" alt="Dentist with patient in clinic" />
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- About -->
+    <section id="about">
+      <div class="container about-grid">
+        <div>
+          <h2 class="section-title">Meet Dr. Jane Doe & Our Team</h2>
+          <p class="section-subtitle">
+            We focus on clear communication, gentle care, and evidence-based treatments so every visit feels predictable and stress-free.
+          </p>
+          <p>
+            Dr. Jane Doe is a board-certified dentist with a special interest in cosmetic and family dentistry. Our team is trained to
+            support anxious patients, walk you through each step, and build a long-term plan for your oral health.
+          </p>
+          <div class="about-meta">
+            <div><strong>Education:</strong> DDS, Prestigious Dental University</div>
+            <div><strong>Specialties:</strong> Cosmetic, Family, Preventive</div>
+            <div><strong>Languages:</strong> English, Spanish</div>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <h3>Why Patients Choose Us</h3>
+          <ul class="safety-list" style="margin-top: 12px;">
+            <li>Clear explanations before every procedure</li>
+            <li>Modern equipment and digital X-rays</li>
+            <li>Transparent pricing with no surprises</li>
+            <li>Flexible scheduling for busy families</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="container">
+        <h2 class="section-title">Core Dental Services</h2>
+        <p class="section-subtitle">
+          Everything you need to maintain, restore, and enhance your smile — all in one clinic.
+        </p>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <span class="service-tag">Preventive</span>
+            <h3>Checkups & Cleanings</h3>
+            <p>Routine exams, gentle cleanings, and personalized home-care guidance to prevent future problems.</p>
+          </article>
+
+          <article class="service-card">
+            <span class="service-tag">Restorative</span>
+            <h3>Fillings & Crowns</h3>
+            <p>Tooth-colored fillings and durable crowns that restore function while keeping your smile natural-looking.</p>
+          </article>
+
+          <article class="service-card">
+            <span class="service-tag">Cosmetic</span>
+            <h3>Teeth Whitening</h3>
+            <p>Professional-grade whitening that safely lifts stains and brightens your smile in a single visit.</p>
+          </article>
+
+          <article class="service-card">
+            <span class="service-tag">Aligners</span>
+            <h3>Clear Aligners</h3>
+            <p>Straighten teeth discreetly with custom clear aligners designed around your lifestyle.</p>
+          </article>
+
+          <article class="service-card">
+            <span class="service-tag">Emergency</span>
+            <h3>Emergency Dentistry</h3>
+            <p>Same-day appointments for toothaches, broken teeth, or urgent concerns whenever possible.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials & Gallery -->
+    <section id="testimonials">
+      <div class="container">
+        <h2 class="section-title">What Our Patients Say</h2>
+        <p class="section-subtitle">
+          Real experiences from people who trusted us with their smiles.
+        </p>
+
+        <div class="testimonials-grid">
+          <article class="testimonial-card">
+            <div class="rating">★★★★★</div>
+            <p>
+              “The most comfortable dental visit I've ever had. Everything was explained clearly, and I never felt rushed or judged.”
+            </p>
+            <p class="testimonial-name">— Sarah M.</p>
+          </article>
+
+          <article class="testimonial-card">
+            <div class="rating">★★★★★</div>
+            <p>
+              “Beautiful clinic, friendly staff, and they were amazing with my kids. Booking and reminders are super easy.”
+            </p>
+            <p class="testimonial-name">— Daniel K.</p>
+          </article>
+
+          <article class="testimonial-card">
+            <div class="rating">★★★★★</div>
+            <p>
+              “They saw me the same day for a severe toothache and took care of the pain quickly. Highly recommend.”
+            </p>
+            <p class="testimonial-name">— Priya S.</p>
+          </article>
+        </div>
+
+        <h3 style="margin-top: 40px; margin-bottom: 16px; font-size: 1.1rem;">Before & After Results</h3>
+        <div class="gallery-grid">
+          <div class="gallery-item">Before / After 1</div>
+          <div class="gallery-item">Before / After 2</div>
+          <div class="gallery-item">Before / After 3</div>
+          <div class="gallery-item">Before / After 4</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking -->
+    <section id="booking">
+      <div class="container booking-wrapper">
+        <div class="booking-card">
+          <h2 class="section-title" style="margin-bottom: 4px;">Book an Appointment</h2>
+          <p class="section-subtitle" style="margin-bottom: 20px;">
+            Share a few details and our team will confirm your appointment as soon as possible.
+          </p>
+
+          <form action="#" method="post">
+            <div>
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" required />
+            </div>
+
+            <div>
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 (234) 567-890" required />
+            </div>
+
+            <div>
+              <label for="email">Email (optional)</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" />
+            </div>
+
+            <div>
+              <label for="service">Reason for visit</label>
+              <select id="service" name="service" required>
+                <option value="">Select an option</option>
+                <option value="checkup">Checkup & Cleaning</option>
+                <option value="whitening">Teeth Whitening</option>
+                <option value="pain">Tooth Pain / Emergency</option>
+                <option value="aligners">Clear Aligners Consultation</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="date">Preferred date</label>
+              <input type="date" id="date" name="date" />
+              <p class="helper-text">We’ll do our best to match your preferred date and time.</p>
+            </div>
+
+            <div>
+              <label for="message">Anything we should know?</label>
+              <textarea id="message" name="message" placeholder="Tell us about your concern or any special requests."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 4px;">
+              Submit Request
+            </button>
+
+            <p class="helper-text" style="margin-top: 8px;">
+              For urgent concerns, please call us directly at <a href="tel:+1234567890">+1 (234) 567-890</a>.
+            </p>
+          </form>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 12px;">Emergency or Same-Day Appointments</h3>
+          <p style="font-size: 0.95rem; color: #4b5563; margin-bottom: 10px;">
+            If you’re in pain or have a broken tooth, call us right away. We reserve limited same-day slots for emergencies.
+          </p>
+          <p style="font-size: 0.95rem; color: #4b5563; margin-bottom: 10px;">
+            We’ll guide you on what to do before you arrive and make your visit as smooth as possible.
+          </p>
+
+          <ul class="safety-list" style="margin-top: 16px;">
+            <li>24/7 online request form</li>
+            <li>Prioritized scheduling for urgent cases</li>
+            <li>Clear estimates before treatment begins</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safety & Hygiene -->
+    <section id="safety">
+      <div class="container">
+        <h2 class="section-title">Hygiene, Safety & Technology</h2>
+        <p class="section-subtitle">
+          We follow strict sterilization protocols and invest in modern equipment to keep every visit safe and efficient.
+        </p>
+
+        <ul class="safety-list">
+          <li>Hospital-grade sterilization for all instruments and surfaces</li>
+          <li>Digital X-rays with significantly reduced radiation</li>
+          <li>Single-use disposable items where appropriate</li>
+          <li>Air purification and rigorous infection control procedures</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact & Map -->
+    <section id="contact">
+      <div class="container contact-grid">
+        <div>
+          <h2 class="section-title">Visit Our Clinic</h2>
+          <p class="section-subtitle">
+            Located in a central, easy-to-reach area with convenient parking and public transport nearby.
+          </p>
+
+          <div class="contact-details">
+            <p><span class="contact-label">Address:</span> 123 Main Street, Suite 200, Your City</p>
+            <p><span class="contact-label">Phone:</span> <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+            <p><span class="contact-label">Email:</span> <a href="mailto:hello@clinicname.com">hello@clinicname.com</a></p>
+            <p>
+              <span class="contact-label">Hours:</span> Mon–Fri 9:00–18:00 • Sat 10:00–14:00 • Sun Closed
+            </p>
+          </div>
+
+          <div class="contact-actions">
+            <a href="https://maps.google.com" class="btn-outline">Get Directions</a>
+            <a href="https://wa.me/000000000000" class="btn-outline">Chat on WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="map-placeholder">
+          <!-- Replace with real Google Maps embed -->
+          <span>Map embed goes here</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Clinic Name. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
