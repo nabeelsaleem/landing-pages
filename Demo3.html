@@ -3,1148 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumina Dental | Premium Dental Care</title>
+    <title>Lumina Dental | Modern Esthetic Dentistry</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Primary Blue
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            bg: '#0f172a',
+                            surface: '#1e293b',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 20px rgba(14, 165, 233, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
     
     <style>
-        :root {
-            --primary: #0ea5e9;
-            --secondary: #0f172a;
-            --accent: #14b8a6;
-            --dark: #020617;
-            --light: #f8fafc;
-            --text: #1e293b;
-            --text-light: #94a3b8;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            --gradient-dark: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
+        /* Essential Custom CSS */
+        body { -webkit-font-smoothing: antialiased; }
+        
+        /* Smooth Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .dark .glass {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
-        html, body {
-            overflow-x: hidden;
+
+        /* Abstract Background blob animation */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
         }
-        
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--light);
-            color: var(--text);
-            transition: background-color 0.3s ease, color 0.3s ease;
+        .animate-blob {
+            animation: blob 7s infinite;
         }
-        
-        /* Dark Mode Styles */
-        .dark-mode {
-            --light: #0f172a;
-            --text: #f1f5f9;
-            --text-light: #94a3b8;
-            --secondary: #f8fafc;
-        }
-        
-        /* Advanced Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        
-        @keyframes pulseRing {
-            0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(14, 165, 233, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
-        }
-        
-        /* Loading Screen */
-        #loader {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        
-        #loader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        .loader-circle {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        /* Advanced Navigation */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        
-        .dark-mode .glass-nav {
-            background: rgba(15, 23, 42, 0.85);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .nav-link {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
-        .hero-bg {
-            background-image: radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.1) 0%, transparent 50%),
-                              linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%),
-                              url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2068&auto=format&fit=crop');
-            background-size: 100% 100%, 100% 100%, cover, cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        
-        .hero-title {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            font-weight: 800;
-        }
-        
-        /* Service Cards with 3D Tilt */
-        .service-card {
-            transform-style: preserve-3d;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            cursor: pointer;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            box-shadow: 0 25px 40px -15px rgba(14, 165, 233, 0.2);
-        }
-        
-        .dark-mode .service-card {
-            background: rgba(15, 23, 42, 0.7);
-            border-color: rgba(148, 163, 184, 0.1);
-        }
-        
-        /* Floating Action Button */
-        .fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .fab-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .fab-button:hover {
-            transform: scale(1.15) rotate(5deg);
-            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.6);
-        }
-        
-        /* Advanced Lightbox */
-        #lightbox {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.95);
-            backdrop-filter: blur(10px);
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        #lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
-        
-        #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        #lightbox.active img {
-            transform: scale(1);
-        }
-        
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            border: none;
-            color: white;
-            font-size: 24px;
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 50%;
-        }
-        
-        .lightbox-nav:hover {
-            background: rgba(14, 165, 233, 0.5);
-        }
-        
-        .lightbox-prev { left: 20px; }
-        .lightbox-next { right: 20px; }
-        
-        /* Progress Bar */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: var(--gradient);
-            z-index: 1001;
-            transition: width 0.1s ease;
-        }
-        
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
-        }
-        
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .back-to-top:hover {
-            transform: translateY(-5px);
-        }
-        
-        /* Dark Mode Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 100px;
-            right: 30px;
-            z-index: 999;
-            background: var(--gradient);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
-        }
-        
-        .theme-toggle:hover {
-            transform: rotate(15deg);
-        }
-        
-        /* Form Enhancements */
-        .form-group {
-            position: relative;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            background: white;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-        
-        .dark-mode .form-input {
-            background: rgba(15, 23, 42, 0.5);
-            border-color: rgba(148, 163, 184, 0.2);
-            color: var(--text);
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
-        }
-        
-        .form-label {
-            position: absolute;
-            left: 16px;
-            top: 14px;
-            color: var(--text-light);
-            transition: all 0.3s ease;
-            pointer-events: none;
-            background: white;
-            padding: 0 4px;
-        }
-        
-        .dark-mode .form-label {
-            background: var(--light);
-        }
-        
-        .form-input:focus + .form-label,
-        .form-input:not(:placeholder-shown) + .form-label {
-            top: -10px;
-            left: 12px;
-            font-size: 12px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        /* Splitting Text Animation */
-        .splitting .char {
-            opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
-            animation-delay: calc(0.05s * var(--char-index));
-        }
-        
-        /* Advanced Stats Counter */
-        .stat-item {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-number {
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Cookie Consent */
-        .cookie-consent {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            right: 30px;
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--gradient);
-            color: white;
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s ease;
-            z-index: 9999;
-        }
-        
-        .cookie-consent.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        /* Loader */
+        #loader { transition: opacity 0.5s ease; }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        
-        .dark-mode ::-webkit-scrollbar-track {
-            background: #020617;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--gradient);
-            border-radius: 5px;
-        }
-        
-        /* Mobile Menu Enhancements */
-        .mobile-menu-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            z-index: 49;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Pulse Animation for CTA */
-        .pulse {
-            animation: pulseRing 2s infinite;
-        }
-        
-        /* Advanced Gallery Grid */
-        .masonry-grid {
-            columns: 4;
-            column-gap: 16px;
-        }
-        
-        @media (max-width: 1024px) {
-            .masonry-grid { columns: 3; }
-        }
-        
-        @media (max-width: 768px) {
-            .masonry-grid { columns: 2; }
-        }
-        
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .masonry-item:hover {
-            transform: translateY(-5px);
-        }
-        
-        /* Shimmer Effect */
-        .shimmer {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        
-        .dark-mode .shimmer {
-            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        /* Advanced Testimonial Cards */
-        .testimonial-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.4s ease;
-        }
-        
-        .dark-mode .testimonial-card {
-            background: rgba(15, 23, 42, 0.7);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.2);
-        }
-        
-        /* Splide Customization */
-        .splide__arrow {
-            background: var(--gradient) !important;
-            opacity: 0.8;
-        }
-        
-        .splide__arrow:hover {
-            opacity: 1;
-        }
-        
-        .splide__pagination__page {
-            background: var(--primary) !important;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Lightbox transitions */
+        #lightbox { transition: opacity 0.3s ease, visibility 0.3s ease; }
+        #lightbox.active { opacity: 1; visibility: visible; }
     </style>
 </head>
-<body class="antialiased">
-    <!-- Loading Screen -->
-    <div id="loader">
-        <div class="loader-circle"></div>
-    </div>
-    
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progress-bar"></div>
-    
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-        <i class="fas fa-moon" id="theme-icon"></i>
-    </button>
-    
-    <!-- Back to Top -->
-    <div class="back-to-top" id="back-to-top" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-    
-    <!-- Floating Action Button -->
-    <div class="fab">
-        <a href="https://wa.me/1234567890" target="_blank" class="fab-button pulse" aria-label="WhatsApp us">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    </div>
-    
-    <!-- Cookie Consent -->
-    <div class="cookie-consent" id="cookie-consent">
-        <p class="text-sm mb-3">We use cookies to enhance your experience and help our website run effectively. <a href="#" class="underline">Learn more</a></p>
-        <button onclick="acceptCookies()" class="bg-white text-primary px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition">Accept</button>
+<body class="bg-slate-50 text-slate-900 dark:bg-dark-bg dark:text-slate-100 transition-colors duration-300">
+
+    <div id="loader" class="fixed inset-0 z-[9999] bg-white dark:bg-dark-bg flex items-center justify-center">
+        <div class="relative flex items-center justify-center">
+            <div class="absolute w-16 h-16 border-4 border-brand-100 dark:border-slate-700 rounded-full"></div>
+            <div class="absolute w-16 h-16 border-4 border-brand-500 rounded-full border-t-transparent animate-spin"></div>
+            <i class="fa-solid fa-tooth text-brand-500 text-xl animate-pulse"></i>
+        </div>
     </div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
-    
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                    <i class="fa-solid fa-tooth text-3xl text-primary"></i>
-                    <span class="font-bold text-2xl text-secondary">Lumina<span class="text-primary">Dental</span></span>
+    <div class="fixed top-0 left-0 h-1 bg-gradient-to-r from-brand-500 to-cyan-400 z-[100] transition-all duration-100" id="progress-bar" style="width: 0%"></div>
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 border-b border-transparent py-4">
+        <div class="absolute inset-0 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md -z-10 shadow-sm opacity-0 transition-opacity duration-300" id="nav-bg"></div>
+        
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center text-white transform group-hover:rotate-12 transition-transform duration-300">
+                        <i class="fa-solid fa-tooth text-lg"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">Lumina<span class="text-brand-500">Dental</span></span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <div class="flex gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                        <a href="#about" class="hover:text-brand-500 dark:hover:text-brand-400 transition-colors">About</a>
+                        <a href="#services" class="hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Services</a>
+                        <a href="#gallery" class="hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Results</a>
+                        <a href="#reviews" class="hover:text-brand-500 dark:hover:text-brand-400 transition-colors">Stories</a>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <button id="theme-toggle" class="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-brand-500 flex items-center justify-center transition-colors">
+                            <i class="fas fa-moon dark:hidden"></i>
+                            <i class="fas fa-sun hidden dark:inline"></i>
+                        </button>
+                        <a href="#booking" class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-lg hover:scale-105 transition-all duration-300">
+                            Book Visit
+                        </a>
+                    </div>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="nav-link text-gray-600 hover:text-primary font-medium transition">About</a>
-                    <a href="#services" class="nav-link text-gray-600 hover:text-primary font-medium transition">Services</a>
-                    <a href="#gallery" class="nav-link text-gray-600 hover:text-primary font-medium transition">Results</a>
-                    <a href="#reviews" class="nav-link text-gray-600 hover:text-primary font-medium transition">Reviews</a>
-                    <a href="#contact" class="nav-link text-gray-600 hover:text-primary font-medium transition">Contact</a>
-                    <a href="#booking" class="bg-primary hover:bg-sky-600 text-white px-6 py-2.5 rounded-full font-medium transition shadow-lg transform hover:scale-105">
-                        Book Appointment
-                    </a>
-                </div>
-
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
-                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-2xl text-slate-600 dark:text-slate-300">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
             </div>
         </div>
-        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 md:hidden">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-8">
-                    <span class="font-bold text-xl text-secondary">Menu</span>
-                    <button id="close-mobile-menu" class="text-gray-600">
-                        <i class="fa-solid fa-xmark text-2xl"></i>
-                    </button>
-                </div>
-                <div class="space-y-4">
-                    <a href="#about" class="block py-3 text-gray-600 hover:text-primary font-medium mobile-nav-link">About</a>
-                    <a href="#services" class="block py-3 text-gray-600 hover:text-primary font-medium mobile-nav-link">Services</a>
-                    <a href="#gallery" class="block py-3 text-gray-600 hover:text-primary font-medium mobile-nav-link">Results</a>
-                    <a href="#reviews" class="block py-3 text-gray-600 hover:text-primary font-medium mobile-nav-link">Reviews</a>
-                    <a href="#contact" class="block py-3 text-gray-600 hover:text-primary font-medium mobile-nav-link">Contact</a>
-                    <a href="#booking" class="block mt-6 bg-primary text-white py-3 rounded-lg font-medium text-center">Book Now</a>
-                </div>
-            </div>
+
+        <div id="mobile-menu" class="fixed inset-0 z-40 bg-white dark:bg-dark-bg transform translate-x-full transition-transform duration-300 md:hidden flex flex-col pt-24 px-6 gap-6">
+            <a href="#about" class="text-2xl font-bold" onclick="toggleMobileMenu()">About</a>
+            <a href="#services" class="text-2xl font-bold" onclick="toggleMobileMenu()">Services</a>
+            <a href="#gallery" class="text-2xl font-bold" onclick="toggleMobileMenu()">Results</a>
+            <a href="#booking" class="bg-brand-500 text-white p-4 rounded-xl text-center font-bold mt-4" onclick="toggleMobileMenu()">Book Appointment</a>
+            
+            <button class="absolute top-6 right-6 text-2xl" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="relative min-h-screen flex items-center justify-center hero-bg text-white overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-slate-900/90 to-slate-800/80"></div>
-        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center" data-aos="fade-up">
-            <span class="inline-block py-2 px-4 rounded-full bg-primary/20 border border-primary/50 text-sky-200 text-sm font-semibold mb-6 tracking-wider animate-pulse">
-                <i class="fas fa-check-circle mr-2"></i>ACCEPTING NEW PATIENTS
-            </span>
-            
-            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-                <span class="splitting" data-splitting>Experience Gentle & </span><br/>
-                <span class="hero-title splitting" data-splitting>Modern Dental Care</span>
-            </h1>
-            
-            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Advanced technology meets compassionate care. We transform smiles and restore confidence in a relaxing environment.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-                <a href="#booking" class="group bg-primary hover:bg-sky-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-primary/40 flex items-center justify-center gap-3 transform hover:scale-105">
-                    <i class="fa-regular fa-calendar-check group-hover:animate-bounce"></i> Book Online
-                </a>
-                <a href="tel:+1234567890" class="group bg-white hover:bg-gray-100 text-secondary px-10 py-4 rounded-full font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-3 transform hover:scale-105">
-                    <i class="fa-solid fa-phone group-hover:rotate-12"></i> (555) 123-4567
-                </a>
+    <header class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob dark:opacity-10"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-brand-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000 dark:opacity-10"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000 dark:opacity-10"></div>
+
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-wider mb-6 border border-brand-100 dark:border-slate-700">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Accepting New Patients
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1]">
+                    Smile with <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-purple-600">Confidence.</span>
+                </h1>
+                
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-lg leading-relaxed">
+                    Experience the perfect blend of modern technology and compassionate care. We design smiles that change lives in a relaxing, spa-like environment.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#booking" class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-4 rounded-full font-bold shadow-glow hover:shadow-brand-500/50 transition-all transform hover:-translate-y-1">
+                        Book Appointment
+                    </a>
+                    <a href="tel:+1234567890" class="group px-8 py-4 rounded-full font-bold text-slate-700 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-phone text-brand-500 group-hover:rotate-12 transition-transform"></i> (555) 123-4567
+                    </a>
+                </div>
+
+                <div class="mt-12 flex gap-8 border-t border-slate-200 dark:border-slate-800 pt-8">
+                    <div>
+                        <p class="text-3xl font-bold text-slate-900 dark:text-white">4.9</p>
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider">Google Rating</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-bold text-slate-900 dark:text-white">15+</p>
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider">Years Exp.</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-bold text-slate-900 dark:text-white">5k+</p>
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider">Happy Patients</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="grid grid-cols-3 gap-8 border-t border-slate-600/50 pt-8 max-w-3xl mx-auto">
-                <div class="stat-item text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="stat-number text-4xl md:text-5xl mb-2" data-count="15">0</div>
-                    <div class="text-sm text-gray-400 font-medium">Years Experience</div>
-                </div>
-                <div class="stat-item text-center" data-aos="fade-up" data-aos-delay="400">
-                    <div class="stat-number text-4xl md:text-5xl mb-2" data-count="5000">0</div>
-                    <div class="text-sm text-gray-400 font-medium">Happy Patients</div>
-                </div>
-                <div class="stat-item text-center" data-aos="fade-up" data-aos-delay="600">
-                    <div class="stat-number text-4xl md:text-5xl mb-2" data-count="4.9">0</div>
-                    <div class="text-sm text-gray-400 font-medium">Google Rating</div>
+
+            <div class="relative lg:h-[600px] hidden lg:block" data-aos="fade-left" data-aos-duration="1000">
+                <div class="absolute inset-0 bg-gradient-to-tr from-brand-500/20 to-purple-500/20 rounded-[2.5rem] transform rotate-3"></div>
+                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2068&auto=format&fit=crop" alt="Modern Dental Clinic" class="relative rounded-[2.5rem] shadow-2xl w-full h-full object-cover border-4 border-white dark:border-slate-800">
+                
+                <div class="absolute bottom-10 -left-10 glass p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                        <i class="fa-solid fa-shield-heart text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">Pain-Free</p>
+                        <p class="text-xs text-slate-500">Guaranteed Comfort</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <i class="fas fa-chevron-down text-2xl text-white/60"></i>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="relative" data-aos="fade-right">
-                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
-                    <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+    <section id="services" class="py-24 bg-white dark:bg-dark-bg relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 max-w-2xl mx-auto">
+                <h4 class="text-brand-500 font-bold uppercase tracking-widest text-xs mb-2">Our Expertise</h4>
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Comprehensive Care</h2>
+                <p class="text-slate-600 dark:text-slate-400">We utilize cutting-edge technology to provide a full range of dental treatments under one roof.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 hover:shadow-soft transition-all duration-300" data-aos="fade-up">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-tooth text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">General Dentistry</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">Routine checkups, cleanings, and preventive care to maintain optimal oral health.</p>
+                    <a href="#booking" class="text-sm font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">Book Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 hover:shadow-soft transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mb-6 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Cosmetic Design</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">Veneers, whitening, and smile makeovers designed to boost your confidence.</p>
+                    <a href="#booking" class="text-sm font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 hover:shadow-soft transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-teal-100 dark:bg-teal-900/30 rounded-2xl flex items-center justify-center mb-6 text-teal-600 dark:text-teal-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-teeth-open text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Invisalign®</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">Clear aligner therapy for a straighter smile without the look of metal braces.</p>
+                    <a href="#booking" class="text-sm font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 hover:shadow-soft transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center mb-6 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-layer-group text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Dental Implants</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">Permanent, natural-looking tooth replacement solutions.</p>
+                    <a href="#booking" class="text-sm font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">Consultation <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 hover:shadow-soft transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-6 text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-kit-medical text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Emergency Care</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">Same-day appointments for toothaches, chips, and urgent issues.</p>
+                    <a href="tel:5551234567" class="text-sm font-bold text-red-500 flex items-center gap-2 group-hover:gap-3 transition-all">Call Now <i class="fa-solid fa-phone"></i></a>
+                </div>
+
+                <div class="group p-8 rounded-3xl bg-slate-50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 hover:shadow-soft transition-all duration-300" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-14 h-14 bg-pink-100 dark:bg-pink-900/30 rounded-2xl flex items-center justify-center mb-6 text-pink-600 dark:text-pink-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-child-reaching text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Pediatric Care</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">Gentle, fun, and educational dental visits for children of all ages.</p>
+                    <a href="#booking" class="text-sm font-bold text-brand-500 flex items-center gap-2 group-hover:gap-3 transition-all">For Kids <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-24 bg-slate-50 dark:bg-slate-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-slate-900 dark:text-white mb-2">Real Transformations</h2>
+                    <p class="text-slate-600 dark:text-slate-400">Click to expand any image.</p>
+                </div>
+                <div class="hidden md:block">
+                    <a href="#booking" class="text-brand-500 font-bold hover:underline">Start your transformation -></a>
+                </div>
+            </div>
+
+            <div class="columns-1 md:columns-2 lg:columns-4 gap-4 space-y-4">
+                <div class="relative group rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(0)">
+                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=600&auto=format&fit=crop" class="w-full object-cover rounded-2xl transition duration-500 group-hover:scale-110" alt="Smile">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fa-solid fa-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <div class="relative group rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(1)">
+                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=600&auto=format&fit=crop" class="w-full object-cover rounded-2xl transition duration-500 group-hover:scale-110" alt="Clinic">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fa-solid fa-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <div class="relative group rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(2)">
+                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=80&w=600&auto=format&fit=crop" class="w-full object-cover rounded-2xl transition duration-500 group-hover:scale-110" alt="Doctor">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fa-solid fa-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+                <div class="relative group rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(3)">
+                    <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?q=80&w=600&auto=format&fit=crop" class="w-full object-cover rounded-2xl transition duration-500 group-hover:scale-110" alt="Equipment">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <i class="fa-solid fa-plus text-white text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="py-24 bg-white dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="bg-slate-900 dark:bg-slate-800 rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row relative">
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-500 rounded-full blur-3xl opacity-20 pointer-events-none"></div>
+
+                <div class="p-8 md:p-16 lg:w-3/5 bg-white dark:bg-dark-surface order-2 lg:order-1">
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Book Your Visit</h2>
+                    <p class="text-slate-500 mb-8">Fill out the form below. We'll confirm your appointment within 30 minutes.</p>
                     
-                    <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl group">
-                        <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop" 
-                             alt="Dr. Sarah Jenkins" 
-                             class="w-full h-[600px] object-cover transition duration-700 group-hover:scale-105">
-                        
-                        <div class="absolute top-6 left-6 bg-white/90 backdrop-blur rounded-2xl p-4 shadow-lg">
-                            <div class="bg-yellow-100 p-3 rounded-full text-yellow-500 w-fit">
-                                <i class="fa-solid fa-star text-xl"></i>
-                            </div>
-                            <p class="text-sm font-bold text-gray-800 mt-2">Top Rated Dentist</p>
-                            <p class="text-xs text-gray-500">2024 Excellence Award</p>
-                        </div>
-                        
-                        <div class="absolute bottom-6 right-6 bg-primary/90 backdrop-blur rounded-2xl p-4 shadow-lg">
-                            <p class="text-white font-bold text-2xl">15+</p>
-                            <p class="text-sky-100 text-sm">Years</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div data-aos="fade-left">
-                    <h4 class="text-primary font-bold uppercase tracking-wider text-sm mb-3">Meet Your Doctor</h4>
-                    <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-6">Dr. Sarah Jenkins, DDS</h2>
-                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        With over 15 years of clinical experience, Dr. Jenkins specializes in cosmetic and restorative dentistry. She believes that a visit to the dentist should be comfortable, transparent, and anxiety-free.
-                    </p>
-                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                        Dr. Jenkins is a graduate of Harvard School of Dental Medicine and actively participates in continuous education to bring the latest technology to her patients.
-                    </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                        <div class="bg-blue-50 p-4 rounded-2xl flex items-center gap-3 hover:bg-blue-100 transition group">
-                            <i class="fa-solid fa-graduation-cap text-primary group-hover:scale-110 transition"></i>
-                            <div>
-                                <p class="text-sm font-bold text-gray-800">Harvard Alum</p>
-                                <p class="text-xs text-gray-500">DDS Graduate</p>
-                            </div>
-                        </div>
-                        <div class="bg-teal-50 p-4 rounded-2xl flex items-center gap-3 hover:bg-teal-100 transition group">
-                            <i class="fa-solid fa-certificate text-accent group-hover:scale-110 transition"></i>
-                            <div>
-                                <p class="text-sm font-bold text-gray-800">ADA Member</p>
-                                <p class="text-xs text-gray-500">Since 2008</p>
-                            </div>
-                        </div>
-                        <div class="bg-purple-50 p-4 rounded-2xl flex items-center gap-3 hover:bg-purple-100 transition group">
-                            <i class="fa-solid fa-award text-purple-500 group-hover:scale-110 transition"></i>
-                            <div>
-                                <p class="text-sm font-bold text-gray-800">Invisalign</p>
-                                <p class="text-xs text-gray-500">Platinum Provider</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button onclick="showComingSoon()" class="bg-primary hover:bg-sky-600 text-white px-8 py-4 rounded-full font-semibold transition transform hover:scale-105">
-                        <i class="fas fa-play-circle mr-2"></i> Watch Introduction
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h4 class="text-primary font-bold uppercase tracking-wider text-sm mb-3">Our Expertise</h4>
-                <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-4">Comprehensive Dental Services</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Advanced treatments tailored to your unique needs</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="service-card bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group text-left" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition group-hover:scale-105 group-hover:rotate-6">
-                        <i class="fa-solid fa-tooth text-3xl text-primary group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3">General Dentistry</h3>
-                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">Routine checkups, cleanings, and fillings to keep your oral hygiene perfect. Preventive care for lifelong health.</p>
-                    <div class="flex items-center justify-between">
-                        <a href="#booking" class="text-primary font-semibold hover:underline flex items-center gap-2 group">
-                            Book Checkup <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
-                        </a>
-                        <span class="text-xs text-gray-400">From $99</span>
-                    </div>
-                </div>
-
-                <div class="service-card bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group text-left" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent transition group-hover:scale-105 group-hover:rotate-6">
-                        <i class="fa-solid fa-wand-magic-sparkles text-3xl text-accent group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3">Cosmetic Dentistry</h3>
-                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">Veneers, teeth whitening, and smile makeovers designed to stun. Transform your confidence.</p>
-                    <div class="flex items-center justify-between">
-                        <a href="#booking" class="text-primary font-semibold hover:underline flex items-center gap-2 group">
-                            Learn More <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
-                        </a>
-                        <span class="text-xs text-gray-400">From $299</span>
-                    </div>
-                </div>
-
-                <div class="service-card bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group text-left" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-500 transition group-hover:scale-105 group-hover:rotate-6">
-                        <i class="fa-solid fa-teeth text-3xl text-purple-500 group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3">Orthodontics</h3>
-                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">Clear aligners (Invisalign) and traditional braces for all ages. Discreet and effective.</p>
-                    <div class="flex items-center justify-between">
-                        <a href="#booking" class="text-primary font-semibold hover:underline flex items-center gap-2 group">
-                            Get Started <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
-                        </a>
-                        <span class="text-xs text-gray-400">From $3,999</span>
-                    </div>
-                </div>
-
-                <div class="service-card bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group text-left" data-aos="fade-up" data-aos-delay="400">
-                    <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-red-500 transition group-hover:scale-105 group-hover:rotate-6">
-                        <i class="fa-solid fa-heart-pulse text-3xl text-red-500 group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3">Emergency Care</h3>
-                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">Immediate attention for toothaches, chipped teeth, and trauma. Same-day appointments available.</p>
-                    <div class="flex items-center justify-between">
-                        <a href="tel:+1234567890" class="text-red-500 font-semibold hover:underline flex items-center gap-2 group">
-                            Call Now <i class="fas fa-phone group-hover:rotate-12 transition"></i>
-                        </a>
-                        <span class="text-xs text-gray-400">24/7 Hotline</span>
-                    </div>
-                </div>
-
-                <div class="service-card bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group text-left" data-aos="fade-up" data-aos-delay="500">
-                    <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-orange-500 transition group-hover:scale-105 group-hover:rotate-6">
-                        <i class="fa-solid fa-shapes text-3xl text-orange-500 group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3">Dental Implants</h3>
-                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">Permanent, natural-looking solutions for missing teeth. Restore function and aesthetics.</p>
-                    <div class="flex items-center justify-between">
-                        <a href="#booking" class="text-primary font-semibold hover:underline flex items-center gap-2 group">
-                            Free Consult <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
-                        </a>
-                        <span class="text-xs text-gray-400">From $2,499</span>
-                    </div>
-                </div>
-
-                <div class="service-card bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group text-left" data-aos="fade-up" data-aos-delay="600">
-                    <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-green-500 transition group-hover:scale-105 group-hover:rotate-6">
-                        <i class="fa-solid fa-child text-3xl text-green-500 group-hover:text-white transition"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3">Pediatric Dentistry</h3>
-                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">Friendly, gentle care specifically designed for children. Happy visits guaranteed.</p>
-                    <div class="flex items-center justify-between">
-                        <a href="#booking" class="text-primary font-semibold hover:underline flex items-center gap-2 group">
-                            Kids Appointment <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
-                        </a>
-                        <span class="text-xs text-gray-400">From $79</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Safety Protocol Section -->
-    <section class="bg-secondary text-white py-16 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover">
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-shield-halved text-primary text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold">🛡️ Safety First</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm">We adhere to the strictest sterilization and safety standards.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:col-span-3">
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition">
-                        <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-pump-medical text-primary text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="font-semibold mb-1">Hospital-grade Air</p>
-                            <p class="text-sm text-gray-400">HEPA filtration system</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition">
-                        <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-hands-bubbles text-primary text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="font-semibold mb-1">Strict Sterilization</p>
-                            <p class="text-sm text-gray-400">Autoclave & chemical sterilization</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition">
-                        <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-microscope text-primary text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="font-semibold mb-1">Digital X-Rays</p>
-                            <p class="text-sm text-gray-400">90% less radiation</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-4">Real Results</h2>
-                <p class="text-lg text-gray-600 mb-8">Click on any image to view in detail</p>
-            </div>
-
-            <div class="masonry-grid" id="gallery-grid">
-                <div class="masonry-item" data-aos="fade-up" data-aos-delay="100">
-                    <div class="relative group overflow-hidden rounded-2xl h-64 bg-gray-200 shimmer">
-                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=800&auto=format&fit=crop" 
-                             alt="Smile Transformation" 
-                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                             loading="lazy"
-                             onclick="openLightbox(0)">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                            <p class="text-white font-bold text-lg"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i> View</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="masonry-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative group overflow-hidden rounded-2xl h-80 bg-gray-200 shimmer">
-                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=800&auto=format&fit=crop" 
-                             alt="Before & After" 
-                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                             loading="lazy"
-                             onclick="openLightbox(1)">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                            <p class="text-white font-bold text-lg"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i> View</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="masonry-item" data-aos="fade-up" data-aos-delay="300">
-                    <div class="relative group overflow-hidden rounded-2xl h-56 bg-gray-200 shimmer">
-                        <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=80&w=800&auto=format&fit=crop" 
-                             alt="Dental Excellence" 
-                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                             loading="lazy"
-                             onclick="openLightbox(2)">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                            <p class="text-white font-bold text-lg"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i> View</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="masonry-item" data-aos="fade-up" data-aos-delay="400">
-                    <div class="relative group overflow-hidden rounded-2xl h-72 bg-gray-200 shimmer">
-                        <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?q=80&w=800&auto=format&fit=crop" 
-                             alt="Modern Clinic" 
-                             class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                             loading="lazy"
-                             onclick="openLightbox(3)">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                            <p class="text-white font-bold text-lg"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i> View</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section id="reviews" class="py-24 bg-blue-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h4 class="text-primary font-bold uppercase tracking-wider text-sm mb-3">Patient Stories</h4>
-                <h2 class="text-4xl md:text-5xl font-bold text-secondary mb-4">What People Say</h2>
-                <div class="flex justify-center items-center gap-3 mt-4">
-                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                        <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" width="24" alt="Google" class="rounded">
-                        <span class="font-bold text-secondary">4.9/5</span>
-                        <span class="text-gray-500 text-sm">(Based on 250+ Reviews)</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="splide" id="testimonial-slider">
-                <div class="splide__track">
-                    <ul class="splide__list">
-                        <li class="splide__slide">
-                            <div class="testimonial-card">
-                                <div class="flex mb-4">
-                                    <div class="text-yellow-400 flex text-xl">
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600 mb-6 italic text-lg leading-relaxed">"I've always been terrified of the dentist, but Dr. Jenkins made me feel so calm. The procedure was completely painless. Highly recommended!"</p>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center font-bold text-white text-lg">MK</div>
-                                    <div>
-                                        <h5 class="font-bold text-lg text-secondary">Michael K.</h5>
-                                        <p class="text-sm text-gray-500">Implant Patient</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="testimonial-card">
-                                <div class="flex mb-4">
-                                    <div class="text-yellow-400 flex text-xl">
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600 mb-6 italic text-lg leading-relaxed">"The facility is ultra-modern and clean. I got Invisalign here and the results are amazing. The team is very professional."</p>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center font-bold text-white text-lg">AS</div>
-                                    <div>
-                                        <h5 class="font-bold text-lg text-secondary">Amanda S.</h5>
-                                        <p class="text-sm text-gray-500">Orthodontics</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div class="testimonial-card">
-                                <div class="flex mb-4">
-                                    <div class="text-yellow-400 flex text-xl">
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600 mb-6 italic text-lg leading-relaxed">"Great experience with my kids. They actually look forward to going to the dentist now because of the friendly staff."</p>
-                                <div class="flex items-center gap-4">
-                                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center font-bold text-white text-lg">JL</div>
-                                    <div>
-                                        <h5 class="font-bold text-lg text-secondary">James L.</h5>
-                                        <p class="text-sm text-gray-500">Pediatric Care</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Booking Section -->
-    <section id="booking" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 skew-y-2 transform origin-top-left scale-110 z-0"></div>
-        
-        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white dark-mode:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
-                <div class="p-8 md:p-12 md:w-3/5">
-                    <h2 class="text-3xl font-bold text-secondary mb-3">Book Your Visit</h2>
-                    <p class="text-gray-500 mb-8 text-lg">Fill out the form and we'll contact you to confirm your appointment within 30 minutes.</p>
-                    
-                    <form id="booking-form" class="space-y-6">
+                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('Request sent! We will contact you shortly.')">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="form-group">
-                                <input type="text" class="form-input" placeholder=" " id="name" required>
-                                <label for="name" class="form-label">Full Name</label>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold uppercase text-slate-400">Full Name</label>
+                                <input type="text" class="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 transition-all dark:text-white" placeholder="John Doe" required>
                             </div>
-                            <div class="form-group">
-                                <input type="tel" class="form-input" placeholder=" " id="phone" required>
-                                <label for="phone" class="form-label">Phone Number</label>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <input type="email" class="form-input" placeholder=" " id="email" required>
-                            <label for="email" class="form-label">Email Address</label>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="form-group">
-                                <select class="form-input" id="service" required>
-                                    <option value="">Select Service</option>
-                                    <option>General Checkup & Cleaning</option>
-                                    <option>Tooth Pain / Emergency</option>
-                                    <option>Cosmetic Consultation</option>
-                                    <option>Orthodontics / Braces</option>
-                                    <option>Dental Implants</option>
-                                    <option>Teeth Whitening</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="date" class="form-input" id="date">
-                                <label for="date" class="form-label">Preferred Date</label>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold uppercase text-slate-400">Phone</label>
+                                <input type="tel" class="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 transition-all dark:text-white" placeholder="(555) 000-0000" required>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <textarea class="form-input" rows="4" placeholder=" " id="message"></textarea>
-                            <label for="message" class="form-label">Tell us about your needs (optional)</label>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold uppercase text-slate-400">Service Needed</label>
+                            <select class="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 transition-all dark:text-white">
+                                <option>General Checkup</option>
+                                <option>Cosmetic Consultation</option>
+                                <option>Pain / Emergency</option>
+                                <option>Invisalign</option>
+                            </select>
                         </div>
-                        
-                        <div class="flex items-center gap-3">
-                            <input type="checkbox" id="emergency" class="w-5 h-5 text-red-600 rounded border-gray-300 focus:ring-red-500">
-                            <label for="emergency" class="text-red-500 font-bold flex items-center gap-2">
-                                <i class="fas fa-exclamation-triangle"></i> This is a dental emergency
+
+                        <div class="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-100 dark:border-red-900/50">
+                            <input type="checkbox" id="emergency" class="w-5 h-5 text-red-600 rounded focus:ring-red-500">
+                            <label for="emergency" class="text-red-600 dark:text-red-400 font-bold text-sm">
+                                <i class="fas fa-bolt mr-1"></i> This is a dental emergency
                             </label>
                         </div>
 
-                        <button type="submit" class="w-full bg-primary hover:bg-sky-600 text-white font-bold py-4 rounded-xl transition transform hover:scale-105 shadow-lg hover:shadow-primary/40 flex items-center justify-center gap-3">
-                            <i class="fas fa-paper-plane"></i> Request Appointment
+                        <button type="submit" class="w-full bg-slate-900 dark:bg-brand-500 text-white font-bold py-4 rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all">
+                            Request Appointment
                         </button>
                     </form>
-                    
-                    <div class="mt-6 p-4 bg-green-50 border-l-4 border-green-400 rounded-r-lg hidden" id="success-message">
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
-                            <div>
-                                <p class="text-green-800 font-semibold">Appointment request sent!</p>
-                                <p class="text-green-600 text-sm">We'll contact you within 30 minutes to confirm.</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="bg-primary p-8 md:p-12 md:w-2/5 text-white flex flex-col justify-between">
-                    <div>
+                <div class="bg-brand-500 dark:bg-slate-900 p-12 lg:w-2/5 text-white flex flex-col justify-between relative overflow-hidden order-1 lg:order-2">
+                    <div class="relative z-10">
                         <h3 class="text-2xl font-bold mb-8">Contact Info</h3>
                         <div class="space-y-6">
-                            <div class="flex items-start gap-4 group">
-                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition">
-                                    <i class="fa-solid fa-location-dot text-xl"></i>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-location-dot"></i>
                                 </div>
                                 <div>
-                                    <p class="font-semibold mb-1">Address</p>
-                                    <p class="text-sky-100 text-sm">123 Dental Avenue, Suite 101<br>New York, NY 10001</p>
+                                    <p class="font-bold">Visit Us</p>
+                                    <p class="text-white/80 text-sm">123 Dental Ave, Suite 101<br>New York, NY 10001</p>
                                 </div>
                             </div>
-                            <div class="flex items-start gap-4 group">
-                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition">
-                                    <i class="fa-solid fa-phone text-xl"></i>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-envelope"></i>
                                 </div>
                                 <div>
-                                    <p class="font-semibold mb-1">Phone</p>
-                                    <p class="text-sky-100 text-sm">(555) 123-4567</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4 group">
-                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition">
-                                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold mb-1">WhatsApp</p>
-                                    <p class="text-sky-100 text-sm">+1 555 987 6543</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4 group">
-                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition">
-                                    <i class="fa-solid fa-envelope text-xl"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold mb-1">Email</p>
-                                    <p class="text-sky-100 text-sm">hello@luminadental.com</p>
+                                    <p class="font-bold">Email Us</p>
+                                    <p class="text-white/80 text-sm">hello@luminadental.com</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="mt-10">
-                        <h4 class="font-bold mb-4 uppercase tracking-wider text-sm opacity-80">Working Hours</h4>
-                        <div class="space-y-2 text-sky-100 text-sm">
-                            <div class="flex justify-between">
-                                <span>Monday - Friday</span>
-                                <span>9:00 AM - 6:00 PM</span>
+                    <div class="relative z-10 mt-12">
+                        <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/10">
+                            <p class="font-bold mb-2">Hours</p>
+                            <div class="flex justify-between text-sm text-white/80 mb-1">
+                                <span>Mon - Fri</span>
+                                <span>9am - 6pm</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Saturday</span>
-                                <span>10:00 AM - 2:00 PM</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Sunday</span>
-                                <span>Closed</span>
+                            <div class="flex justify-between text-sm text-white/80">
+                                <span>Sat</span>
+                                <span>10am - 2pm</span>
                             </div>
                         </div>
                     </div>
@@ -1153,380 +403,127 @@
         </div>
     </section>
 
-    <!-- Contact Map -->
-    <section id="contact" class="h-96 w-full relative">
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98513032400567!3d40.7588949713861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1716300000000!5m2!1sen!2sus" 
-            width="100%" 
-            height="100%" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade"
-            class="filter grayscale hover:grayscale-0 hover:contrast-125 transition duration-500">
-        </iframe>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-secondary text-gray-300 py-16 relative">
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-                <div class="md:col-span-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fa-solid fa-tooth text-2xl text-primary"></i>
-                        <span class="font-bold text-xl text-white">Lumina<span class="text-primary">Dental</span></span>
-                    </div>
-                    <p class="text-sm text-gray-400 mb-6">Creating brighter, healthier smiles with modern technology and gentle hands.</p>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition text-white">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition text-white">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition text-white">
-                            <i class="fa-brands fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition text-white">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-white font-bold mb-4 text-lg">Quick Links</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#about" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> About Us</a></li>
-                        <li><a href="#services" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Our Services</a></li>
-                        <li><a href="#reviews" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Testimonials</a></li>
-                        <li><a href="#booking" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Book Online</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-bold mb-4 text-lg">Treatments</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#services" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Teeth Whitening</a></li>
-                        <li><a href="#services" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Dental Implants</a></li>
-                        <li><a href="#services" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Invisalign</a></li>
-                        <li><a href="#services" class="hover:text-primary transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs"></i> Root Canals</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-bold mb-4 text-lg">Newsletter</h4>
-                    <p class="text-sm text-gray-400 mb-4">Subscribe for dental health tips and exclusive offers.</p>
-                    <form class="space-y-3" onsubmit="subscribeNewsletter(event)">
-                        <input type="email" placeholder="Your email" class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-primary" required>
-                        <button type="submit" class="w-full bg-primary hover:bg-sky-600 text-white font-semibold py-3 rounded-lg transition">Subscribe</button>
-                    </form>
+    <footer class="bg-slate-900 text-slate-400 py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-2">
+                <a href="#" class="flex items-center gap-2 mb-6">
+                    <i class="fa-solid fa-tooth text-brand-500 text-2xl"></i>
+                    <span class="font-bold text-xl text-white">Lumina<span class="text-brand-500">Dental</span></span>
+                </a>
+                <p class="max-w-sm mb-6">Redefining the dental experience with state-of-the-art technology and a patient-first approach.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-brand-500 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-brand-500 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-brand-500 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-twitter"></i></a>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                <p>&copy; 2025 Lumina Dental Clinic. All rights reserved. | <i class="fas fa-heart text-primary"></i> Crafted with care</p>
-                <div class="flex gap-4 mt-2 md:mt-0">
-                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition">Terms of Service</a>
-                </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="#about" class="hover:text-brand-500 transition-colors">About</a></li>
+                    <li><a href="#services" class="hover:text-brand-500 transition-colors">Services</a></li>
+                    <li><a href="#booking" class="hover:text-brand-500 transition-colors">Book Online</a></li>
+                    <li><a href="#reviews" class="hover:text-brand-500 transition-colors">Testimonials</a></li>
+                </ul>
             </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-6">Legal</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="hover:text-brand-500 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-brand-500 transition-colors">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-brand-500 transition-colors">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-800 text-sm text-center md:text-left flex flex-col md:flex-row justify-between">
+            <p>&copy; 2025 Lumina Dental. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Lightbox -->
-    <div id="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(event, -1)">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <img id="lightbox-img" src="" alt="Gallery Image">
-        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(event, 1)">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+    <a href="https://wa.me/1234567890" target="_blank" class="fixed bottom-6 right-6 z-40 bg-green-500 text-white w-14 h-14 rounded-full shadow-lg hover:shadow-green-500/50 flex items-center justify-center text-3xl hover:-translate-y-2 transition-all duration-300">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 invisible opacity-0 flex items-center justify-center p-4">
+        <button class="absolute top-6 right-6 text-white text-4xl hover:text-brand-500 transition" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" alt="Gallery" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl">
     </div>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
-    
     <script>
-        // Initialize Libraries
-        AOS.init({
-            once: true,
-            offset: 100
-        });
-        
-        Splitting();
-        
-        // Testimonial Slider
-        const testimonialSlider = new Splide('#testimonial-slider', {
-            type: 'loop',
-            autoplay: true,
-            interval: 5000,
-            pauseOnHover: true,
-            perPage: 1,
-            perMove: 1,
-            gap: 20,
-            breakpoints: {
-                768: {
-                    perPage: 1
-                }
-            }
-        });
-        testimonialSlider.mount();
-        
-        // Gallery Images
-        const galleryImages = [
-            'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?q=80&w=1200&auto=format&fit=crop'
-        ];
-        
-        let currentLightboxIndex = 0;
-        
-        // Hide loader after page load
+        AOS.init({ once: true, offset: 50, duration: 800 });
+
+        // Loader
         window.addEventListener('load', () => {
             setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 1000);
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').remove(), 500);
+            }, 800);
         });
-        
+
         // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const storedTheme = localStorage.getItem('theme');
+        const html = document.documentElement;
         
-        if (storedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeIcon.className = 'fas fa-sun';
+        // Check local storage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
         }
-        
+
         themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
         });
-        
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + "%";
+            
+            // Navbar background opacity
+            const navBg = document.getElementById('nav-bg');
+            if (winScroll > 50) {
+                navBg.classList.remove('opacity-0');
+            } else {
+                navBg.classList.add('opacity-0');
+            }
+        });
+
         // Mobile Menu
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        const mobileOverlay = document.getElementById('mobile-overlay');
-        const closeMobileMenu = document.getElementById('close-mobile-menu');
-        
         function toggleMobileMenu() {
             mobileMenu.classList.toggle('translate-x-full');
-            mobileOverlay.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('translate-x-full') ? 'auto' : 'hidden';
+            document.body.classList.toggle('overflow-hidden');
         }
-        
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-        closeMobileMenu.addEventListener('click', toggleMobileMenu);
-        mobileOverlay.addEventListener('click', toggleMobileMenu);
-        
-        // Smooth Scroll with Offset
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offsetTop = target.offsetTop - 80;
-                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                    if (!mobileMenu.classList.contains('translate-x-full')) {
-                        toggleMobileMenu();
-                    }
-                }
-            });
-        });
-        
-        // Navbar Scroll Effect
-        const navbar = document.getElementById('navbar');
-        let lastScrollTop = 0;
-        
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > 50) {
-                navbar.classList.add('shadow-md');
-                navbar.style.transform = scrollTop > lastScrollTop ? 'translateY(-100%)' : 'translateY(0)';
-            } else {
-                navbar.classList.remove('shadow-md');
-                navbar.style.transform = 'translateY(0)';
-            }
-            
-            lastScrollTop = scrollTop;
-            
-            // Progress Bar
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = (scrollTop / docHeight) * 100;
-            document.getElementById('progress-bar').style.width = progress + '%';
-            
-            // Back to Top Button
-            const backToTop = document.getElementById('back-to-top');
-            if (scrollTop > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-            
-            // Active Nav Link
-            const sections = document.querySelectorAll('section[id]');
-            sections.forEach(section => {
-                const top = section.offsetTop - 100;
-                const height = section.clientHeight;
-                const id = section.getAttribute('id');
-                
-                if (scrollTop >= top && scrollTop < top + height) {
-                    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-                    document.querySelector(`a[href="#${id}"]`)?.classList.add('active');
-                }
-            });
-        });
-        
-        // Back to Top
-        document.getElementById('back-to-top').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        // Counter Animation
-        const counters = document.querySelectorAll('.stat-number');
-        const animateCounters = () => {
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-count'));
-                const duration = 2000;
-                const start = performance.now();
-                
-                const updateCounter = (currentTime) => {
-                    const elapsed = currentTime - start;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const current = Math.floor(progress * target);
-                    
-                    counter.textContent = current + (counter.getAttribute('data-count') === '4.9' ? '+': '');
-                    
-                    if (progress < 1) {
-                        requestAnimationFrame(updateCounter);
-                    }
-                };
-                
-                requestAnimationFrame(updateCounter);
-            });
-        };
-        
-        // Intersection Observer for Counter
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounters();
-                    counterObserver.unobserve(entry.target);
-                }
-            });
-        });
-        
-        const statsSection = document.querySelector('.grid.grid-cols-3');
-        if (statsSection) counterObserver.observe(statsSection);
-        
-        // Form Validation
-        const bookingForm = document.getElementById('booking-form');
-        bookingForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Simple validation
-            const formData = new FormData(bookingForm);
-            const data = Object.fromEntries(formData);
-            
-            // Show success message
-            document.getElementById('success-message').classList.remove('hidden');
-            bookingForm.reset();
-            
-            // Hide after 5 seconds
-            setTimeout(() => {
-                document.getElementById('success-message').classList.add('hidden');
-            }, 5000);
-            
-            // Scroll to success message
-            document.getElementById('success-message').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-        
-        // Lightbox Functions
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // Lightbox
+        const images = [
+            'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1200',
+            'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1200',
+            'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=80&w=1200',
+            'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?q=80&w=1200'
+        ];
+
         function openLightbox(index) {
-            event.stopPropagation();
-            currentLightboxIndex = index;
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
-            img.src = galleryImages[currentLightboxIndex];
+            img.src = images[index];
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
-        
+
         function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.getElementById('lightbox').classList.remove('active');
         }
-        
-        function navigateLightbox(event, direction) {
-            event.stopPropagation();
-            currentLightboxIndex = (currentLightboxIndex + direction + galleryImages.length) % galleryImages.length;
-            document.getElementById('lightbox-img').src = galleryImages[currentLightboxIndex];
-        }
-        
-        // Keyboard Navigation for Lightbox
+
+        // Close lightbox on escape key
         document.addEventListener('keydown', (e) => {
-            const lightbox = document.getElementById('lightbox');
-            if (lightbox.classList.contains('active')) {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') navigateLightbox(e, -1);
-                if (e.key === 'ArrowRight') navigateLightbox(e, 1);
-            }
+            if (e.key === 'Escape') closeLightbox();
         });
-        
-        // Cookie Consent
-        function acceptCookies() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            document.getElementById('cookie-consent').classList.remove('show');
-        }
-        
-        if (!localStorage.getItem('cookiesAccepted')) {
-            setTimeout(() => {
-                document.getElementById('cookie-consent').classList.add('show');
-            }, 3000);
-        }
-        
-        // Newsletter Subscribe
-        function subscribeNewsletter(event) {
-            event.preventDefault();
-            alert('Thank you for subscribing! You will receive dental health tips and exclusive offers.');
-            event.target.reset();
-        }
-        
-        // Coming Soon Alert
-        function showComingSoon() {
-            alert('This feature is coming soon! Stay tuned for our video introduction.');
-        }
-        
-        // Image Lazy Loading
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.classList.remove('shimmer');
-                        imageObserver.unobserve(img);
-                    }
-                });
-            });
-            
-            document.querySelectorAll('img').forEach(img => imageObserver.observe(img));
-        }
-        
-        // Add hover touch support for mobile
-        if ('ontouchstart' in window) {
-            document.querySelectorAll('.service-card, .testimonial-card').forEach(card => {
-                card.addEventListener('touchstart', () => {});
-            });
-        }
     </script>
 </body>
 </html>
