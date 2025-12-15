@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright Smiles Karachi | Modern Dental Studio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1A3C34',   // Dark Teal/Forest
+                            lime: '#C6F038',   // Electric Lime
+                            light: '#F2F4F3',  // Off-white
+                            surface: '#ffffff',
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'lime': '0 10px 40px -10px rgba(198, 240, 56, 0.5)',
+                    },
+                    borderRadius: {
+                        '4xl': '2.5rem',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { 
+            background-color: #F2F4F3; 
+            color: #1A3C34;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .glass-dark {
+            background: rgba(26, 60, 52, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(198, 240, 56, 0.1);
+        }
+
+        /* Smooth Image Interactions */
+        .hover-grow { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .hover-grow:hover { transform: scale(1.05); }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delay { animation: float 5s ease-in-out 2s infinite; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #1A3C34; }
+        ::-webkit-scrollbar-thumb { background: #C6F038; border-radius: 5px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-lime selection:text-brand-dark">
+
+    <nav class="fixed w-full z-50 transition-all duration-300 py-4 bg-brand-light/90 backdrop-blur-md">
+        <div class="max-w-[1400px] mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-brand-dark rounded-full flex items-center justify-center text-brand-lime text-xl group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid fa-smile"></i>
+                </div>
+                <span class="font-extrabold text-2xl tracking-tight">Bright<span class="text-brand-dark">Smiles.</span></span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 font-bold text-sm">
+                <a href="#services" class="hover:text-brand-lime transition-colors">Treatments</a>
+                <a href="#about" class="hover:text-brand-lime transition-colors">About</a>
+                <a href="#reviews" class="hover:text-brand-lime transition-colors">Stories</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="tel:02135841234" class="hidden lg:block font-bold hover:text-brand-lime transition">021-3584-1234</a>
+                <a href="#booking" class="bg-white border-2 border-brand-dark text-brand-dark px-6 py-2.5 rounded-full font-bold text-sm hover:bg-brand-dark hover:text-white transition-all duration-300">
+                    BOOK NOW
+                </a>
+                <button class="md:hidden text-2xl ml-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-brand-light border-b border-gray-200 p-6 flex flex-col gap-4 shadow-xl">
+            <a href="#services" class="text-lg font-bold">Treatments</a>
+            <a href="#about" class="text-lg font-bold">About</a>
+            <a href="#booking" class="bg-brand-lime text-brand-dark p-3 rounded-xl text-center font-bold">Book Visit</a>
+        </div>
+    </nav>
+
+    <header class="relative pt-28 pb-20 px-6 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-8 items-center relative">
+            
+            <div class="relative order-2 lg:order-1" data-aos="fade-right">
+                <div class="relative rounded-4xl overflow-hidden h-[500px] lg:h-[650px] w-full group">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1288&auto=format&fit=crop" 
+                         alt="Happy Patient" 
+                         class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700">
+                </div>
+
+                <div class="absolute top-1/3 -right-6 lg:-right-12 flex flex-col gap-4 animate-float">
+                    <div class="w-14 h-14 bg-brand-dark rounded-full flex items-center justify-center text-brand-lime shadow-lg border-2 border-white">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                    </div>
+                    <div class="w-14 h-14 bg-brand-dark rounded-full flex items-center justify-center text-brand-lime shadow-lg border-2 border-white ml-8">
+                        <i class="fa-solid fa-tooth text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="absolute bottom-8 left-8 max-w-xs text-xs font-medium text-white/90 drop-shadow-md hidden md:block">
+                    When you come to Bright Smiles Karachi, we want you to feel like you're visiting a friend, not a clinic.
+                </div>
+            </div>
+
+            <div class="relative order-1 lg:order-2 h-full flex flex-col justify-center" data-aos="fade-left">
+                <div class="glass-card p-10 md:p-14 rounded-4xl shadow-glass relative z-10">
+                    <h1 class="text-5xl md:text-7xl font-extrabold leading-[0.9] tracking-tight mb-6 text-brand-dark">
+                        Dentist <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-dark to-emerald-800">Karachi</span>
+                    </h1>
+                    
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mt-8">
+                        <a href="#booking" class="bg-brand-lime text-brand-dark px-8 py-4 rounded-full font-bold text-lg shadow-lime hover:transform hover:-translate-y-1 transition-all duration-300">
+                            BOOK NOW
+                        </a>
+                        <p class="text-brand-dark/70 font-medium max-w-[200px] leading-tight border-l-2 border-brand-dark/20 pl-4">
+                            There's always a bright smile here for you in DHA Phase 6.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="absolute -bottom-10 right-0 md:right-10 glass-card bg-white p-4 pr-8 rounded-full shadow-xl flex items-center gap-4 animate-float-delay max-w-sm z-20">
+                    <div class="flex -space-x-3">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=1" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=5" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=9" alt="User">
+                    </div>
+                    <p class="text-xs font-bold text-brand-dark">
+                        What if the dentist was <br>actually fun?
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-20 px-6 bg-white rounded-t-[3rem] -mt-10 relative z-10" id="about">
+        <div class="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 relative inline-block">
+                    Dread the dentist?
+                    <svg class="absolute w-full h-3 -bottom-1 left-0 text-brand-lime z-[-1]" viewBox="0 0 200 9" fill="currentColor"><path d="M2.00025 6.99997C25.7667 4.14959 55.4859 1.63852 92.1001 2.45354C128.714 3.26857 167.366 7.40954 197.999 7.99997" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                </h2>
+                <h3 class="text-2xl font-bold text-brand-dark/50 mb-6">Let's change that.</h3>
+                <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                    We ditch the clinical vibes for comfort. Located in **Bukhari Commercial**, we’re the Karachi dentist you’ll actually look forward to seeing. 
+                </p>
+                <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                    Think of us less like a hospital, and more like a wellness hub for your mouth. From Dr. Ayesha's gentle hand to our Spotify playlists, everything is designed for you.
+                </p>
+            </div>
+            <div class="relative" data-aos="zoom-in">
+                <div class="absolute inset-0 bg-brand-lime rounded-3xl transform rotate-3 translate-x-2 translate-y-2"></div>
+                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1200" alt="Clinic Interior" class="relative rounded-3xl w-full h-[400px] object-cover border-4 border-white">
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 bg-brand-dark text-white rounded-[3rem] my-4 mx-2 md:mx-6" id="services">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 px-4">
+                <h2 class="text-4xl md:text-6xl font-bold max-w-xl">Curated care for your best smile.</h2>
+                <a href="#booking" class="text-brand-lime font-bold text-lg hover:underline mt-4 md:mt-0">View Full Menu -></a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white text-brand-dark p-8 rounded-3xl hover:bg-brand-lime transition-colors duration-300 group cursor-pointer" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+                    <div class="w-16 h-16 bg-brand-dark rounded-full flex items-center justify-center text-white mb-8 text-2xl group-hover:bg-white group-hover:text-brand-dark transition-colors">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Shaadi Package</h3>
+                    <p class="text-sm opacity-70 mb-8">Teeth whitening & aesthetic bonding to get camera-ready for the wedding season.</p>
+                    <span class="font-bold text-sm border-b-2 border-brand-dark pb-1">Learn More</span>
+                </div>
+
+                <div class="bg-white text-brand-dark p-8 rounded-3xl hover:bg-brand-lime transition-colors duration-300 group cursor-pointer" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+                    <div class="w-16 h-16 bg-brand-dark rounded-full flex items-center justify-center text-white mb-8 text-2xl group-hover:bg-white group-hover:text-brand-dark transition-colors">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Implants</h3>
+                    <p class="text-sm opacity-70 mb-8">Korean & Swiss implant options to replace missing teeth permanently.</p>
+                    <span class="font-bold text-sm border-b-2 border-brand-dark pb-1">Learn More</span>
+                </div>
+
+                <div class="bg-white text-brand-dark p-8 rounded-3xl hover:bg-brand-lime transition-colors duration-300 group cursor-pointer" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+                    <div class="w-16 h-16 bg-brand-dark rounded-full flex items-center justify-center text-white mb-8 text-2xl group-hover:bg-white group-hover:text-brand-dark transition-colors">
+                        <i class="fa-solid fa-teeth-open"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Aligners</h3>
+                    <p class="text-sm opacity-70 mb-8">Invisible braces for adults. Straighten teeth without the "metal mouth".</p>
+                    <span class="font-bold text-sm border-b-2 border-brand-dark pb-1">Learn More</span>
+                </div>
+
+                <div class="bg-white text-brand-dark p-8 rounded-3xl hover:bg-brand-lime transition-colors duration-300 group cursor-pointer" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+                    <div class="w-16 h-16 bg-brand-dark rounded-full flex items-center justify-center text-white mb-8 text-2xl group-hover:bg-white group-hover:text-brand-dark transition-colors">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Kids Club</h3>
+                    <p class="text-sm opacity-70 mb-8">Fun, fearless dentistry for the little ones. No tears, just high-fives.</p>
+                    <span class="font-bold text-sm border-b-2 border-brand-dark pb-1">Learn More</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 bg-white">
+        <div class="max-w-[1200px] mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-16 text-brand-dark">Meet your dental mates.</h2>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="group cursor-pointer">
+                    <div class="relative w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden border-4 border-transparent group-hover:border-brand-lime transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <h3 class="text-2xl font-bold text-brand-dark">Dr. Ayesha</h3>
+                    <p class="text-brand-lime font-bold uppercase text-xs tracking-wider mb-2">Lead Surgeon</p>
+                    <p class="text-sm text-gray-500 italic">"Coffee snob & Dow Grad"</p>
+                </div>
+
+                <div class="group cursor-pointer">
+                    <div class="relative w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden border-4 border-transparent group-hover:border-brand-lime transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <h3 class="text-2xl font-bold text-brand-dark">Dr. Bilal</h3>
+                    <p class="text-brand-lime font-bold uppercase text-xs tracking-wider mb-2">Orthodontist</p>
+                    <p class="text-sm text-gray-500 italic">"Cricket fan & Braces pro"</p>
+                </div>
+
+                <div class="group cursor-pointer">
+                    <div class="relative w-64 h-64 mx-auto mb-6 rounded-full overflow-hidden border-4 border-transparent group-hover:border-brand-lime transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=800" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <h3 class="text-2xl font-bold text-brand-dark">Sarah</h3>
+                    <p class="text-brand-lime font-bold uppercase text-xs tracking-wider mb-2">Hygienist</p>
+                    <p class="text-sm text-gray-500 italic">"Makes cleaning fun"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 bg-brand-light overflow-hidden" id="reviews">
+        <div class="max-w-[1400px] mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center text-brand-dark">Community Love</h2>
+            
+            <div class="flex gap-6 overflow-x-auto pb-8 snap-x">
+                <div class="min-w-[300px] md:min-w-[400px] glass-dark p-8 rounded-3xl relative snap-center">
+                    <i class="fa-solid fa-quote-left text-6xl text-brand-lime/20 absolute top-4 right-6"></i>
+                    <p class="text-white text-lg mb-6 relative z-10">"Best dental experience in DHA. Dr. Ayesha is extremely gentle. I got my wisdom tooth removed and didn't feel a thing."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-lime rounded-full flex items-center justify-center font-bold text-brand-dark">SA</div>
+                        <div>
+                            <p class="font-bold text-white text-sm">Saad Ahmed</p>
+                            <div class="text-brand-lime text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="min-w-[300px] md:min-w-[400px] glass-dark p-8 rounded-3xl relative snap-center">
+                    <i class="fa-solid fa-quote-left text-6xl text-brand-lime/20 absolute top-4 right-6"></i>
+                    <p class="text-white text-lg mb-6 relative z-10">"Got my teeth whitening done before my wedding. The results were amazing. The clinic ambiance is so chill."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-lime rounded-full flex items-center justify-center font-bold text-brand-dark">FZ</div>
+                        <div>
+                            <p class="font-bold text-white text-sm">Fatima Z.</p>
+                            <div class="text-brand-lime text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="min-w-[300px] md:min-w-[400px] glass-dark p-8 rounded-3xl relative snap-center">
+                    <i class="fa-solid fa-quote-left text-6xl text-brand-lime/20 absolute top-4 right-6"></i>
+                    <p class="text-white text-lg mb-6 relative z-10">"I usually hate the dentist, but this place is different. Great music, friendly staff, and high tech equipment."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-lime rounded-full flex items-center justify-center font-bold text-brand-dark">OM</div>
+                        <div>
+                            <p class="font-bold text-white text-sm">Omar M.</p>
+                            <div class="text-brand-lime text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-brand-dark text-white pt-20 pb-10 px-6 mt-12 rounded-t-[3rem]" id="booking">
+        <div class="max-w-[1200px] mx-auto text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8">Ready to get your <br><span class="text-brand-lime">Bright Smile</span> back?</h2>
+            
+            <form class="max-w-md mx-auto space-y-4 mb-8" onsubmit="event.preventDefault(); alert('We will call you shortly!');">
+                <input type="text" placeholder="Your Name" class="w-full px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-brand-lime transition">
+                <input type="tel" placeholder="0300-1234567" class="w-full px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-brand-lime transition">
+                <button class="w-full bg-brand-lime text-brand-dark font-extrabold text-xl px-12 py-5 rounded-full hover:scale-105 transition-transform shadow-lime">
+                    BOOK ONLINE 24/7
+                </button>
+            </form>
+            <p class="text-sm opacity-50">Or WhatsApp us at <span class="text-brand-lime font-bold">0300-1234567</span></p>
+        </div>
+
+        <div class="max-w-[1400px] mx-auto border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-start gap-10">
+            <div>
+                <a href="#" class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-brand-dark text-lg">
+                        <i class="fa-solid fa-smile"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">Bright<span class="text-brand-lime">Smiles.</span></span>
+                </a>
+                <p class="text-sm text-white/60 max-w-xs">Bukhari Commercial, DHA Phase 6.<br>Karachi, Pakistan.</p>
+            </div>
+
+            <div class="flex gap-12 text-sm">
+                <div class="flex flex-col gap-3">
+                    <p class="font-bold text-brand-lime mb-1">Contact</p>
+                    <a href="#" class="hover:text-brand-lime">021-3584-1234</a>
+                    <a href="#" class="hover:text-brand-lime">hello@brightsmiles.pk</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <p class="font-bold text-brand-lime mb-1">Hours</p>
+                    <p class="text-white/60">Mon-Sat: 11am - 8pm</p>
+                    <p class="text-white/60">Sun: Emergency Only</p>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <p class="font-bold text-brand-lime mb-1">Social</p>
+                    <div class="flex gap-2">
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-lime hover:text-brand-dark transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-lime hover:text-brand-dark transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-12 text-xs text-white/30">
+            © 2025 Bright Smiles Karachi. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 800 });
+    </script>
+</body>
+</html>
