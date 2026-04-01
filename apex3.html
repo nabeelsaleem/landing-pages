@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Manufacturing | High Quality Peptides & SARMs</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1adf3c;
+  --green-dark: #0faa2a;
+  --green-mid: #16c234;
+  --green-pale: #e8fded;
+  --green-pale2: #d0f9da;
+  --green-light: rgba(26,223,60,0.12);
+  --green-border: rgba(26,223,60,0.28);
+  --white: #ffffff;
+  --off-white: #f7fdf8;
+  --light: #eef8f0;
+  --light2: #e2f4e6;
+  --text-dark: #0d1f0f;
+  --text-body: #2d4a32;
+  --text-muted: #6b8f72;
+  --text-light: #9dbea3;
+  --border: #d8edd9;
+  --border2: #c5e3c8;
+  --shadow: 0 4px 24px rgba(15,90,30,0.10);
+  --shadow-lg: 0 16px 60px rgba(15,90,30,0.14);
+  --shadow-card: 0 2px 16px rgba(15,90,30,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--text-dark);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--light);}::-webkit-scrollbar-thumb{background:var(--green-mid);border-radius:3px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:68px;transition:box-shadow .3s;}
+nav.scrolled{box-shadow:var(--shadow);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;box-shadow:0 4px 14px rgba(26,223,60,0.35);}
+.logo-text{display:flex;flex-direction:column;line-height:1.15;}
+.logo-text b{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--text-dark);letter-spacing:-.3px;}
+.logo-text small{font-size:10px;font-weight:500;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13.5px;font-weight:500;color:var(--text-body);text-decoration:none;padding:7px 14px;border-radius:8px;transition:all .2s;}
+.nav-links a:hover{color:var(--green-dark);background:var(--green-pale);}
+.nav-dropdown{position:relative;}
+.nav-dropdown>a::after{content:' ▾';font-size:9px;opacity:.5;}
+.nav-dropdown-menu{display:none;position:absolute;top:calc(100% + 10px);left:0;background:var(--white);border:1px solid var(--border2);border-radius:12px;padding:8px;min-width:220px;box-shadow:var(--shadow-lg);}
+.nav-dropdown:hover .nav-dropdown-menu{display:block;}
+.nav-dropdown-menu a{display:block;padding:9px 14px;border-radius:8px;font-size:13px;color:var(--text-body);}
+.nav-dropdown-menu a:hover{background:var(--green-pale);color:var(--green-dark);}
+.btn-quote{background:var(--green)!important;color:#fff!important;font-weight:600!important;font-size:13px!important;padding:9px 22px!important;border-radius:50px!important;box-shadow:0 4px 18px rgba(26,223,60,0.35)!important;transition:all .2s!important;}
+.btn-quote:hover{background:var(--green-dark)!important;box-shadow:0 6px 26px rgba(26,223,60,0.5)!important;transform:translateY(-1px);}
+
+/* HERO */
+#home{padding-top:68px;background:linear-gradient(155deg,var(--off-white) 0%,var(--green-pale) 50%,var(--white) 100%);position:relative;overflow:hidden;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;}
+.hero-dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(26,223,60,0.2) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse 80% 80% at 60% 40%,black 30%,transparent 80%);}
+.hero-blob{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(26,223,60,0.13) 0%,transparent 65%);border-radius:50%;top:-100px;right:-100px;pointer-events:none;}
+.hero-left{position:relative;z-index:2;padding:80px 5% 80px 8%;animation:fadeUp .8s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--green-border);border-radius:50px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--green-dark);margin-bottom:28px;box-shadow:var(--shadow-card);}
+.hero-tag .dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(44px,6vw,80px);line-height:1.05;color:var(--text-dark);margin-bottom:22px;letter-spacing:-1px;}
+.hero-title em{font-style:italic;color:var(--green-dark);}
+.hero-sub{font-size:16px;color:var(--text-muted);max-width:460px;line-height:1.8;margin-bottom:36px;}
+.promo-pill{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--green),var(--green-mid));border-radius:16px;padding:16px 24px;margin-bottom:38px;box-shadow:0 8px 30px rgba(26,223,60,0.3);}
+.promo-pill .pbig{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;line-height:1;}
+.promo-pill .psub{font-size:12px;color:rgba(255,255,255,.85);margin-top:3px;font-weight:500;}
+.promo-pill .pico{font-size:28px;}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font-weight:600;font-size:15px;padding:14px 30px;border-radius:50px;text-decoration:none;box-shadow:0 6px 24px rgba(26,223,60,0.38);transition:all .25s;border:none;cursor:pointer;}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 10px 34px rgba(26,223,60,0.5);}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--text-dark);font-weight:600;font-size:15px;padding:14px 28px;border-radius:50px;text-decoration:none;border:1.5px solid var(--border2);transition:all .25s;box-shadow:var(--shadow-card);}
+.btn-secondary:hover{border-color:var(--green);color:var(--green-dark);background:var(--green-pale);}
+
+/* HERO RIGHT: mini product showcase */
+.hero-right{position:relative;z-index:2;padding:80px 6% 80px 0;display:flex;align-items:center;justify-content:center;animation:fadeUp .8s ease .2s both;}
+.hero-products-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:440px;width:100%;}
+.hero-product-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:22px 16px 18px;text-align:center;box-shadow:var(--shadow-card);transition:all .3s;cursor:pointer;position:relative;overflow:hidden;}
+.hero-product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green-mid));transform:scaleX(0);transition:transform .3s;}
+.hero-product-card:hover::before{transform:scaleX(1);}
+.hero-product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--green-border);}
+.hero-product-card.wide{grid-column:1/-1;text-align:left;display:flex;align-items:center;gap:24px;padding:24px;}
+.hpc-img{flex-shrink:0;}
+.hpc-info h4{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text-dark);margin-bottom:6px;}
+.hpc-info p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:14px;max-width:210px;}
+.hpc-info .hprice{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text-dark);}
+.hpc-badge{position:absolute;top:12px;right:12px;background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:3px 9px;border-radius:50px;letter-spacing:.5px;text-transform:uppercase;}
+.sm-card-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text-dark);margin-top:12px;margin-bottom:3px;}
+.sm-card-price{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--green-dark);}
+.sm-card-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px;}
+.mini-btn{background:var(--green-pale);color:var(--green-dark);border:1px solid var(--green-border);border-radius:50px;font-size:11px;font-weight:700;padding:5px 14px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.mini-btn:hover{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* FORM BAND */
+.form-band{background:var(--light);border-top:1px solid var(--border);padding:80px 8%;grid-column:1/-1;}
+.form-inner{max-width:860px;margin:0 auto;}
+.form-head{text-align:center;margin-bottom:48px;}
+.form-head h2{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,48px);color:var(--text-dark);margin-bottom:10px;line-height:1.15;letter-spacing:-.5px;}
+.form-head h2 span{color:var(--green-dark);font-style:italic;}
+.form-head p{color:var(--text-muted);font-size:15px;}
+.contact-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:7px;}
+.form-group.full{grid-column:1/-1;}
+.form-group label{font-size:12px;font-weight:600;letter-spacing:.5px;color:var(--text-body);text-transform:uppercase;}
+.form-group input,.form-group textarea{background:var(--white);border:1.5px solid var(--border2);border-radius:12px;padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text-dark);outline:none;transition:all .25s;width:100%;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(26,223,60,0.1);}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--text-light);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.btn-submit{grid-column:1/-1;background:var(--green);color:#fff;border:none;padding:17px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;letter-spacing:.5px;border-radius:14px;cursor:pointer;transition:all .25s;box-shadow:0 6px 24px rgba(26,223,60,0.32);}
+.btn-submit:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 10px 36px rgba(26,223,60,0.45);}
+
+/* BADGE STRIP */
+.badge-strip{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 8%;}
+.badge-strip-inner{display:flex;flex-wrap:wrap;justify-content:center;}
+.badge-item{display:flex;align-items:center;gap:12px;padding:16px 30px;border-right:1px solid var(--border);transition:background .2s;}
+.badge-item:last-child{border-right:none;}
+.badge-item:hover{background:var(--green-pale);}
+.badge-icon-wrap{width:42px;height:42px;border-radius:12px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid var(--green-border);}
+.badge-text b{display:block;font-size:13px;font-weight:700;color:var(--text-dark);line-height:1.3;}
+.badge-text small{font-size:11px;color:var(--text-muted);}
+
+/* SHARED SECTION */
+.eyebrow{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green-dark);background:var(--green-pale);border:1px solid var(--green-border);padding:5px 14px;border-radius:50px;margin-bottom:18px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,58px);line-height:1.08;letter-spacing:-.5px;color:var(--text-dark);margin-bottom:18px;}
+.section-title em{font-style:italic;color:var(--green-dark);}
+.section-body{font-size:16px;color:var(--text-muted);line-height:1.8;max-width:560px;}
+
+/* CATALOG / SHOP */
+#catalog{padding:100px 8%;background:var(--off-white);}
+.catalog-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;flex-wrap:wrap;gap:20px;}
+.catalog-filters{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-btn{font-size:13px;font-weight:600;padding:8px 20px;border-radius:50px;border:1.5px solid var(--border2);background:var(--white);color:var(--text-body);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.filter-btn.active,.filter-btn:hover{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 4px 14px rgba(26,223,60,0.28);}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;}
+.product-card{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-card);transition:all .3s;position:relative;}
+.product-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg);border-color:var(--green-border);}
+.product-img-wrap{background:linear-gradient(145deg,var(--green-pale),var(--light2));padding:36px 24px 20px;display:flex;align-items:center;justify-content:center;min-height:210px;position:relative;}
+.product-badge-tag{position:absolute;top:14px;left:14px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:50px;}
+.tag-new{background:var(--green);color:#fff;}
+.tag-hot{background:#ff6b35;color:#fff;}
+.tag-popular{background:#a855f7;color:#fff;}
+.product-info{padding:20px 20px 8px;}
+.product-info h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:6px;}
+.product-stars{display:flex;align-items:center;gap:5px;margin-bottom:10px;}
+.stars{color:var(--green-dark);font-size:13px;letter-spacing:1px;}
+.review-count{font-size:11.5px;color:var(--text-muted);}
+.product-meta{font-size:12.5px;color:var(--text-muted);line-height:1.6;}
+.product-footer{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 18px;}
+.product-price{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text-dark);}
+.product-price small{font-size:12px;font-weight:500;color:var(--text-muted);margin-left:3px;}
+.btn-add{display:flex;align-items:center;gap:6px;background:var(--green);color:#fff;border:none;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:9px 18px;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(26,223,60,0.3);}
+.btn-add:hover{background:var(--green-dark);transform:scale(1.04);}
+
+/* R&D */
+#rnd{padding:100px 8%;background:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.rnd-visual{position:relative;height:460px;background:linear-gradient(145deg,var(--green-pale),var(--light2));border-radius:28px;border:1px solid var(--border2);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.rnd-visual::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,223,60,0.2) 1px,transparent 1px);background-size:28px 28px;}
+.rnd-center{position:relative;z-index:2;text-align:center;animation:float 5s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+.rnd-hex{width:130px;height:130px;margin:0 auto 18px;background:linear-gradient(135deg,var(--green),var(--green-mid));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 20px 50px rgba(26,223,60,0.3);}
+.rnd-tag{position:absolute;background:var(--white);border:1px solid var(--border2);border-radius:14px;padding:10px 16px;font-size:12px;font-weight:600;color:var(--text-body);box-shadow:var(--shadow-card);display:flex;align-items:center;gap:8px;animation:float linear infinite;}
+.rnd-tag:nth-child(2){top:12%;left:8%;animation-duration:4.5s;}
+.rnd-tag:nth-child(3){top:12%;right:8%;animation-duration:5.5s;animation-delay:-1.2s;}
+.rnd-tag:nth-child(4){bottom:18%;left:5%;animation-duration:6s;animation-delay:-2s;}
+.rnd-tag:nth-child(5){bottom:18%;right:5%;animation-duration:4.8s;animation-delay:-.7s;}
+.rnd-tag span{font-size:16px;}
+.rnd-cards-list{display:flex;flex-direction:column;gap:16px;margin-top:36px;}
+.rnd-card{display:flex;align-items:flex-start;gap:16px;background:var(--off-white);border:1px solid var(--border);border-radius:16px;padding:20px;transition:all .25s;}
+.rnd-card:hover{border-color:var(--green-border);background:var(--green-pale);transform:translateX(6px);}
+.rnd-card-icon{width:44px;height:44px;border-radius:12px;background:var(--green-pale);border:1px solid var(--green-border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.rnd-card h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.rnd-card p{font-size:13px;color:var(--text-muted);line-height:1.6;}
+
+/* ABOUT */
+#about{padding:100px 8%;background:var(--light);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:22px 18px;transition:all .25s;}
+.stat-card:hover{border-color:var(--green-border);box-shadow:var(--shadow-card);}
+.stat-card .num{font-family:'DM Serif Display',serif;font-size:40px;color:var(--green-dark);line-height:1;margin-bottom:4px;}
+.stat-card .lbl{font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.5px;text-transform:uppercase;}
+.about-image{position:relative;border-radius:28px;overflow:hidden;background:linear-gradient(145deg,var(--white),var(--green-pale));border:1px solid var(--border2);height:480px;display:flex;align-items:center;justify-content:center;}
+.about-pattern{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,223,60,0.16) 1px,transparent 1px);background-size:24px 24px;}
+.about-cert-list{position:relative;z-index:2;display:flex;flex-direction:column;gap:12px;padding:30px;width:100%;}
+.cert-item{display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--border2);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow-card);transition:all .25s;}
+.cert-item:hover{border-color:var(--green);transform:translateX(6px);}
+.cert-icon{font-size:22px;}
+.cert-info b{display:block;font-size:14px;font-weight:700;color:var(--text-dark);}
+.cert-info span{font-size:12px;color:var(--text-muted);}
+.cert-check{margin-left:auto;width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0;}
+
+/* COAs */
+#coas{padding:100px 8%;background:var(--white);text-align:center;}
+.coa-header{margin-bottom:60px;}
+.coa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;text-align:left;}
+.coa-card{background:var(--off-white);border:1px solid var(--border);border-radius:20px;padding:36px 30px;transition:all .3s;}
+.coa-card:hover{border-color:var(--green-border);transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.coa-icon{font-size:28px;margin-bottom:14px;}
+.coa-num{font-family:'DM Serif Display',serif;font-size:56px;color:var(--green-pale2);line-height:1;margin-bottom:-8px;}
+.coa-card h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--text-dark);margin-bottom:10px;}
+.coa-card p{font-size:14px;color:var(--text-muted);line-height:1.8;}
+
+/* TESTIMONIALS */
+.testimonials{padding:100px 8%;background:var(--off-white);}
+.test-header{text-align:center;margin-bottom:56px;}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.test-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:32px 28px;box-shadow:var(--shadow-card);transition:all .3s;}
+.test-card:hover{border-color:var(--green-border);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.quote-mark{font-family:'DM Serif Display',serif;font-size:72px;color:var(--green-pale2);line-height:.8;margin-bottom:12px;}
+.test-stars{color:var(--green-dark);font-size:15px;letter-spacing:2px;margin-bottom:14px;}
+.test-text{font-size:14px;color:var(--text-body);line-height:1.8;margin-bottom:24px;font-style:italic;}
+.test-author{display:flex;align-items:center;gap:14px;}
+.author-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-mid));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;}
+.author-av.b{background:linear-gradient(135deg,#14b82f,#0a8a22);}
+.author-av.c{background:linear-gradient(135deg,#22c94a,#18a838);}
+.author-info b{display:block;font-size:14px;font-weight:700;color:var(--text-dark);}
+.author-info span{font-size:12px;color:var(--text-muted);}
+
+/* DIFFERENT */
+#different{padding:100px 8%;background:var(--white);}
+.diff-header{text-align:center;margin-bottom:60px;}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.diff-card{border:1px solid var(--border);border-radius:20px;padding:38px 30px;transition:all .3s;background:var(--off-white);position:relative;overflow:hidden;}
+.diff-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green-mid));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.diff-card:hover::after{transform:scaleX(1);}
+.diff-card:hover{border-color:var(--green-border);transform:translateY(-6px);box-shadow:var(--shadow-lg);background:var(--white);}
+.diff-icon{width:52px;height:52px;border-radius:14px;background:var(--green-pale);border:1px solid var(--green-border);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px;}
+.diff-step{font-family:'DM Serif Display',serif;font-size:40px;color:var(--green-pale2);line-height:1;margin-bottom:6px;}
+.diff-card h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:12px;}
+.diff-card p{font-size:14px;color:var(--text-muted);line-height:1.8;}
+
+/* FOOTER */
+footer{background:var(--text-dark);color:var(--text-light);padding:70px 8% 30px;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;margin-bottom:50px;}
+.footer-brand p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.4);margin:18px 0 24px;max-width:280px;}
+.footer-logo-light{display:flex;align-items:center;gap:10px;}
+.lml{background:var(--green);border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;}
+.ltl b{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:#fff;display:block;}
+.ltl small{font-size:9px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;}
+.social-row{display:flex;gap:10px;}
+.social-btn{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:14px;text-decoration:none;transition:all .2s;}
+.social-btn:hover{border-color:var(--green);color:var(--green);background:rgba(26,223,60,.1);}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:20px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:10px;}
+.footer-col ul li a{font-size:14px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--green);}
+.fci{display:flex;gap:10px;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:12px;align-items:flex-start;}
+.fci .ci{color:var(--green);font-size:15px;flex-shrink:0;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,.3);}
+.footer-certs{display:flex;gap:8px;}
+.fcert{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green);border:1px solid rgba(26,223,60,.3);padding:5px 12px;border-radius:6px;background:rgba(26,223,60,.07);}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  #home{grid-template-columns:1fr;}
+  .hero-right{padding:10px 8% 40px;}
+  .hero-products-grid{max-width:100%;grid-template-columns:repeat(4,1fr);}
+  .hero-product-card.wide{grid-column:1/-1;}
+  #rnd,#about{grid-template-columns:1fr;gap:40px;}
+  .rnd-visual,.about-image{height:300px;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hero-left{padding:40px 6%;}
+  .hero-products-grid{grid-template-columns:1fr 1fr;}
+  .hero-product-card.wide{grid-column:1/-1;}
+  .contact-form{grid-template-columns:1fr;}
+  .form-group.full,.btn-submit{grid-column:1;}
+  .badge-strip-inner{flex-direction:column;}
+  .badge-item{border-right:none;border-bottom:1px solid var(--border);}
+  .test-grid,.diff-grid,.coa-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .about-stats{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#home" class="nav-logo">
+    <div class="logo-mark">AM</div>
+    <div class="logo-text">
+      <b>Apex Manufacturing</b>
+      <small>Research Compounds</small>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#catalog">Browse Catalog</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#coas">COAs</a></li>
+    <li class="nav-dropdown">
+      <a href="#different">What Makes Us Different</a>
+      <div class="nav-dropdown-menu">
+        <a href="#rnd">Research &amp; Development</a>
+        <a href="#different">Quality Control</a>
+        <a href="#catalog">Diverse Product Selection</a>
+      </div>
+    </li>
+    <li><a href="#contact-form" class="btn-quote">Get A Quote Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-dots"></div>
+  <div class="hero-blob"></div>
+
+  <div class="hero-left">
+    <div class="hero-tag"><span class="dot"></span> USA-Based Manufacturer</div>
+    <h1 class="hero-title">High Quality<br><em>Peptides</em> &amp;<br>SARMs</h1>
+    <p class="hero-sub">Apex Manufacturing delivers precision-grade research compounds — 3rd-party verified, USA-made, and shipped with unmatched speed and transparency.</p>
+    <div class="promo-pill">
+      <span class="pico">🏷️</span>
+      <div>
+        <div class="pbig">15% Off First Order!</div>
+        <div class="psub">Exclusive welcome discount for first-time customers</div>
+      </div>
+    </div>
+    <div class="hero-ctas">
+      <a href="#catalog" class="btn-primary">🛒 Shop Products</a>
+      <a href="#contact-form" class="btn-secondary">Get a Quote →</a>
+    </div>
+  </div>
+
+  <!-- Hero mini product shelf -->
+  <div class="hero-right">
+    <div class="hero-products-grid">
+      <!-- Featured wide card -->
+      <div class="hero-product-card wide">
+        <span class="hpc-badge">⭐ Best Seller</span>
+        <div class="hpc-img">
+          <svg width="65" height="180" viewBox="0 0 70 195">
+            <defs>
+              <linearGradient id="hv1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="50%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient>
+              <linearGradient id="hvl" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1adf3c" stop-opacity=".35"/><stop offset="100%" stop-color="#0faa2a" stop-opacity=".55"/></linearGradient>
+            </defs>
+            <rect x="9" y="36" width="52" height="150" rx="6" fill="url(#hv1)" stroke="#b5debb" stroke-width="1.5"/>
+            <rect x="9" y="110" width="52" height="76" rx="6" fill="url(#hvl)"/>
+            <line x1="9" y1="110" x2="61" y2="110" stroke="#1adf3c" stroke-width="1" stroke-opacity=".5"/>
+            <rect x="9" y="26" width="52" height="13" rx="2" fill="#e2f4e6" stroke="#c5e3c8" stroke-width="1"/>
+            <ellipse cx="35" cy="16" rx="20" ry="13" fill="#c5e3c8" stroke="#a8d6ad" stroke-width="1.5"/>
+            <ellipse cx="35" cy="12" rx="13" ry="8" fill="#1adf3c" fill-opacity=".45"/>
+            <rect x="16" y="40" width="7" height="140" rx="3.5" fill="white" fill-opacity=".5"/>
+            <line x1="61" y1="90" x2="67" y2="90" stroke="#a8d6ad" stroke-width="1"/>
+            <line x1="61" y1="120" x2="67" y2="120" stroke="#a8d6ad" stroke-width="1"/>
+            <line x1="61" y1="150" x2="67" y2="150" stroke="#a8d6ad" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="hpc-info">
+          <h4>Peptide Vials</h4>
+          <p>Lyophilized &amp; liquid research-grade peptide preparations. 99%+ purity, COA included.</p>
+          <span class="hprice">From $49 <small style="font-size:13px;color:var(--text-muted);font-weight:500;">/vial</small></span>
+        </div>
+      </div>
+
+      <!-- Capsule -->
+      <div class="hero-product-card">
+        <svg width="64" height="140" viewBox="0 0 85 175">
+          <defs><linearGradient id="hc1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="60%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient></defs>
+          <rect x="20" y="0" width="45" height="30" rx="9" fill="#b5debb" stroke="#9dd4a2" stroke-width="1.2"/>
+          <rect x="10" y="33" width="65" height="135" rx="12" fill="url(#hc1)" stroke="#c5e3c8" stroke-width="1.5"/>
+          <rect x="19" y="46" width="11" height="114" rx="5.5" fill="white" fill-opacity=".45"/>
+        </svg>
+        <div class="sm-card-name">Capsules</div>
+        <div class="sm-card-sub">Precision-dosed formulations</div>
+        <div class="sm-card-price">From $39</div>
+        <button class="mini-btn" style="margin-top:8px;">Quote →</button>
+      </div>
+
+      <!-- Nasal Spray -->
+      <div class="hero-product-card">
+        <svg width="55" height="140" viewBox="0 0 68 175">
+          <defs><linearGradient id="hn1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="60%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient></defs>
+          <rect x="29" y="0" width="10" height="24" rx="5" fill="#1adf3c" fill-opacity=".65"/>
+          <rect x="17" y="22" width="34" height="22" rx="7" fill="#e2f4e6" stroke="#c5e3c8" stroke-width="1"/>
+          <rect x="8" y="46" width="52" height="126" rx="14" fill="url(#hn1)" stroke="#c5e3c8" stroke-width="1.5"/>
+          <rect x="16" y="58" width="10" height="105" rx="5" fill="white" fill-opacity=".4"/>
+          <circle cx="34" cy="-10" r="2.5" fill="#1adf3c" fill-opacity=".5"/>
+          <circle cx="24" cy="-16" r="1.5" fill="#1adf3c" fill-opacity=".35"/>
+          <circle cx="44" cy="-15" r="1.8" fill="#1adf3c" fill-opacity=".42"/>
+        </svg>
+        <div class="sm-card-name">Nasal Sprays</div>
+        <div class="sm-card-sub">Rapid absorption delivery</div>
+        <div class="sm-card-price">From $44</div>
+        <button class="mini-btn" style="margin-top:8px;">Quote →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-band" id="contact-form">
+    <div class="form-inner">
+      <div class="form-head">
+        <h2>Have <span>Apex Manufacturing</span><br>Help My Research Company Now!</h2>
+        <p>Fill out the form — our team responds within 24 hours with a custom quote.</p>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="John" required></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith" required></div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@researchlab.com" required></div>
+        <div class="form-group"><label>Research Company Name</label><input type="text" placeholder="Your Research Organization" required></div>
+        <div class="form-group full"><label>Description of Needs</label><textarea placeholder="Tell us about your research requirements, compounds of interest, quantities, and formulation needs…" required></textarea></div>
+        <button type="submit" class="btn-submit">🚀 Submit &amp; Get My Custom Quote</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- BADGE STRIP -->
+<div class="badge-strip">
+  <div class="badge-strip-inner">
+    <div class="badge-item"><div class="badge-icon-wrap">🇺🇸</div><div class="badge-text"><b>Made in the USA</b><small>Domestic manufacturing</small></div></div>
+    <div class="badge-item"><div class="badge-icon-wrap">⚡</div><div class="badge-text"><b>Lightning Turnaround</b><small>Industry-leading speed</small></div></div>
+    <div class="badge-item"><div class="badge-icon-wrap">🔬</div><div class="badge-text"><b>3rd Party Tested</b><small>Verified COAs every batch</small></div></div>
+    <div class="badge-item"><div class="badge-icon-wrap">🧬</div><div class="badge-text"><b>Diverse Products</b><small>Peptides, SARMs &amp; more</small></div></div>
+    <div class="badge-item"><div class="badge-icon-wrap">💰</div><div class="badge-text"><b>Competitive Pricing</b><small>Affordable research solutions</small></div></div>
+  </div>
+</div>
+
+<!-- CATALOG / SHOP -->
+<section id="catalog">
+  <div class="catalog-top">
+    <div>
+      <span class="eyebrow">Product Catalog</span>
+      <h2 class="section-title">Browse Our <em>Shop</em></h2>
+    </div>
+    <div class="catalog-filters">
+      <button class="filter-btn active" onclick="filterProducts(this,'all')">All Products</button>
+      <button class="filter-btn" onclick="filterProducts(this,'peptide')">Peptides</button>
+      <button class="filter-btn" onclick="filterProducts(this,'sarm')">SARMs</button>
+      <button class="filter-btn" onclick="filterProducts(this,'delivery')">Delivery Forms</button>
+    </div>
+  </div>
+  <div class="products-grid">
+
+    <!-- Peptide Vial -->
+    <div class="product-card" data-cat="peptide">
+      <div class="product-img-wrap">
+        <span class="product-badge-tag tag-popular">Popular</span>
+        <svg width="72" height="200" viewBox="0 0 72 210">
+          <defs><linearGradient id="pv1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="50%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient><linearGradient id="pvl" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1adf3c" stop-opacity=".3"/><stop offset="100%" stop-color="#0faa2a" stop-opacity=".5"/></linearGradient></defs>
+          <rect x="9" y="38" width="54" height="162" rx="7" fill="url(#pv1)" stroke="#b5debb" stroke-width="1.5"/>
+          <rect x="9" y="118" width="54" height="82" rx="7" fill="url(#pvl)"/>
+          <line x1="9" y1="118" x2="63" y2="118" stroke="#1adf3c" stroke-width="1" stroke-opacity=".5"/>
+          <rect x="9" y="28" width="54" height="14" rx="2" fill="#e2f4e6" stroke="#c5e3c8" stroke-width="1"/>
+          <ellipse cx="36" cy="18" rx="21" ry="14" fill="#c5e3c8" stroke="#a8d6ad" stroke-width="1.5"/>
+          <ellipse cx="36" cy="13" rx="14" ry="9" fill="#1adf3c" fill-opacity=".45"/>
+          <rect x="17" y="44" width="8" height="150" rx="4" fill="white" fill-opacity=".5"/>
+          <line x1="63" y1="96" x2="69" y2="96" stroke="#a8d6ad" stroke-width="1"/>
+          <line x1="63" y1="130" x2="69" y2="130" stroke="#a8d6ad" stroke-width="1"/>
+          <line x1="63" y1="162" x2="69" y2="162" stroke="#a8d6ad" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <h3>Research Peptide Vial</h3>
+        <div class="product-stars"><span class="stars">★★★★★</span><span class="review-count">(148)</span></div>
+        <p class="product-meta">Lyophilized &amp; liquid peptide preparations. 99%+ purity. Sterile, COA included with every order.</p>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">From $49 <small>/vial</small></div>
+        <button class="btn-add">🛒 Quote</button>
+      </div>
+    </div>
+
+    <!-- Nasal Spray -->
+    <div class="product-card" data-cat="delivery">
+      <div class="product-img-wrap">
+        <span class="product-badge-tag tag-new">New</span>
+        <svg width="70" height="200" viewBox="0 0 70 210">
+          <defs><linearGradient id="ns1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="60%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient></defs>
+          <rect x="30" y="0" width="10" height="28" rx="5" fill="#1adf3c" fill-opacity=".65"/>
+          <rect x="17" y="26" width="36" height="25" rx="8" fill="#e2f4e6" stroke="#c5e3c8" stroke-width="1"/>
+          <rect x="8" y="53" width="54" height="150" rx="15" fill="url(#ns1)" stroke="#c5e3c8" stroke-width="1.5"/>
+          <rect x="17" y="66" width="11" height="128" rx="5.5" fill="white" fill-opacity=".4"/>
+          <circle cx="35" cy="-12" r="2.8" fill="#1adf3c" fill-opacity=".5"/>
+          <circle cx="24" cy="-19" r="1.6" fill="#1adf3c" fill-opacity=".35"/>
+          <circle cx="46" cy="-18" r="2" fill="#1adf3c" fill-opacity=".42"/>
+          <circle cx="18" cy="-10" r="1.2" fill="#1adf3c" fill-opacity=".27"/>
+          <circle cx="53" cy="-13" r="1.4" fill="#1adf3c" fill-opacity=".3"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <h3>Nasal Spray Formula</h3>
+        <div class="product-stars"><span class="stars">★★★★★</span><span class="review-count">(92)</span></div>
+        <p class="product-meta">Bioavailable nasal delivery systems for rapid compound absorption. Custom concentrations available.</p>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">From $44 <small>/bottle</small></div>
+        <button class="btn-add">🛒 Quote</button>
+      </div>
+    </div>
+
+    <!-- Capsule Bottle -->
+    <div class="product-card" data-cat="delivery">
+      <div class="product-img-wrap">
+        <span class="product-badge-tag tag-hot">Hot</span>
+        <svg width="88" height="200" viewBox="0 0 88 210">
+          <defs><linearGradient id="cb1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="60%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient></defs>
+          <rect x="22" y="0" width="44" height="36" rx="10" fill="#b5debb" stroke="#9dd4a2" stroke-width="1.2"/>
+          <rect x="29" y="8" width="30" height="5" rx="2.5" fill="white" fill-opacity=".5"/>
+          <rect x="10" y="39" width="68" height="164" rx="13" fill="url(#cb1)" stroke="#c5e3c8" stroke-width="1.5"/>
+          <rect x="20" y="54" width="12" height="140" rx="6" fill="white" fill-opacity=".44"/>
+          <ellipse cx="44" cy="203" rx="34" ry="7" fill="#1adf3c" fill-opacity=".08"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <h3>Capsule Formulations</h3>
+        <div class="product-stars"><span class="stars">★★★★★</span><span class="review-count">(204)</span></div>
+        <p class="product-meta">Precision-dosed capsules for reliable research administration. Multiple sizes and compounds.</p>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">From $39 <small>/bottle</small></div>
+        <button class="btn-add">🛒 Quote</button>
+      </div>
+    </div>
+
+    <!-- Transdermal -->
+    <div class="product-card" data-cat="delivery">
+      <div class="product-img-wrap">
+        <svg width="82" height="200" viewBox="0 0 82 210">
+          <defs><linearGradient id="td1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="55%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient></defs>
+          <ellipse cx="41" cy="20" rx="32" ry="20" fill="#e2f4e6" stroke="#c5e3c8" stroke-width="1.5"/>
+          <ellipse cx="41" cy="14" rx="24" ry="13" fill="#1adf3c" fill-opacity=".2"/>
+          <rect x="34" y="36" width="14" height="12" rx="4" fill="#1adf3c" fill-opacity=".55"/>
+          <rect x="9" y="50" width="64" height="154" rx="14" fill="url(#td1)" stroke="#c5e3c8" stroke-width="1.5"/>
+          <rect x="19" y="64" width="11" height="130" rx="5.5" fill="white" fill-opacity=".42"/>
+          <ellipse cx="41" cy="204" rx="32" ry="7" fill="#1adf3c" fill-opacity=".08"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <h3>Transdermal Cream</h3>
+        <div class="product-stars"><span class="stars">★★★★☆</span><span class="review-count">(67)</span></div>
+        <p class="product-meta">Topical transdermal formulations for targeted systemic delivery through the skin barrier.</p>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">From $54 <small>/pump</small></div>
+        <button class="btn-add">🛒 Quote</button>
+      </div>
+    </div>
+
+    <!-- SARM Capsules -->
+    <div class="product-card" data-cat="sarm">
+      <div class="product-img-wrap">
+        <span class="product-badge-tag tag-popular">Top Rated</span>
+        <svg width="80" height="200" viewBox="0 0 80 210">
+          <defs><linearGradient id="sc1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="60%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient></defs>
+          <rect x="18" y="0" width="44" height="35" rx="10" fill="#a8d6ad" stroke="#8ec994" stroke-width="1.2"/>
+          <rect x="10" y="38" width="60" height="165" rx="12" fill="url(#sc1)" stroke="#c5e3c8" stroke-width="1.5"/>
+          <rect x="19" y="52" width="10" height="143" rx="5" fill="white" fill-opacity=".45"/>
+          <rect x="26" y="88" width="28" height="14" rx="7" fill="#1adf3c" fill-opacity=".18"/>
+          <rect x="26" y="112" width="28" height="14" rx="7" fill="#1adf3c" fill-opacity=".13"/>
+          <rect x="26" y="136" width="28" height="14" rx="7" fill="#1adf3c" fill-opacity=".09"/>
+          <ellipse cx="40" cy="203" rx="30" ry="6" fill="#1adf3c" fill-opacity=".08"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <h3>SARM Capsules</h3>
+        <div class="product-stars"><span class="stars">★★★★★</span><span class="review-count">(311)</span></div>
+        <p class="product-meta">Selective Androgen Receptor Modulators — verified purity profiles, multiple compounds available.</p>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">From $59 <small>/bottle</small></div>
+        <button class="btn-add">🛒 Quote</button>
+      </div>
+    </div>
+
+    <!-- Custom Blend -->
+    <div class="product-card" data-cat="peptide sarm">
+      <div class="product-img-wrap">
+        <span class="product-badge-tag tag-new">Custom</span>
+        <svg width="74" height="200" viewBox="0 0 74 210">
+          <defs><linearGradient id="bl1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d0f9da"/><stop offset="60%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#c5e3c8"/></linearGradient></defs>
+          <path d="M29 12 L45 12 L45 72 L65 158 Q67 178 37 183 Q7 178 9 158 L29 72 Z" fill="url(#bl1)" stroke="#c5e3c8" stroke-width="1.5"/>
+          <path d="M31 95 L43 95 L61 158 Q63 173 37 176 Q11 173 13 158 Z" fill="#1adf3c" fill-opacity=".22"/>
+          <rect x="27" y="0" width="20" height="16" rx="4" fill="#e2f4e6" stroke="#c5e3c8" stroke-width="1"/>
+          <path d="M31 12 L31 72" stroke="white" stroke-width="8" stroke-opacity=".3" stroke-linecap="round"/>
+          <circle cx="29" cy="138" r="4.5" fill="#1adf3c" fill-opacity=".3"/>
+          <circle cx="43" cy="156" r="3.5" fill="#1adf3c" fill-opacity=".25"/>
+          <circle cx="36" cy="168" r="2.5" fill="#1adf3c" fill-opacity=".2"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <h3>Custom Blends</h3>
+        <div class="product-stars"><span class="stars">★★★★★</span><span class="review-count">(58)</span></div>
+        <p class="product-meta">Bespoke compound combinations tailored to your exact research protocol and specifications.</p>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">Custom</div>
+        <button class="btn-add">🛒 Get Quote</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- R&D -->
+<section id="rnd">
+  <div class="rnd-visual">
+    <div class="rnd-tag"><span>🔬</span> HPLC Verified</div>
+    <div class="rnd-tag"><span>⚗️</span> GMP Standards</div>
+    <div class="rnd-tag"><span>📊</span> Full Documentation</div>
+    <div class="rnd-tag"><span>🧬</span> Novel Formulations</div>
+    <div class="rnd-center">
+      <div class="rnd-hex">🔭</div>
+      <p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;">R&amp;D Lab</p>
+    </div>
+  </div>
+  <div>
+    <span class="eyebrow">Our Commitment</span>
+    <h2 class="section-title">Groundbreaking<br><em>Research &amp; Dev</em></h2>
+    <p class="section-body">At Apex Manufacturing, we invest heavily in R&amp;D to push the boundaries of research compound synthesis. Our PhD-level scientists continuously refine formulations and explore novel delivery mechanisms.</p>
+    <div class="rnd-cards-list">
+      <div class="rnd-card"><div class="rnd-card-icon">🧪</div><div><h4>Advanced Synthesis</h4><p>Cutting-edge peptide and SARM synthesis protocols developed entirely in-house.</p></div></div>
+      <div class="rnd-card"><div class="rnd-card-icon">📊</div><div><h4>Data-Driven Quality Control</h4><p>Every batch validated against strict purity benchmarks with full traceability.</p></div></div>
+      <div class="rnd-card"><div class="rnd-card-icon">⚗️</div><div><h4>GMP Manufacturing</h4><p>Good Manufacturing Practice protocols at every single step of production.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div>
+    <span class="eyebrow">Who We Are</span>
+    <h2 class="section-title">About <em>Apex</em></h2>
+    <p class="section-body">Apex Manufacturing was founded on one mission: provide research organizations with the highest quality compounds available — manufactured domestically, tested rigorously, and delivered with speed and transparency the industry has never seen.</p>
+    <p class="section-body" style="margin-top:14px;">We are not a broker or middleman. Every compound is synthesized, formulated, tested, and shipped from our USA facility — giving you total confidence in provenance and purity.</p>
+    <div class="about-stats">
+      <div class="stat-card"><div class="num">99%+</div><div class="lbl">Purity Guarantee</div></div>
+      <div class="stat-card"><div class="num">48hr</div><div class="lbl">Avg Turnaround</div></div>
+      <div class="stat-card"><div class="num">100%</div><div class="lbl">USA Manufactured</div></div>
+      <div class="stat-card"><div class="num">3rd</div><div class="lbl">Party Verified</div></div>
+    </div>
+  </div>
+  <div class="about-image">
+    <div class="about-pattern"></div>
+    <div class="about-cert-list">
+      <div class="cert-item"><span class="cert-icon">🇺🇸</span><div class="cert-info"><b>Manufactured in USA</b><span>Domestic facility, full traceability</span></div><div class="cert-check">✓</div></div>
+      <div class="cert-item"><span class="cert-icon">🔬</span><div class="cert-info"><b>3rd Party Lab Tested</b><span>Independent verification every batch</span></div><div class="cert-check">✓</div></div>
+      <div class="cert-item"><span class="cert-icon">📋</span><div class="cert-info"><b>Certificate of Analysis</b><span>Full COA included with every order</span></div><div class="cert-check">✓</div></div>
+      <div class="cert-item"><span class="cert-icon">⚡</span><div class="cert-info"><b>Fast Turnaround</b><span>Industry-leading fulfillment speeds</span></div><div class="cert-check">✓</div></div>
+      <div class="cert-item"><span class="cert-icon">💊</span><div class="cert-info"><b>GMP Standards</b><span>Good Manufacturing Practice compliant</span></div><div class="cert-check">✓</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COAs -->
+<section id="coas">
+  <div class="coa-header">
+    <span class="eyebrow">Full Transparency</span>
+    <h2 class="section-title">Certificates of <em>Analysis</em></h2>
+    <p style="color:var(--text-muted);font-size:15px;max-width:520px;margin:0 auto;">Every Apex product ships with a 3rd-party Certificate of Analysis — full transparency on what's in every vial, capsule, and bottle.</p>
+  </div>
+  <div class="coa-grid">
+    <div class="coa-card"><div class="coa-icon">🧪</div><div class="coa-num">01</div><h3>Identity Verification</h3><p>Confirmed via HPLC, NMR, and mass spectrometry by accredited independent laboratories — every batch.</p></div>
+    <div class="coa-card"><div class="coa-icon">📊</div><div class="coa-num">02</div><h3>Purity Analysis</h3><p>Precise purity percentages documented for every batch. No guessing, no ambiguity — verifiable hard data.</p></div>
+    <div class="coa-card"><div class="coa-icon">🛡️</div><div class="coa-num">03</div><h3>Microbial Testing</h3><p>Tested for contaminants, heavy metals, and microbial presence to ensure research-safe product quality.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="test-header">
+    <span class="eyebrow">Social Proof</span>
+    <h2 class="section-title">What Researchers <em>Say</em></h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card"><div class="quote-mark">"</div><div class="test-stars">★★★★★</div><p class="test-text">Apex has completely transformed our procurement process. Purity levels are consistently above 99% and the COAs are always ready before we even ask. Turnaround is unmatched.</p><div class="test-author"><div class="author-av">DR</div><div class="author-info"><b>Dr. R. Mercer</b><span>Biotech Research Institute</span></div></div></div>
+    <div class="test-card"><div class="quote-mark">"</div><div class="test-stars">★★★★★</div><p class="test-text">We've sourced peptides from a dozen vendors. Apex is the only one I'd stake my research reputation on. Documentation is thorough and quality is genuinely elite.</p><div class="test-author"><div class="author-av b">KL</div><div class="author-info"><b>K. Larson, PhD</b><span>Advanced Sciences Lab</span></div></div></div>
+    <div class="test-card"><div class="quote-mark">"</div><div class="test-stars">★★★★★</div><p class="test-text">Fast shipping, incredible customer service, and the 15% first-order discount sealed the deal. We haven't looked back. This is what research supply should look like.</p><div class="test-author"><div class="author-av c">TN</div><div class="author-info"><b>T. Nguyen</b><span>Molecular Dynamics Research</span></div></div></div>
+  </div>
+</section>
+
+<!-- DIFFERENT -->
+<section id="different">
+  <div class="diff-header">
+    <span class="eyebrow">Our Edge</span>
+    <h2 class="section-title">What Makes Us <em>Different</em></h2>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-card"><div class="diff-icon">🔭</div><div class="diff-step">01</div><h3>Research &amp; Development</h3><p>Our in-house R&amp;D team continuously improves synthesis protocols, explores novel formulations, and ensures Apex remains at the forefront of research compound manufacturing.</p></div>
+    <div class="diff-card"><div class="diff-icon">🛡️</div><div class="diff-step">02</div><h3>Quality Control</h3><p>Triple-stage quality control — internal testing, third-party verification, and final review — ensures every order meets the strictest purity standards in the industry.</p></div>
+    <div class="diff-card"><div class="diff-icon">🧬</div><div class="diff-step">03</div><h3>Diverse Product Selection</h3><p>From lyophilized peptide vials to transdermal creams, nasal sprays to capsules — Apex covers every research administration route with one trusted source.</p></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-light">
+        <div class="lml">AM</div>
+        <div class="ltl"><b>Apex Manufacturing</b><small>Research Compounds</small></div>
+      </div>
+      <p>Delivering precision-grade research compounds — manufactured in the USA, 3rd-party tested, shipped with industry-leading speed and transparency.</p>
+      <div class="social-row">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">📧</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#catalog">Browse Catalog</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#coas">COAs</a></li>
+        <li><a href="#different">What Makes Us Different</a></li>
+        <li><a href="#contact-form">Get A Quote</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a href="#catalog">Peptide Vials</a></li>
+        <li><a href="#catalog">SARMs</a></li>
+        <li><a href="#catalog">Nasal Sprays</a></li>
+        <li><a href="#catalog">Capsules</a></li>
+        <li><a href="#catalog">Transdermal</a></li>
+        <li><a href="#catalog">Custom Blends</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="fci"><span class="ci">📍</span><span>United States of America</span></div>
+      <div class="fci"><span class="ci">📧</span><span>info@apexmanufacturing.com</span></div>
+      <div class="fci"><span class="ci">⏱️</span><span>Mon–Fri: 9am – 6pm EST</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Apex Manufacturing. All rights reserved. For research purposes only.</p>
+    <div class="footer-certs"><span class="fcert">USA Made</span><span class="fcert">3rd Party Tested</span><span class="fcert">Research Grade</span></div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>40);
+  });
+
+  function handleSubmit(e){
+    e.preventDefault();
+    const btn=e.target.querySelector('.btn-submit');
+    btn.textContent='✅ Submitted! We\'ll be in touch within 24 hours.';
+    btn.style.background='var(--green-dark)';btn.style.cursor='default';
+    e.target.querySelectorAll('input,textarea').forEach(el=>el.disabled=true);
+  }
+
+  function filterProducts(btn,cat){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card=>{
+      const c=card.dataset.cat||'';
+      card.style.display=(cat==='all'||c.includes(cat))?'block':'none';
+    });
+  }
+
+  document.querySelectorAll('.btn-add,.mini-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      const o=this.textContent;
+      this.textContent='✅ Added!';
+      this.style.background='var(--green-dark)';
+      if(this.classList.contains('btn-add')) this.style.color='#fff';
+      setTimeout(()=>{this.textContent=o;this.style.background='';this.style.color='';},1800);
+    });
+  });
+
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
+  },{threshold:.1});
+
+  document.querySelectorAll('.product-card,.rnd-card,.coa-card,.test-card,.diff-card,.stat-card,.cert-item,.hero-product-card,.badge-item').forEach(el=>{
+    el.style.opacity='0';el.style.transform='translateY(18px)';
+    el.style.transition='opacity .55s ease,transform .55s ease,border-color .3s,background .3s,box-shadow .3s';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
