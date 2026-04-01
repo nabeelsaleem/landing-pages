@@ -1,717 +1,746 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daity - Intelligent Airline Operations</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAITY OS — Carry-On Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  :root {
+    /* Enterprise SaaS Color Palette (Light Mode) */
+    --bg-canvas: #F8FAFC; /* Slate 50 */
+    --bg-surface: #FFFFFF;
+    --border-color: #E2E8F0; /* Slate 200 */
+    --border-light: #F1F5F9;
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    --text-primary: #0F172A; /* Slate 900 */
+    --text-secondary: #475569; /* Slate 600 */
+    --text-tertiary: #94A3B8; /* Slate 400 */
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    --brand-primary: #4F46E5; /* Indigo 600 */
+    --brand-passenger: #0EA5E9; /* Sky 500 */
+    --brand-ai: #8B5CF6; /* Violet 500 */
+    --brand-warning: #EF4444; /* Red 500 */
+    --brand-success: #10B981; /* Emerald 500 */
     
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     
-    <!-- Vanilla Tilt for 3D Cards -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 8px;
+  }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            dark: '#030305',
-                            card: '#0F0F13',
-                            primary: '#6366f1',
-                            secondary: '#a855f7',
-                        }
-                    },
-                    animation: {
-                        'blob': 'blob 7s infinite',
-                        'spin-slow': 'spin 12s linear infinite',
-                    },
-                    keyframes: {
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <style>
-        body {
-            background-color: #030305;
-            color: #ffffff;
-            overflow-x: hidden;
-            cursor: default;
-        }
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-        /* Advanced Grid Background */
-        .grid-bg {
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-        }
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
 
-        /* Spotlight Effect Variables */
-        .spotlight-card {
-            --mouse-x: 50%;
-            --mouse-y: 50%;
-            --spotlight-color: rgba(99, 102, 241, 0.15);
-            position: relative;
-            background: linear-gradient(rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-        }
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
 
-        .spotlight-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
+  /* ─── LAYOUT SHELL ─── */
+  .app-layout {
+    display: flex;
+    min-height: 100vh;
+  }
 
-        .spotlight-card:hover::before {
-            opacity: 1;
-        }
-        
-        .spotlight-card:hover {
-            border-color: rgba(99, 102, 241, 0.3);
-        }
+  /* ─── STICKY SIDEBAR (PIPELINE) ─── */
+  .sidebar {
+    width: 280px;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    background: var(--bg-canvas);
+    border-right: 1px solid var(--border-color);
+    padding: 40px 32px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
 
-        /* Text Mask Reveal */
-        .reveal-text {
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-        }
-        
-        .char {
-            display: inline-block;
-            transform-origin: 50% 100%;
-        }
+  .brand-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: -0.05em;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-logo svg { width: 24px; height: 24px; color: var(--brand-primary); }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030305; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+  .pipeline-tracker {
+    position: relative;
+    flex: 1;
+  }
 
-        /* Magnetic Button */
-        .magnetic-btn {
-            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        /* Image Gradients */
-        .img-overlay {
-            background: linear-gradient(to top, #030305 0%, transparent 100%);
-        }
+  /* The background track line */
+  .track-bg {
+    position: absolute;
+    left: 11px; top: 12px; bottom: 12px;
+    width: 2px;
+    background: var(--border-color);
+    z-index: 1;
+  }
 
-        .glass-nav {
-            background: rgba(3, 3, 5, 0.7);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-    </style>
+  /* The active fill line */
+  .track-fill {
+    position: absolute;
+    left: 11px; top: 12px;
+    width: 2px;
+    background: var(--brand-primary);
+    height: 0%;
+    z-index: 2;
+    transition: height 0.1s ease;
+  }
+
+  .nav-step {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 40px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .nav-step:hover { opacity: 0.8; }
+  .nav-step.active { opacity: 1; }
+
+  .step-indicator {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg-canvas);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .nav-step.active .step-indicator {
+    border-color: var(--brand-primary);
+    background: var(--brand-primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  }
+
+  .step-indicator::inner {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: transparent;
+  }
+  .nav-step.active .step-indicator::inner { background: #fff; }
+
+  .nav-label h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+  .nav-label p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ─── MAIN CONTENT AREA ─── */
+  .main-content {
+    margin-left: 280px;
+    flex: 1;
+    padding: 60px 80px;
+    max-width: 1200px;
+  }
+
+  .page-header {
+    margin-bottom: 80px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #EEF2FF;
+    color: var(--brand-primary);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  .page-title {
+    font-size: clamp(40px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .page-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 600px;
+  }
+
+  /* ─── BENTO BOX DASHBOARD GRID ─── */
+  .step-section {
+    margin-bottom: 120px;
+    padding-top: 40px; /* Offset for scroll anchors */
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .step-num-large {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--border-color);
+    line-height: 1;
+  }
+  .step-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+
+  /* Bento Cards */
+  .bento-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .bento-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .col-span-12 { grid-column: span 12; }
+  .col-span-8 { grid-column: span 8; }
+  .col-span-7 { grid-column: span 7; }
+  .col-span-6 { grid-column: span 6; }
+  .col-span-5 { grid-column: span 5; }
+  .col-span-4 { grid-column: span 4; }
+
+  /* Card Tags (Passenger vs AI) */
+  .card-tag {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .tag-passenger { background: #E0F2FE; color: var(--brand-passenger); }
+  .tag-ai { background: #F3E8FF; color: var(--brand-ai); }
+  .tag-ops { background: #F1F5F9; color: var(--text-secondary); }
+
+  .bento-icon {
+    width: 48px; height: 48px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-light);
+  }
+
+  .bento-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .bento-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  /* ─── UI MOCKUPS INSIDE CARDS ─── */
+  .ui-mockup {
+    margin-top: auto;
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 16px;
+  }
+
+  .ui-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .ui-row:last-child { border-bottom: none; padding-bottom: 0; }
+  
+  .ui-label { font-size: 13px; color: var(--text-secondary); font-weight: 500;}
+  .ui-value { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+
+  /* Code/JSON Block */
+  .code-block {
+    background: #0F172A;
+    border-radius: var(--radius-md);
+    padding: 20px;
+    color: #38BDF8;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+  .code-key { color: #818CF8; }
+  .code-string { color: #A7F3D0; }
+
+  /* Visual Data Blocks */
+  .data-visual {
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding-top: 20px;
+  }
+  .bar {
+    flex: 1;
+    background: #E2E8F0;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: var(--brand-ai);
+    border-radius: 4px 4px 0 0;
+  }
+  .bar-label {
+    position: absolute;
+    bottom: -24px; left: 0; right: 0;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  /* Warning Banner Mockup */
+  .alert-mockup {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .alert-icon { color: var(--brand-warning); font-size: 20px; }
+  .alert-title { font-size: 14px; font-weight: 600; color: #991B1B; margin-bottom: 4px;}
+  .alert-text { font-size: 13px; color: #B91C1C; }
+
+  /* Mobile Responsive */
+  @media (max-width: 1024px) {
+    .sidebar { display: none; }
+    .main-content { margin-left: 0; padding: 40px 24px; }
+    .col-span-5, .col-span-6, .col-span-7, .col-span-8 { grid-column: span 12; }
+  }
+
+</style>
 </head>
-<body class="antialiased selection:bg-indigo-500 selection:text-white">
+<body>
 
-    <!-- Ambient Background -->
-    <div class="fixed inset-0 grid-bg z-[-1] pointer-events-none"></div>
-    <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-indigo-600/20 rounded-full blur-[120px] animate-blob z-[-1]"></div>
-    <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-600/10 rounded-full blur-[120px] animate-blob animation-delay-2000 z-[-1]"></div>
+<div class="app-layout">
+  
+  <aside class="sidebar">
+    <div class="brand-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      DAITY OS
+    </div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <!-- Logo -->
-                <div class="flex items-center gap-3 cursor-pointer group">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:rotate-12 transition-transform duration-300">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight">Daity</span>
-                </div>
+    <div class="pipeline-tracker">
+      <div class="track-bg"></div>
+      <div class="track-fill" id="trackFill"></div>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#solutions" class="text-sm font-medium text-gray-400 hover:text-white transition-colors relative overflow-hidden group">
-                        <span class="relative z-10">Solutions</span>
-                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-indigo-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                    </a>
-                    <a href="#workflow" class="text-sm font-medium text-gray-400 hover:text-white transition-colors relative overflow-hidden group">
-                        <span class="relative z-10">Workflow</span>
-                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-indigo-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                    </a>
-                    <a href="#metrics" class="text-sm font-medium text-gray-400 hover:text-white transition-colors relative overflow-hidden group">
-                        <span class="relative z-10">Impact</span>
-                        <span class="absolute bottom-0 left-0 w-full h-[1px] bg-indigo-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                    </a>
-                </div>
-
-                <!-- CTA -->
-                <button class="magnetic-btn px-6 py-2.5 rounded-full bg-white text-black text-sm font-bold hover:bg-indigo-50 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                    Request Demo
-                </button>
-            </div>
+      <div class="nav-step active" data-target="step-1">
+        <div class="step-indicator"></div>
+        <div class="nav-label">
+          <h4>Identity & Ticketing</h4>
+          <p>Boarding Pass Scan</p>
         </div>
-    </nav>
+      </div>
 
-    <!-- Hero Section -->
-    <section class="relative pt-40 pb-20 lg:pt-52 lg:pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-            
-            <!-- Text Content -->
-            <div class="relative z-10">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in-up">
-                    <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                    AI-Powered Operations v2.0
-                </div>
-                
-                <h1 class="text-5xl lg:text-7xl font-bold leading-[1.1] mb-8 text-white">
-                    <span class="block reveal-wrapper">The Future of</span>
-                    <span class="block reveal-wrapper text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 animate-gradient-x">Airport Intelligence</span>
-                </h1>
-                
-                <p class="text-lg text-gray-400 mb-10 max-w-xl leading-relaxed reveal-text">
-                    Transform baggage handling, boarding efficiency, and revenue recovery with enterprise-grade computer vision.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-5">
-                    <button class="magnetic-btn px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group">
-                        Start Free Trial
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </button>
-                    <button class="magnetic-btn px-8 py-4 rounded-xl glass-panel text-white font-medium hover:bg-white/10 transition-all flex items-center justify-center gap-2 group">
-                        <div class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/50 transition-colors">
-                            <svg class="w-3 h-3 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
-                        View Case Study
-                    </button>
-                </div>
-            </div>
-
-            <!-- Hero Image / Dashboard -->
-            <div class="relative z-10 perspective-1000">
-                <!-- Decorative Elements behind image -->
-                <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl opacity-20 blur-2xl transform rotate-3"></div>
-                
-                <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl hero-image-container" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
-                    <!-- Real Image -->
-                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2574&auto=format&fit=crop" alt="Dashboard" class="w-full h-auto object-cover opacity-80">
-                    
-                    <!-- Overlay UI Elements -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                    
-                    <!-- Floating Badge -->
-                    <div class="absolute bottom-8 left-8 right-8 p-4 glass-panel rounded-xl backdrop-blur-md border border-white/10 transform translate-y-4 opacity-0 animate-float-up">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <div>
-                                <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">System Status</div>
-                                <div class="text-white font-bold">All Systems Operational</div>
-                            </div>
-                            <div class="ml-auto text-right">
-                                <div class="text-xs text-gray-400">Processing Speed</div>
-                                <div class="text-indigo-400 font-mono font-bold">42ms</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="nav-step" data-target="step-2">
+        <div class="step-indicator"></div>
+        <div class="nav-label">
+          <h4>Volumetric Analysis</h4>
+          <p>AI Capture Zone</p>
         </div>
+      </div>
+
+      <div class="nav-step" data-target="step-3">
+        <div class="step-indicator"></div>
+        <div class="nav-label">
+          <h4>Policy Validation</h4>
+          <p>Rules Engine Check</p>
+        </div>
+      </div>
+
+      <div class="nav-step" data-target="step-4">
+        <div class="step-indicator"></div>
+        <div class="nav-label">
+          <h4>Agent Resolution</h4>
+          <p>Gate Action Workflow</p>
+        </div>
+      </div>
+
+      <div class="nav-step" data-target="step-5">
+        <div class="step-indicator"></div>
+        <div class="nav-label">
+          <h4>Cabin Optimization</h4>
+          <p>Boarding Efficiency</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    
+    <header class="page-header">
+      <div class="badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Live Operations Dashboard
+      </div>
+      <h1 class="page-title">Carry-On Intelligence <br>Pipeline</h1>
+      <p class="page-subtitle">A seamless, data-driven workflow that transforms how airlines monitor and resolve carry-on baggage compliance in real time.</p>
+    </header>
+
+    <section class="step-section" id="step-1">
+      <div class="step-header">
+        <span class="step-num-large">01</span>
+        <h2>Identity & Ticketing Trigger</h2>
+      </div>
+      
+      <div class="bento-grid">
+        <div class="bento-card col-span-5 gsap-card">
+          <div class="card-tag tag-passenger">Passenger</div>
+          <div class="bento-icon">🎫</div>
+          <h3 class="bento-title">Boarding Pass Scan</h3>
+          <p class="bento-desc">The passenger scans their digital or physical boarding pass at the gate kiosk, initiating the workflow.</p>
+          
+          <div class="ui-mockup">
+            <div class="ui-row">
+              <span class="ui-label">Status</span>
+              <span class="ui-value" style="color: var(--brand-success);">Verified</span>
+            </div>
+            <div class="ui-row">
+              <span class="ui-label">Gate Kiosk</span>
+              <span class="ui-value mono">T5-G12</span>
+            </div>
+            <div class="ui-row">
+              <span class="ui-label">Time</span>
+              <span class="ui-value mono">08:42:15 AM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card col-span-7 gsap-card">
+          <div class="card-tag tag-ai">DAITY AI</div>
+          <div class="bento-icon">⚡</div>
+          <h3 class="bento-title">Profile Activation</h3>
+          <p class="bento-desc">The system instantly retrieves the passenger's PNR, links their identity, and loads their specific carry-on entitlements.</p>
+          
+          <div class="code-block mono">
+            <span class="code-key">"event"</span>: <span class="code-string">"SCAN_TRIGGER"</span>,<br>
+            <span class="code-key">"pnr"</span>: <span class="code-string">"X7BQ9P"</span>,<br>
+            <span class="code-key">"allowance"</span>: {<br>
+            &nbsp;&nbsp;<span class="code-key">"carry_on"</span>: <span class="code-string">1</span>,<br>
+            &nbsp;&nbsp;<span class="code-key">"personal_item"</span>: <span class="code-string">1</span>,<br>
+            &nbsp;&nbsp;<span class="code-key">"max_dim"</span>: <span class="code-string">"22x14x9 in"</span><br>
+            },<br>
+            <span class="code-key">"vision_session"</span>: <span class="code-string">"ACTIVE"</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Workflow / Solutions Section -->
-    <section id="workflow" class="py-24 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20">
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 reveal-text">One Platform. <span class="text-indigo-400">Infinite Scale.</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">Deploy AI models across your entire airport ecosystem with a single integration.</p>
+    <section class="step-section" id="step-2">
+      <div class="step-header">
+        <span class="step-num-large">02</span>
+        <h2>Volumetric Analysis</h2>
+      </div>
+      
+      <div class="bento-grid">
+        <div class="bento-card col-span-7 gsap-card">
+          <div class="card-tag tag-ai">DAITY AI</div>
+          <div class="bento-icon">👁️</div>
+          <h3 class="bento-title">Multi-Angle Vision Capture</h3>
+          <p class="bento-desc">As the passenger walks through the zone, computer vision models isolate, count, and measure each bag in real-time.</p>
+          
+          <div class="ui-mockup" style="display: flex; gap: 12px; border:none; padding:0; background:transparent;">
+            <div style="flex:1; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; background: #fff;">
+               <div style="font-size: 11px; color: var(--text-tertiary); margin-bottom: 8px; text-transform: uppercase;">Item 01</div>
+               <div class="ui-value">Rolling Suitcase</div>
+               <div class="ui-label mono" style="margin-top:4px;">24" x 15" x 10"</div>
             </div>
-
-            <div class="grid lg:grid-cols-12 gap-8">
-                <!-- Sidebar Tabs -->
-                <div class="lg:col-span-4 flex flex-col gap-4">
-                    <button class="workflow-tab active group relative p-6 rounded-2xl glass-panel text-left transition-all duration-300 hover:bg-white/5 border border-white/5 hover:border-indigo-500/30" data-target="content-1">
-                        <div class="flex items-center gap-4 relative z-10">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">Baggage Detection</h3>
-                                <p class="text-sm text-gray-500">Real-time tracking</p>
-                            </div>
-                        </div>
-                    </button>
-                    
-                    <button class="workflow-tab group relative p-6 rounded-2xl glass-panel text-left transition-all duration-300 hover:bg-white/5 border border-white/5 hover:border-purple-500/30" data-target="content-2">
-                        <div class="flex items-center gap-4 relative z-10">
-                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">Boarding Flow</h3>
-                                <p class="text-sm text-gray-500">Queue management</p>
-                            </div>
-                        </div>
-                    </button>
-
-                    <button class="workflow-tab group relative p-6 rounded-2xl glass-panel text-left transition-all duration-300 hover:bg-white/5 border border-white/5 hover:border-blue-500/30" data-target="content-3">
-                        <div class="flex items-center gap-4 relative z-10">
-                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">Revenue Recovery</h3>
-                                <p class="text-sm text-gray-500">Overweight & Oversize</p>
-                            </div>
-                        </div>
-                    </button>
-                </div>
-
-                <!-- Content Area -->
-                <div class="lg:col-span-8 relative min-h-[500px]">
-                    <!-- Content 1 -->
-                    <div class="workflow-content absolute inset-0" id="content-1">
-                        <div class="h-full glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden group">
-                            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                            
-                            <div class="grid md:grid-cols-2 gap-8 h-full relative z-10">
-                                <div>
-                                    <h3 class="text-3xl font-bold mb-4">Automated Baggage Handling</h3>
-                                    <p class="text-gray-400 mb-6">Identify baggage tags and container IDs instantly using high-speed OCR, reducing manual scanning errors by 99%.</p>
-                                    
-                                    <div class="space-y-4">
-                                        <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                                            <div class="text-indigo-400 font-bold text-xl">99.8%</div>
-                                            <div class="text-sm text-gray-400">OCR Accuracy</div>
-                                        </div>
-                                        <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                                            <div class="text-indigo-400 font-bold text-xl">-15min</div>
-                                            <div class="text-sm text-gray-400">Loading Time</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10 h-64 md:h-auto transform group-hover:scale-[1.02] transition-transform duration-500">
-                                    <img src="https://images.unsplash.com/photo-1570710891163-6d3b9c437973?q=80&w=2670&auto=format&fit=crop" class="w-full h-full object-cover" alt="Baggage">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                                    <div class="absolute bottom-4 left-4">
-                                        <div class="text-xs font-mono text-indigo-300 mb-1">ANALYSIS ACTIVE</div>
-                                        <div class="text-sm font-bold text-white">Bag ID: #8821-X</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content 2 -->
-                    <div class="workflow-content absolute inset-0 opacity-0 pointer-events-none" id="content-2">
-                        <div class="h-full glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden group">
-                            <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                            
-                            <div class="grid md:grid-cols-2 gap-8 h-full relative z-10">
-                                <div>
-                                    <h3 class="text-3xl font-bold mb-4">Smart Boarding Gates</h3>
-                                    <p class="text-gray-400 mb-6">Analyze passenger flow and queue density to optimize boarding sequences and reduce gate congestion.</p>
-                                    
-                                    <div class="space-y-4">
-                                        <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                                            <div class="text-purple-400 font-bold text-xl">30%</div>
-                                            <div class="text-sm text-gray-400">Faster Boarding</div>
-                                        </div>
-                                        <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                                            <div class="text-purple-400 font-bold text-xl">Zero</div>
-                                            <div class="text-sm text-gray-400">Manual Counting</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10 h-64 md:h-auto transform group-hover:scale-[1.02] transition-transform duration-500">
-                                    <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=2670&auto=format&fit=crop" class="w-full h-full object-cover" alt="Boarding">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                                    <div class="absolute bottom-4 left-4">
-                                        <div class="text-xs font-mono text-purple-300 mb-1">HEATMAP ACTIVE</div>
-                                        <div class="text-sm font-bold text-white">Density: High</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content 3 -->
-                    <div class="workflow-content absolute inset-0 opacity-0 pointer-events-none" id="content-3">
-                        <div class="h-full glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden group">
-                            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                            
-                            <div class="grid md:grid-cols-2 gap-8 h-full relative z-10">
-                                <div>
-                                    <h3 class="text-3xl font-bold mb-4">Revenue Recovery</h3>
-                                    <p class="text-gray-400 mb-6">Automatically detect overweight and oversized bags at check-in kiosks to ensure fee collection.</p>
-                                    
-                                    <div class="space-y-4">
-                                        <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                                            <div class="text-blue-400 font-bold text-xl">+$2M</div>
-                                            <div class="text-sm text-gray-400">Annual Revenue</div>
-                                        </div>
-                                        <div class="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/5">
-                                            <div class="text-blue-400 font-bold text-xl">100%</div>
-                                            <div class="text-sm text-gray-400">Audit Trail</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10 h-64 md:h-auto transform group-hover:scale-[1.02] transition-transform duration-500">
-                                    <img src="https://images.unsplash.com/photo-1542296332-2e44a996aa0d?q=80&w=2670&auto=format&fit=crop" class="w-full h-full object-cover" alt="Check in">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                                    <div class="absolute bottom-4 left-4">
-                                        <div class="text-xs font-mono text-blue-300 mb-1">DETECTED</div>
-                                        <div class="text-sm font-bold text-white">Overweight: +4kg</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div style="flex:1; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; background: #fff;">
+               <div style="font-size: 11px; color: var(--text-tertiary); margin-bottom: 8px; text-transform: uppercase;">Item 02</div>
+               <div class="ui-value">Backpack</div>
+               <div class="ui-label mono" style="margin-top:4px;">18" x 12" x 8"</div>
             </div>
+          </div>
         </div>
+
+        <div class="bento-card col-span-5 gsap-card">
+          <div class="card-tag tag-passenger">Passenger</div>
+          <div class="bento-icon">🚶</div>
+          <h3 class="bento-title">Frictionless Entry</h3>
+          <p class="bento-desc">The passenger simply walks naturally through the corridor. No stopping, posing, or physical bag sizing is required.</p>
+          <div class="ui-mockup" style="text-align: center; padding: 24px;">
+             <span class="ui-value" style="color: var(--brand-success);">0 Seconds Delay Added</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Key Benefits Grid (Spotlight Cards) -->
-    <section class="py-24 bg-white/[0.02]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="cards-container">
-                <!-- Card 1 -->
-                <div class="spotlight-card p-6 rounded-2xl h-full flex flex-col">
-                    <div class="w-12 h-12 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">High Speed</h3>
-                    <p class="text-sm text-gray-400 flex-grow">Processing latency under 50ms with edge computing capabilities.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="spotlight-card p-6 rounded-2xl h-full flex flex-col">
-                    <div class="w-12 h-12 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Secure</h3>
-                    <p class="text-sm text-gray-400 flex-grow">SOC2 compliant with on-premise deployment options.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="spotlight-card p-6 rounded-2xl h-full flex flex-col">
-                    <div class="w-12 h-12 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Integrates</h3>
-                    <p class="text-sm text-gray-400 flex-grow">Works seamlessly with existing CCTV infrastructure.</p>
-                </div>
-                <!-- Card 4 -->
-                <div class="spotlight-card p-6 rounded-2xl h-full flex flex-col">
-                    <div class="w-12 h-12 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Self-Healing</h3>
-                    <p class="text-sm text-gray-400 flex-grow">Models that adapt to lighting changes and obstructions.</p>
-                </div>
-            </div>
+    <section class="step-section" id="step-3">
+      <div class="step-header">
+        <span class="step-num-large">03</span>
+        <h2>Policy Engine Validation</h2>
+      </div>
+      
+      <div class="bento-grid">
+        <div class="bento-card col-span-12 gsap-card" style="padding-bottom: 0;">
+           <div class="bento-icon">⚖️</div>
+           <h3 class="bento-title">Rules Engine & Alerts</h3>
+           <p class="bento-desc">Detected dimensions and counts are instantly matched against the ticket's fare class rules.</p>
         </div>
+
+        <div class="bento-card col-span-6 gsap-card" style="margin-top: -24px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none;">
+          <div class="card-tag tag-ai">System Logic</div>
+          <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Validation Check</h4>
+          <div class="ui-row">
+            <span class="ui-label">Count Allowed vs Detected</span>
+            <span class="ui-value" style="color: var(--brand-warning);">1 vs 2</span>
+          </div>
+          <div class="ui-row">
+            <span class="ui-label">Size Validation</span>
+            <span class="ui-value" style="color: var(--brand-warning);">Oversized (+2")</span>
+          </div>
+          <div class="ui-row">
+            <span class="ui-label">Action Status</span>
+            <span class="ui-value" style="color: var(--brand-warning);">FLAGGED</span>
+          </div>
+        </div>
+
+        <div class="bento-card col-span-6 gsap-card" style="margin-top: -24px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none; background: #FAFAFA;">
+          <div class="card-tag tag-passenger">Passenger App</div>
+          <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Mobile Push Alert</h4>
+          <div class="alert-mockup">
+            <div class="alert-icon">⚠️</div>
+            <div>
+              <div class="alert-title">Carry-On Limit Exceeded</div>
+              <div class="alert-text">Your rolling bag exceeds the size limit for your Basic Economy fare. Tap to pay gate-check fee now to avoid lines.</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Impact Metrics -->
-    <section id="metrics" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="metric-item group">
-                    <div class="text-5xl md:text-7xl font-bold text-white mb-2 flex justify-center items-baseline">
-                        <span class="counter" data-target="35">0</span>%
-                    </div>
-                    <div class="text-indigo-400 text-sm font-medium uppercase tracking-wider group-hover:text-indigo-300 transition-colors">Efficiency Gain</div>
-                </div>
-                <div class="metric-item group">
-                    <div class="text-5xl md:text-7xl font-bold text-white mb-2 flex justify-center items-baseline">
-                        $<span class="counter" data-target="12">0</span>M
-                    </div>
-                    <div class="text-indigo-400 text-sm font-medium uppercase tracking-wider group-hover:text-indigo-300 transition-colors">Recovered Revenue</div>
-                </div>
-                <div class="metric-item group">
-                    <div class="text-5xl md:text-7xl font-bold text-white mb-2 flex justify-center items-baseline">
-                        <span class="counter" data-target="500">0</span>+
-                    </div>
-                    <div class="text-indigo-400 text-sm font-medium uppercase tracking-wider group-hover:text-indigo-300 transition-colors">Airports Deployed</div>
-                </div>
-                <div class="metric-item group">
-                    <div class="text-5xl md:text-7xl font-bold text-white mb-2 flex justify-center items-baseline">
-                        <span class="counter" data-target="100">0</span>%
-                    </div>
-                    <div class="text-indigo-400 text-sm font-medium uppercase tracking-wider group-hover:text-indigo-300 transition-colors">Data Privacy</div>
-                </div>
+    <section class="step-section" id="step-4">
+      <div class="step-header">
+        <span class="step-num-large">04</span>
+        <h2>Agent Resolution Workflow</h2>
+      </div>
+      
+      <div class="bento-grid">
+        <div class="bento-card col-span-8 gsap-card">
+          <div class="card-tag tag-ops">Gate Ops</div>
+          <div class="bento-icon">💻</div>
+          <h3 class="bento-title">Agent Dashboard View</h3>
+          <p class="bento-desc">Agents receive early warnings before the passenger reaches the desk, complete with a pre-calculated resolution path.</p>
+          
+          <div class="ui-mockup" style="background: #fff;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+              <span style="font-weight: 600; font-size: 14px;">Incoming Passenger: Seat 12A</span>
+              <span class="badge" style="margin:0; background: #FEF2F2; color: #DC2626;">Action Required</span>
             </div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Violation: Oversized Bag (Rollaboard)</div>
+            <div style="display: flex; gap: 8px;">
+              <button style="flex:1; padding: 10px; background: var(--brand-primary); color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Print Bag Tag</button>
+              <button style="flex:1; padding: 10px; background: #F1F5F9; color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 6px; font-weight: 500; cursor: pointer;">Charge $50 Fee</button>
+            </div>
+          </div>
         </div>
+
+        <div class="bento-card col-span-4 gsap-card">
+          <div class="card-tag tag-passenger">Passenger</div>
+          <div class="bento-icon">🤝</div>
+          <h3 class="bento-title">Guided Outcome</h3>
+          <p class="bento-desc">Confrontations are eliminated. Compliant passengers board instantly; others are processed rapidly via automated systems.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-24 px-6 relative overflow-hidden">
-        <!-- Animated Background for CTA -->
-        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/50 to-purple-900/50 z-[-1]"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-600/20 rounded-full blur-[100px] animate-pulse z-[-1]"></div>
-
-        <div class="max-w-5xl mx-auto relative z-10 text-center">
-            <h2 class="text-4xl md:text-6xl font-bold mb-8 tracking-tight reveal-text">Ready to modernize your airport?</h2>
-            <p class="text-gray-300 mb-12 max-w-2xl mx-auto text-lg reveal-text">Join the leading airlines and airports using Daity to drive efficiency and revenue.</p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <button class="magnetic-btn px-10 py-5 rounded-xl bg-white text-indigo-900 font-bold hover:bg-gray-100 transition-colors shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] hover:scale-105 transform transition-all duration-300">
-                    Book a Demo
-                </button>
-                <button class="magnetic-btn px-10 py-5 rounded-xl border border-white/20 hover:bg-white/10 transition-colors backdrop-blur-sm">
-                    Contact Sales
-                </button>
-            </div>
+    <section class="step-section" id="step-5" style="margin-bottom: 60px;">
+      <div class="step-header">
+        <span class="step-num-large">05</span>
+        <h2>Cabin Optimization</h2>
+      </div>
+      
+      <div class="bento-grid">
+        <div class="bento-card col-span-5 gsap-card">
+          <div class="card-tag tag-passenger">Flight Ops</div>
+          <div class="bento-icon">✈️</div>
+          <h3 class="bento-title">Smooth Boarding</h3>
+          <p class="bento-desc">Fewer disputes at the aircraft door result in faster aisle clearing and improved on-time departure metrics.</p>
         </div>
+
+        <div class="bento-card col-span-7 gsap-card">
+          <div class="card-tag tag-ai">Analytics</div>
+          <div class="bento-icon">📊</div>
+          <h3 class="bento-title">Overhead Bin Capacity Forecast</h3>
+          <p class="bento-desc">Real-time telemetry gives crew exact predictions on bin pressure, allowing proactive valet tagging before congestion hits.</p>
+          
+          <div class="data-visual">
+            <div class="bar"><div class="bar-fill" style="height: 100%;"></div></div>
+            <div class="bar"><div class="bar-fill" style="height: 100%;"></div></div>
+            <div class="bar"><div class="bar-fill" style="height: 90%;"></div></div>
+            <div class="bar"><div class="bar-fill" style="height: 60%;"></div></div>
+            <div class="bar"><div class="bar-fill" style="height: 30%;"></div></div>
+            <div class="bar"><div class="bar-fill" style="height: 10%;"></div></div>
+            <div class="bar" style="background: #FEF2F2;"><div class="bar-fill" style="height: 0%;"></div></div>
+          </div>
+          <div style="display:flex; justify-content: space-between; margin-top: 12px; font-size: 11px; color: var(--text-tertiary); font-weight: 600;">
+            <span>ZONE 1</span>
+            <span>ZONE 4</span>
+            <span style="color: var(--brand-warning);">ZONE 7 (AT RISK)</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/10 pt-16 pb-8 bg-[#030305]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-purple-600"></div>
-                        <span class="font-bold text-lg">Daity</span>
-                    </div>
-                    <p class="text-gray-500 text-sm">Empowering the future of aviation through intelligent vision.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Product</h4>
-                    <ul class="space-y-2 text-sm text-gray-500">
-                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Integrations</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Company</h4>
-                    <ul class="space-y-2 text-sm text-gray-500">
-                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Stay Updated</h4>
-                    <div class="flex gap-2">
-                        <input type="email" placeholder="Enter email" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm w-full focus:outline-none focus:border-indigo-500">
-                        <button class="bg-indigo-600 p-2 rounded-lg hover:bg-indigo-500">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
-                <div>&copy; 2023 Daity Inc. All rights reserved.</div>
-                <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white">Privacy Policy</a>
-                    <a href="#" class="hover:text-white">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+  </main>
+</div>
 
-    <!-- Advanced Scripts -->
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
+<script>
+  gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Text Reveal Animation (Split text helper)
-        function splitTextToSpans(selector) {
-            const elements = document.querySelectorAll(selector);
-            elements.forEach(el => {
-                const text = el.innerText;
-                el.innerHTML = text.split('').map(char => 
-                    char === ' ' ? '&nbsp;' : `<span class="char inline-block opacity-0 translate-y-4">${char}</span>`
-                ).join('');
-            });
+  // 1. Sidebar Track Fill & Active State Logic
+  const sections = document.querySelectorAll('.step-section');
+  const navSteps = document.querySelectorAll('.nav-step');
+  const trackFill = document.getElementById('trackFill');
+
+  sections.forEach((sec, index) => {
+    ScrollTrigger.create({
+      trigger: sec,
+      start: "top 50%",
+      end: "bottom 50%",
+      onToggle: self => {
+        if (self.isActive) {
+          // Update active class on nav items
+          navSteps.forEach(nav => nav.classList.remove('active'));
+          navSteps[index].classList.add('active');
+          
+          // Calculate track fill percentage based on which step we are on
+          // Mapping 5 steps to 0%, 25%, 50%, 75%, 100%
+          const fillPercentage = (index / (sections.length - 1)) * 100;
+          trackFill.style.height = `${fillPercentage}%`;
         }
+      }
+    });
+  });
 
-        // Apply text reveal to specific classes
-        splitTextToSpans('.reveal-text');
-        
-        // Animate the split text
-        gsap.utils.toArray('.reveal-text').forEach(el => {
-            gsap.to(el.querySelectorAll('.char'), {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 80%",
-                },
-                opacity: 1,
-                y: 0,
-                stagger: 0.02,
-                duration: 0.5,
-                ease: "back.out(1.7)"
-            });
-        });
+  // Smooth scroll to section when sidebar item is clicked
+  navSteps.forEach(nav => {
+    nav.addEventListener('click', () => {
+      const targetId = nav.getAttribute('data-target');
+      const targetElement = document.getElementById(targetId);
+      window.scrollTo({
+        top: targetElement.offsetTop - 40, // offset for padding
+        behavior: 'smooth'
+      });
+    });
+  });
 
-        // 2. Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('py-2');
-                nav.classList.remove('py-4');
-            } else {
-                nav.classList.add('py-4');
-                nav.classList.remove('py-2');
-            }
-        });
+  // 2. Bento Card Reveal Animations
+  sections.forEach(sec => {
+    const cards = sec.querySelectorAll('.gsap-card');
+    
+    gsap.fromTo(cards, 
+      { 
+        y: 40, 
+        opacity: 0 
+      }, 
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sec,
+          start: "top 75%", // Triggers when the top of the section hits 75% down the viewport
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+  });
 
-        // 3. Hero Animations
-        gsap.from(".reveal-wrapper", {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
+  // 3. Simple Bar Chart Animation for Step 5
+  const bars = document.querySelectorAll('.bar-fill');
+  ScrollTrigger.create({
+    trigger: "#step-5",
+    start: "top 75%",
+    onEnter: () => {
+      gsap.fromTo(bars, 
+        { scaleY: 0, transformOrigin: "bottom" }, 
+        { scaleY: 1, duration: 1, stagger: 0.1, ease: "power2.out" }
+      );
+    }
+  });
 
-        gsap.from(".hero-image-container", {
-            x: 50,
-            opacity: 0,
-            duration: 1.5,
-            delay: 0.5,
-            ease: "power3.out"
-        });
+</script>
 
-        gsap.to(".animate-float-up", {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            delay: 1.5,
-            ease: "power3.out"
-        });
-
-        // 4. Spotlight Effect Logic for Cards
-        const container = document.getElementById("cards-container");
-        const cards = document.querySelectorAll(".spotlight-card");
-
-        container.onmousemove = e => {
-            for(const card of cards) {
-                const rect = card.getBoundingClientRect(),
-                      x = e.clientX - rect.left,
-                      y = e.clientY - rect.top;
-
-                card.style.setProperty("--mouse-x", `${x}px`);
-                card.style.setProperty("--mouse-y", `${y}px`);
-            }
-        };
-
-        // 5. Workflow Tab Switching with Animation
-        const tabBtns = document.querySelectorAll('.workflow-tab');
-        const tabContents = document.querySelectorAll('.workflow-content');
-
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Reset buttons
-                tabBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.style.borderColor = 'rgba(255,255,255,0.05)';
-                });
-                
-                // Activate clicked
-                btn.classList.add('active');
-                
-                // Hide all contents
-                tabContents.forEach(c => {
-                    gsap.to(c, { opacity: 0, x: 20, duration: 0.3, onComplete: () => {
-                        c.classList.add('opacity-0', 'pointer-events-none');
-                    }});
-                });
-
-                // Show target
-                const targetId = btn.getAttribute('data-target');
-                const targetContent = document.getElementById(targetId);
-                targetContent.classList.remove('opacity-0', 'pointer-events-none');
-                
-                // Animate in
-                gsap.fromTo(targetContent, 
-                    { opacity: 0, x: -20 }, 
-                    { opacity: 1, x: 0, duration: 0.4, delay: 0.1 }
-                );
-            });
-        });
-
-        // 6. Count Up Animation
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            ScrollTrigger.create({
-                trigger: counter,
-                start: "top 85%",
-                once: true,
-                onEnter: () => {
-                    gsap.to(counter, {
-                        innerHTML: target,
-                        duration: 2,
-                        snap: { innerHTML: 1 },
-                        ease: "power1.inOut"
-                    });
-                }
-            });
-        });
-
-        // 7. Magnetic Button Effect
-        const magneticBtns = document.querySelectorAll('.magnetic-btn');
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                
-                gsap.to(btn, {
-                    x: x * 0.3,
-                    y: y * 0.3,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
-
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.5,
-                    ease: "elastic.out(1, 0.3)"
-                });
-            });
-        });
-
-        // 8. Parallax Background
-        gsap.to(".animate-blob", {
-            y: -50,
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1
-            }
-        });
-
-    </script>
 </body>
 </html>
