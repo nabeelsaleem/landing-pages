@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enjoy Cycling Club | Ride the Edge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #cbfc03; /* Lime Green Accent */
+            --primary-hover: #b2e600;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --text-gray: #666666;
+            --border: #e5e5e5;
+            --radius-lg: 32px;
+            --radius-md: 20px;
+            --radius-sm: 12px;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Reset & Globals */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-main); color: var(--dark); background-color: var(--white); overflow-x: hidden; line-height: 1.5; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+        
+        .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+        .section-pad { padding: 120px 0; }
+        
+        /* Typography */
+        h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+        p { color: var(--text-gray); font-size: 1.1rem; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 1rem;
+            transition: all 0.3s ease; cursor: pointer; border: none; gap: 8px;
+        }
+        .btn-primary { background: var(--primary); color: var(--dark); }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(10px); }
+        .btn-outline:hover { background: var(--white); color: var(--dark); }
+        .btn-dark { background: var(--dark); color: var(--white); }
+        .btn-dark:hover { background: var(--text-gray); }
+
+        /* Scroll Animations */
+        .animate-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .animate-up.in-view { opacity: 1; transform: translateY(0); }
+
+        /* --- Navbar --- */
+        nav { position: absolute; top: 0; left: 0; width: 100%; padding: 24px 0; z-index: 100; color: var(--white); }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: -1px; display: flex; align-items: center; gap: 8px; }
+        .nav-links { display: flex; gap: 32px; background: rgba(255,255,255,0.1); padding: 12px 32px; border-radius: 50px; backdrop-filter: blur(10px); }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-actions { display: flex; gap: 16px; align-items: center; }
+        .cart-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--white); color: var(--dark); display: flex; align-items: center; justify-content: center; }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative; height: 95vh; min-height: 700px; width: calc(100% - 48px); margin: 24px auto;
+            border-radius: var(--radius-lg); overflow: hidden; background: #000;
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.7; transform: scale(1.05); animation: zoomOut 10s ease-out forwards;
+        }
+        @keyframes zoomOut { to { transform: scale(1); } }
+        .hero-content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; }
+        .hero-content h1 { color: var(--white); font-size: clamp(3rem, 5vw, 5.5rem); max-width: 800px; margin-bottom: 24px; }
+        .hero-content p { color: rgba(255,255,255,0.8); max-width: 500px; margin-bottom: 40px; }
+        .hero-btns { display: flex; gap: 16px; }
+        
+        .floating-stat {
+            position: absolute; right: 8%; top: 40%; background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(16px); padding: 20px 32px; border-radius: var(--radius-md); color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .floating-stat h3 { font-size: 2.5rem; color: var(--primary); margin-bottom: 4px; }
+        .floating-stat p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin: 0; }
+        
+        .hero-giant-text {
+            position: absolute; bottom: -5%; left: 0; width: 100%; text-align: center;
+            font-size: 16vw; font-weight: 800; color: rgba(255,255,255,0.15); line-height: 0.8;
+            pointer-events: none; z-index: 1; letter-spacing: -0.05em;
+        }
+
+        /* --- Precision Section --- */
+        .precision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .precision-left h2 { font-size: 3rem; margin-bottom: 24px; }
+        .precision-left p { margin-bottom: 40px; }
+        
+        .community-card {
+            background: var(--darker); color: var(--white); padding: 40px; border-radius: var(--radius-md);
+            position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px;
+        }
+        .community-card h3 { font-size: 2rem; margin-bottom: 16px; max-width: 250px; }
+        .community-card p { color: rgba(255,255,255,0.6); font-size: 0.9rem; max-width: 200px; }
+        .avatars { display: flex; position: absolute; top: 40px; right: 40px; }
+        .avatars img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--darker); margin-left: -12px; }
+        .icon-btn-primary { width: 50px; height: 50px; background: var(--primary); color: var(--dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; align-self: flex-end; }
+
+        .precision-right { display: flex; flex-direction: column; gap: 24px; }
+        .filter-tags { display: flex; gap: 12px; justify-content: flex-end; }
+        .tag { padding: 8px 20px; border-radius: 50px; border: 1px solid var(--border); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
+        .tag.active { background: var(--dark); color: var(--white); border-color: var(--dark); }
+        
+        .main-img-wrapper { position: relative; border-radius: var(--radius-md); overflow: hidden; height: 400px; }
+        .main-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .main-img-wrapper:hover img { transform: scale(1.05); }
+        .nav-arrows { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
+        .arrow-btn { padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border); background: var(--white); cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .arrow-btn:hover { background: var(--dark); color: var(--white); }
+
+        /* --- Master Experience Section --- */
+        .experience { text-align: center; }
+        .experience h2 { font-size: 3rem; max-width: 600px; margin: 0 auto 60px; }
+        
+        .exp-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 24px; height: 500px; }
+        .exp-card { position: relative; border-radius: var(--radius-md); overflow: hidden; }
+        .exp-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .exp-card:hover img { transform: scale(1.08); }
+        .exp-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; align-items: flex-start; }
+        .exp-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); color: var(--white); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; margin-top: auto; }
+
+        /* --- Track Every Ride Banner --- */
+        .track-section { background: var(--darker); padding: 100px 24px; }
+        .track-banner { 
+            position: relative; max-width: 1400px; margin: 0 auto; height: 600px;
+            border-radius: var(--radius-lg); overflow: hidden; 
+        }
+        .track-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .track-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 60px; display: flex; flex-direction: column; justify-content: space-between; }
+        .track-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .track-title { color: var(--white); }
+        .track-title h2 { font-size: 4rem; line-height: 1.1; margin-bottom: 16px; }
+        .track-title p { color: rgba(255,255,255,0.8); max-width: 300px; }
+        
+        .track-stats { display: flex; gap: 40px; }
+        .stat-item { color: var(--white); }
+        .stat-item span { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+        .stat-item strong { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .stat-item:nth-child(2) strong, .stat-item:nth-child(3) strong { color: var(--white); }
+
+        .giant-banner-text {
+            font-size: 14vw; font-weight: 800; color: var(--primary); opacity: 0.4;
+            line-height: 0.7; position: absolute; bottom: -2%; left: 0; width: 100%; text-align: center;
+        }
+
+        /* --- Testimonials --- */
+        .testimonials { background: var(--darker); color: var(--white); padding: 120px 0; text-align: center; }
+        .testimonials h2 { font-size: 3rem; margin-bottom: 16px; }
+        .testimonials h2 span { color: var(--primary); }
+        .testimonials > p { color: rgba(255,255,255,0.6); margin-bottom: 60px; }
+        
+        .quote-wrap { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto 60px; }
+        .quote-text { font-size: 1.5rem; line-height: 1.6; font-weight: 500; max-width: 600px; }
+        
+        .user-nav { display: flex; justify-content: center; gap: 16px; align-items: center; }
+        .user-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0.5; cursor: pointer; transition: 0.3s; }
+        .user-avatar:hover { opacity: 1; }
+        .user-avatar.active { width: 60px; height: 60px; opacity: 1; border: 3px solid var(--primary); }
+        .active-user-info { display: flex; align-items: center; background: var(--primary); padding: 8px 24px 8px 8px; border-radius: 50px; gap: 12px; color: var(--dark); }
+        .active-user-info img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+        .active-user-info div { text-align: left; }
+        .active-user-info h4 { font-size: 0.95rem; font-weight: 700; margin: 0; }
+        .active-user-info span { font-size: 0.75rem; font-weight: 600; }
+
+        /* --- Footer --- */
+        footer { padding: 80px 24px 24px; background: var(--darker); }
+        .footer-inner { background: var(--white); border-radius: var(--radius-lg); padding: 80px 60px; max-width: 1320px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 2fr; gap: 40px; margin-bottom: 60px; }
+        .footer-col h4 { font-size: 1.1rem; margin-bottom: 24px; color: var(--dark); }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { color: var(--text-gray); font-weight: 500; transition: 0.3s; }
+        .footer-col ul li a:hover { color: var(--primary); }
+        
+        .newsletter h3 { font-size: 2.5rem; margin-bottom: 24px; }
+        .newsletter-form { display: flex; background: var(--light-bg); border-radius: 50px; padding: 8px; }
+        .newsletter-form input { flex: 1; background: transparent; border: none; padding: 0 20px; font-family: inherit; font-size: 1rem; outline: none; }
+        
+        .footer-bottom-img { position: relative; height: 350px; border-radius: var(--radius-md); overflow: hidden; }
+        .footer-bottom-img img { width: 100%; height: 100%; object-fit: cover; }
+        .footer-brand { position: absolute; bottom: 20px; right: 40px; font-size: 6vw; font-weight: 800; color: var(--primary); line-height: 1; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .precision-grid { grid-template-columns: 1fr; }
+            .exp-grid { grid-template-columns: 1fr 1fr; }
+            .exp-card:last-child { grid-column: span 2; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 3rem; }
+            .floating-stat { display: none; }
+            .hero-giant-text { font-size: 20vw; }
+            .track-title h2 { font-size: 2.5rem; }
+            .track-stats { flex-direction: column; gap: 16px; }
+            .track-banner { height: auto; min-height: 500px; }
+            .quote-wrap { flex-direction: column; text-align: center; gap: 32px; }
+            .quote-text { font-size: 1.2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-inner { padding: 40px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-person-biking" style="color: var(--primary);"></i> EnjoyCycling
+            </a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Community</a>
+                <a href="#">Plans</a>
+                <a href="#">Events</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="cart-btn"><i class="fa-solid fa-bag-shopping"></i></a>
+                <a href="#" class="btn btn-primary">Join Club</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=2000" alt="Cyclist on mountain road" class="hero-bg">
+        <div class="hero-content container">
+            <h1 class="animate-up">Ride the Edge with Enjoy Cycling Club</h1>
+            <p class="animate-up" style="transition-delay: 0.1s;">Push your boundaries, discover breathtaking routes, and connect with a community that shares your passion for the pedal.</p>
+            <div class="hero-btns animate-up" style="transition-delay: 0.2s;">
+                <a href="#" class="btn btn-primary">Start Your Journey</a>
+                <a href="#" class="btn btn-outline">View Routes</a>
+            </div>
+        </div>
+        
+        <div class="floating-stat animate-up" style="transition-delay: 0.4s;">
+            <h3>120<span style="font-size: 1.5rem;">km</span></h3>
+            <p>Next Group Ride</p>
+        </div>
+        
+        <div class="hero-giant-text">ENJOY</div>
+    </section>
+
+    <section class="section-pad">
+        <div class="container precision-grid">
+            <div class="precision-left animate-up">
+                <h2>Precision in Every Pedal Stroke</h2>
+                <p>Experience the ultimate ride with our curated trails, expert coaching, and high-performance gear recommendations tailored for every level.</p>
+                
+                <div class="community-card">
+                    <div>
+                        <h3>Join the Enjoy Community</h3>
+                        <p>Become part of a network that motivates, inspires, and rides together.</p>
+                    </div>
+                    <div class="avatars">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Member">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Member">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Member">
+                    </div>
+                    <a href="#" class="icon-btn-primary"><i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="precision-right animate-up" style="transition-delay: 0.2s;">
+                <div class="filter-tags">
+                    <span class="tag active">Cycling Life</span>
+                    <span class="tag">Community Rides</span>
+                    <span class="tag">Pro Gear Room</span>
+                </div>
+                
+                <div class="main-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&q=80&w=1000" alt="Cyclist resting and drinking water">
+                </div>
+                
+                <div class="nav-arrows">
+                    <button class="arrow-btn"><i class="fa-solid fa-arrow-left"></i> Prev</button>
+                    <button class="arrow-btn btn-dark">Next <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad experience">
+        <div class="container">
+            <h2 class="animate-up">Master Our Cycling Technology Experience</h2>
+            
+            <div class="exp-grid">
+                <div class="exp-card animate-up">
+                    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=600" alt="Road cycling">
+                    <div class="exp-overlay">
+                        <a href="#" class="btn btn-primary" style="margin-bottom: auto; border-radius: 8px; padding: 10px 20px;">See Their Stories <i class="fa-solid fa-arrow-right"></i></a>
+                        <p style="color: white; text-align: left; font-size: 0.9rem; margin-bottom: 0;">"The advanced metrics helped me shave minutes off my personal best."</p>
+                    </div>
+                </div>
+                
+                <div class="exp-card animate-up" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1520114093922-4467c65fce31?auto=format&fit=crop&q=80&w=800" alt="Mountain landscape cycling">
+                    <div class="exp-overlay">
+                        <span class="exp-tag"><i class="fa-solid fa-location-dot"></i> Alpine Routes</span>
+                    </div>
+                </div>
+                
+                <div class="exp-card animate-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?auto=format&fit=crop&q=80&w=600" alt="Sunset ride">
+                    <div class="exp-overlay">
+                        <span class="exp-tag"><i class="fa-regular fa-clock"></i> Evening Sprints</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="track-section">
+        <div class="track-banner animate-up">
+            <img src="https://images.unsplash.com/photo-1571333179267-3395d3dc65ec?auto=format&fit=crop&q=80&w=1400" alt="Cyclist smiling with water bottle">
+            
+            <div class="track-content">
+                <div class="track-top">
+                    <div class="track-title">
+                        <h2>Track Every<br>Turn, Relive</h2>
+                        <p>Our app syncs flawlessly with your gear to capture every heartbeat, cadence push, and elevation gain.</p>
+                    </div>
+                    
+                    <div class="track-stats">
+                        <div class="stat-item">
+                            <span>Distance</span>
+                            <strong>89.9 Km</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>Date</span>
+                            <strong>11/06/23</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span>Riding Time</span>
+                            <strong>04:30 H</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="giant-banner-text">Every Ride</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="animate-up">Voices of <span>Our Riders</span></h2>
+            <p class="animate-up">Learn from the community, train with power, and ride with grace.</p>
+            
+            <div class="quote-wrap animate-up" style="transition-delay: 0.1s;">
+                <button class="arrow-btn" style="background:transparent; border-color: #333; color: white;"><i class="fa-solid fa-arrow-left"></i> Prev</button>
+                <div class="quote-text">
+                    "Enjoy Cycling Club changed how I ride. The tech workshops taught me more in a day than I learned in years. My speed and confidence on the road skyrocketed!"
+                </div>
+                <button class="arrow-btn" style="color: black;">Next <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="user-nav animate-up" style="transition-delay: 0.2s;">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="User 1" class="user-avatar">
+                
+                <div class="active-user-info">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Julian K.">
+                    <div>
+                        <h4>Julian K.</h4>
+                        <span>Pro Event Finisher</span>
+                    </div>
+                </div>
+                
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" alt="User 3" class="user-avatar">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col" style="display: flex; gap: 40px;">
+                    <div>
+                        <h4>Home</h4>
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Membership</a></li>
+                            <li><a href="#">Coaches</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Community</h4>
+                        <ul>
+                            <li><a href="#">Discussions</a></li>
+                            <li><a href="#">Team Admissions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Help Center</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-col" style="grid-column: span 3;">
+                    <div class="newsletter">
+                        <h3>Sign up for updates<br>and VIP deals.</h3>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email address" required>
+                            <button type="submit" class="btn btn-dark">Subscribe <i class="fa-solid fa-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-img">
+                <img src="https://images.unsplash.com/photo-1557330359-ffb0deed6163?auto=format&fit=crop&q=80&w=1200" alt="Cyclist sprinting">
+                <div class="footer-brand">EnjoyCycling</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target); // Run animation once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.animate-up').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
