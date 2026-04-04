@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enjoy Cycling Club | Ride the Edge</title>
+    <title>Enjoy Cycling Club | Premium Cycling Merch & Gear</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -14,7 +14,7 @@
             --primary-hover: #b2e600;
             --dark: #121212;
             --darker: #0a0a0a;
-            --light-bg: #f8f9fa;
+            --light-bg: #f4f5f7;
             --white: #ffffff;
             --text-gray: #666666;
             --border: #e5e5e5;
@@ -22,6 +22,8 @@
             --radius-md: 20px;
             --radius-sm: 12px;
             --font-main: 'Plus Jakarta Sans', sans-serif;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+            --shadow-hover: 0 12px 24px rgba(0,0,0,0.08);
         }
 
         /* Reset & Globals */
@@ -33,6 +35,7 @@
         
         .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
         .section-pad { padding: 120px 0; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
         
         /* Typography */
         h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
@@ -63,11 +66,13 @@
         .nav-links a { font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
         .nav-links a:hover { color: var(--primary); }
         .nav-actions { display: flex; gap: 16px; align-items: center; }
-        .cart-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--white); color: var(--dark); display: flex; align-items: center; justify-content: center; }
+        .cart-btn { position: relative; width: 44px; height: 44px; border-radius: 50%; background: var(--white); color: var(--dark); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
+        .cart-btn:hover { background: var(--primary); }
+        .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--dark); color: var(--white); font-size: 0.7rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--white); }
 
         /* --- Hero Section --- */
         .hero {
-            position: relative; height: 95vh; min-height: 700px; width: calc(100% - 48px); margin: 24px auto;
+            position: relative; height: 90vh; min-height: 650px; width: calc(100% - 48px); margin: 24px auto;
             border-radius: var(--radius-lg); overflow: hidden; background: #000;
         }
         .hero-bg {
@@ -83,97 +88,108 @@
         .floating-stat {
             position: absolute; right: 8%; top: 40%; background: rgba(255,255,255,0.1);
             backdrop-filter: blur(16px); padding: 20px 32px; border-radius: var(--radius-md); color: var(--white);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.2); text-align: center;
         }
         .floating-stat h3 { font-size: 2.5rem; color: var(--primary); margin-bottom: 4px; }
-        .floating-stat p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin: 0; }
+        .floating-stat p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
         
         .hero-giant-text {
             position: absolute; bottom: -5%; left: 0; width: 100%; text-align: center;
-            font-size: 16vw; font-weight: 800; color: rgba(255,255,255,0.15); line-height: 0.8;
+            font-size: 15vw; font-weight: 800; color: rgba(255,255,255,0.15); line-height: 0.8;
             pointer-events: none; z-index: 1; letter-spacing: -0.05em;
         }
 
-        /* --- Precision Section --- */
-        .precision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .precision-left h2 { font-size: 3rem; margin-bottom: 24px; }
-        .precision-left p { margin-bottom: 40px; }
-        
-        .community-card {
-            background: var(--darker); color: var(--white); padding: 40px; border-radius: var(--radius-md);
-            position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px;
+        /* --- Category Grid --- */
+        .categories { background: var(--white); padding-top: 120px; }
+        .category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .category-card {
+            position: relative; height: 350px; border-radius: var(--radius-md); overflow: hidden; cursor: pointer;
         }
-        .community-card h3 { font-size: 2rem; margin-bottom: 16px; max-width: 250px; }
-        .community-card p { color: rgba(255,255,255,0.6); font-size: 0.9rem; max-width: 200px; }
-        .avatars { display: flex; position: absolute; top: 40px; right: 40px; }
-        .avatars img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--darker); margin-left: -12px; }
-        .icon-btn-primary { width: 50px; height: 50px; background: var(--primary); color: var(--dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; align-self: flex-end; }
+        .category-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .category-card:hover img { transform: scale(1.08); }
+        .category-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
+        }
+        .category-overlay h3 { color: var(--white); font-size: 1.5rem; margin-bottom: 8px; }
+        .category-overlay span { color: var(--primary); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 8px; transform: translateY(10px); opacity: 0; transition: 0.3s; }
+        .category-card:hover .category-overlay span { transform: translateY(0); opacity: 1; }
 
-        .precision-right { display: flex; flex-direction: column; gap: 24px; }
-        .filter-tags { display: flex; gap: 12px; justify-content: flex-end; }
-        .tag { padding: 8px 20px; border-radius: 50px; border: 1px solid var(--border); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
-        .tag.active { background: var(--dark); color: var(--white); border-color: var(--dark); }
+        /* --- Scrollable Products Grid --- */
+        .products-section { padding: 120px 0; overflow: hidden; }
+        .products-header h2 { font-size: 3rem; margin-bottom: 16px; }
         
-        .main-img-wrapper { position: relative; border-radius: var(--radius-md); overflow: hidden; height: 400px; }
-        .main-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .main-img-wrapper:hover img { transform: scale(1.05); }
-        .nav-arrows { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
-        .arrow-btn { padding: 12px 24px; border-radius: 50px; border: 1px solid var(--border); background: var(--white); cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
-        .arrow-btn:hover { background: var(--dark); color: var(--white); }
+        .products-scroll-container {
+            display: flex; gap: 24px; overflow-x: auto; padding: 10px 24px 40px 24px;
+            margin: 0 -24px; scroll-snap-type: x mandatory; scrollbar-width: none; /* Firefox */
+        }
+        .products-scroll-container::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+        
+        .product-card {
+            min-width: 320px; flex: 0 0 auto; scroll-snap-align: start;
+            background: var(--white); border-radius: var(--radius-md); padding: 16px;
+            border: 1px solid var(--border); transition: all 0.3s ease; position: relative;
+        }
+        .product-card:hover { box-shadow: var(--shadow-hover); border-color: transparent; }
+        
+        .product-img {
+            width: 100%; height: 300px; border-radius: var(--radius-sm); background: var(--light-bg);
+            margin-bottom: 20px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+        .product-img img { max-height: 80%; width: auto; object-fit: contain; transition: 0.4s ease; }
+        .product-card:hover .product-img img { transform: scale(1.05); }
+        
+        .product-badge { position: absolute; top: 12px; left: 12px; background: var(--dark); color: var(--white); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .product-badge.sale { background: var(--primary); color: var(--dark); }
 
-        /* --- Master Experience Section --- */
-        .experience { text-align: center; }
-        .experience h2 { font-size: 3rem; max-width: 600px; margin: 0 auto 60px; }
+        .product-info { display: flex; flex-direction: column; }
+        .product-cat { color: var(--text-gray); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+        .product-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--dark); }
+        .product-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .product-price { font-size: 1.4rem; font-weight: 800; color: var(--dark); }
+        .product-price span { font-size: 1rem; color: var(--text-gray); text-decoration: line-through; margin-left: 8px; font-weight: 500; }
         
-        .exp-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 24px; height: 500px; }
+        .add-cart-circle { width: 45px; height: 45px; border-radius: 50%; background: var(--light-bg); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; color: var(--dark); border: none; }
+        .product-card:hover .add-cart-circle { background: var(--primary); }
+
+        /* --- Shop the Look / Experience --- */
+        .lookbook { background: var(--darker); padding: 120px 0; color: var(--white); text-align: center; }
+        .lookbook h2 { font-size: 3rem; margin-bottom: 60px; }
+        
+        .exp-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 24px; height: 500px; text-align: left; }
         .exp-card { position: relative; border-radius: var(--radius-md); overflow: hidden; }
         .exp-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
         .exp-card:hover img { transform: scale(1.08); }
-        .exp-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; align-items: flex-start; }
-        .exp-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); color: var(--white); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; margin-top: auto; }
+        .exp-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; align-items: flex-start; }
+        .shop-tag { background: var(--white); color: var(--dark); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px; }
 
-        /* --- Track Every Ride Banner --- */
-        .track-section { background: var(--darker); padding: 100px 24px; }
+        /* --- Promo Banner --- */
+        .promo-section { padding: 80px 24px; }
         .track-banner { 
-            position: relative; max-width: 1400px; margin: 0 auto; height: 600px;
-            border-radius: var(--radius-lg); overflow: hidden; 
+            position: relative; max-width: 1400px; margin: 0 auto; height: 500px;
+            border-radius: var(--radius-lg); overflow: hidden; background: var(--primary);
         }
-        .track-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .track-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 60px; display: flex; flex-direction: column; justify-content: space-between; }
-        .track-top { display: flex; justify-content: space-between; align-items: flex-start; }
-        .track-title { color: var(--white); }
-        .track-title h2 { font-size: 4rem; line-height: 1.1; margin-bottom: 16px; }
-        .track-title p { color: rgba(255,255,255,0.8); max-width: 300px; }
+        .track-banner img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: 0.8; }
+        .track-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 60px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         
-        .track-stats { display: flex; gap: 40px; }
-        .stat-item { color: var(--white); }
-        .stat-item span { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
-        .stat-item strong { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
-        .stat-item:nth-child(2) strong, .stat-item:nth-child(3) strong { color: var(--white); }
-
-        .giant-banner-text {
-            font-size: 14vw; font-weight: 800; color: var(--primary); opacity: 0.4;
-            line-height: 0.7; position: absolute; bottom: -2%; left: 0; width: 100%; text-align: center;
-        }
+        .track-title { color: var(--dark); }
+        .track-title h2 { font-size: 5rem; line-height: 1; margin-bottom: 16px; letter-spacing: -0.04em; }
+        .track-title p { color: var(--dark); font-size: 1.2rem; font-weight: 500; max-width: 400px; margin: 0 auto 32px; }
 
         /* --- Testimonials --- */
-        .testimonials { background: var(--darker); color: var(--white); padding: 120px 0; text-align: center; }
+        .testimonials { background: var(--white); padding: 100px 0; text-align: center; border-bottom: 1px solid var(--border); }
         .testimonials h2 { font-size: 3rem; margin-bottom: 16px; }
         .testimonials h2 span { color: var(--primary); }
-        .testimonials > p { color: rgba(255,255,255,0.6); margin-bottom: 60px; }
         
-        .quote-wrap { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto 60px; }
+        .quote-wrap { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 60px auto; }
         .quote-text { font-size: 1.5rem; line-height: 1.6; font-weight: 500; max-width: 600px; }
         
         .user-nav { display: flex; justify-content: center; gap: 16px; align-items: center; }
-        .user-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; opacity: 0.5; cursor: pointer; transition: 0.3s; }
-        .user-avatar:hover { opacity: 1; }
-        .user-avatar.active { width: 60px; height: 60px; opacity: 1; border: 3px solid var(--primary); }
-        .active-user-info { display: flex; align-items: center; background: var(--primary); padding: 8px 24px 8px 8px; border-radius: 50px; gap: 12px; color: var(--dark); }
+        .active-user-info { display: flex; align-items: center; background: var(--dark); padding: 8px 24px 8px 8px; border-radius: 50px; gap: 12px; color: var(--white); }
         .active-user-info img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
         .active-user-info div { text-align: left; }
         .active-user-info h4 { font-size: 0.95rem; font-weight: 700; margin: 0; }
-        .active-user-info span { font-size: 0.75rem; font-weight: 600; }
+        .active-user-info span { font-size: 0.75rem; font-weight: 600; color: var(--primary); }
 
         /* --- Footer --- */
         footer { padding: 80px 24px 24px; background: var(--darker); }
@@ -184,17 +200,17 @@
         .footer-col ul li a { color: var(--text-gray); font-weight: 500; transition: 0.3s; }
         .footer-col ul li a:hover { color: var(--primary); }
         
-        .newsletter h3 { font-size: 2.5rem; margin-bottom: 24px; }
+        .newsletter h3 { font-size: 2.2rem; margin-bottom: 24px; line-height: 1.2; }
         .newsletter-form { display: flex; background: var(--light-bg); border-radius: 50px; padding: 8px; }
         .newsletter-form input { flex: 1; background: transparent; border: none; padding: 0 20px; font-family: inherit; font-size: 1rem; outline: none; }
         
-        .footer-bottom-img { position: relative; height: 350px; border-radius: var(--radius-md); overflow: hidden; }
+        .footer-bottom-img { position: relative; height: 350px; border-radius: var(--radius-md); overflow: hidden; background: #f0f0f0; }
         .footer-bottom-img img { width: 100%; height: 100%; object-fit: cover; }
-        .footer-brand { position: absolute; bottom: 20px; right: 40px; font-size: 6vw; font-weight: 800; color: var(--primary); line-height: 1; }
+        .footer-brand { position: absolute; bottom: 20px; right: 40px; font-size: 5vw; font-weight: 800; color: var(--primary); line-height: 1; text-shadow: 0 4px 20px rgba(0,0,0,0.2); }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .precision-grid { grid-template-columns: 1fr; }
+            .category-grid { grid-template-columns: repeat(2, 1fr); }
             .exp-grid { grid-template-columns: 1fr 1fr; }
             .exp-card:last-child { grid-column: span 2; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -204,9 +220,9 @@
             .hero-content h1 { font-size: 3rem; }
             .floating-stat { display: none; }
             .hero-giant-text { font-size: 20vw; }
-            .track-title h2 { font-size: 2.5rem; }
-            .track-stats { flex-direction: column; gap: 16px; }
-            .track-banner { height: auto; min-height: 500px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .track-title h2 { font-size: 3rem; }
+            .track-banner { height: auto; min-height: 400px; }
             .quote-wrap { flex-direction: column; text-align: center; gap: 32px; }
             .quote-text { font-size: 1.2rem; }
             .footer-grid { grid-template-columns: 1fr; }
@@ -222,164 +238,233 @@
                 <i class="fa-solid fa-person-biking" style="color: var(--primary);"></i> EnjoyCycling
             </a>
             <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Community</a>
-                <a href="#">Plans</a>
-                <a href="#">Events</a>
+                <a href="#">Shop All</a>
+                <a href="#">Apparel</a>
+                <a href="#">Footwear</a>
+                <a href="#">Accessories</a>
+                <a href="#" style="color: var(--primary);">Sale</a>
             </div>
             <div class="nav-actions">
-                <a href="#" class="cart-btn"><i class="fa-solid fa-bag-shopping"></i></a>
-                <a href="#" class="btn btn-primary">Join Club</a>
+                <a href="#" class="cart-btn">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-badge">2</span>
+                </a>
+                <a href="#" class="btn btn-primary" style="padding: 12px 24px;"><i class="fa-regular fa-user"></i> Account</a>
             </div>
         </div>
     </nav>
 
     <section class="hero">
-        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=2000" alt="Cyclist on mountain road" class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=2000" alt="Cyclist wearing premium gear" class="hero-bg">
         <div class="hero-content container">
-            <h1 class="animate-up">Ride the Edge with Enjoy Cycling Club</h1>
-            <p class="animate-up" style="transition-delay: 0.1s;">Push your boundaries, discover breathtaking routes, and connect with a community that shares your passion for the pedal.</p>
+            <h1 class="animate-up">Ride the Edge with Premium Gear</h1>
+            <p class="animate-up" style="transition-delay: 0.1s;">Elevate your performance and style. Shop our exclusive collection of high-performance jerseys, footwear, and cycling accessories.</p>
             <div class="hero-btns animate-up" style="transition-delay: 0.2s;">
-                <a href="#" class="btn btn-primary">Start Your Journey</a>
-                <a href="#" class="btn btn-outline">View Routes</a>
+                <a href="#" class="btn btn-primary">Shop Collection <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
         
         <div class="floating-stat animate-up" style="transition-delay: 0.4s;">
-            <h3>120<span style="font-size: 1.5rem;">km</span></h3>
-            <p>Next Group Ride</p>
+            <h3>FREE</h3>
+            <p>Shipping Over $100</p>
         </div>
         
-        <div class="hero-giant-text">ENJOY</div>
+        <div class="hero-giant-text">MERCH</div>
     </section>
 
-    <section class="section-pad">
-        <div class="container precision-grid">
-            <div class="precision-left animate-up">
-                <h2>Precision in Every Pedal Stroke</h2>
-                <p>Experience the ultimate ride with our curated trails, expert coaching, and high-performance gear recommendations tailored for every level.</p>
-                
-                <div class="community-card">
-                    <div>
-                        <h3>Join the Enjoy Community</h3>
-                        <p>Become part of a network that motivates, inspires, and rides together.</p>
+    <section class="categories container section-pad" style="padding-bottom: 60px;">
+        <div class="section-header animate-up">
+            <div>
+                <h2>Shop by Category</h2>
+                <p>Find exactly what you need for your next big ride.</p>
+            </div>
+        </div>
+        
+        <div class="category-grid animate-up" style="transition-delay: 0.1s;">
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1525013066836-c6090f0ad9d8?auto=format&fit=crop&w=600&q=80" alt="Jerseys">
+                <div class="category-overlay">
+                    <h3>Apparel & Jerseys</h3>
+                    <span>Shop Now <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614c3a?auto=format&fit=crop&w=600&q=80" alt="Footwear">
+                <div class="category-overlay">
+                    <h3>Cycling Shoes</h3>
+                    <span>Shop Now <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1556822284-db72a15f0376?auto=format&fit=crop&w=600&q=80" alt="Caps">
+                <div class="category-overlay">
+                    <h3>Caps & Helmets</h3>
+                    <span>Shop Now <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1584384666579-05e839e0839e?auto=format&fit=crop&w=600&q=80" alt="Accessories">
+                <div class="category-overlay">
+                    <h3>Accessories</h3>
+                    <span>Shop Now <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section container">
+        <div class="section-header animate-up">
+            <div class="products-header">
+                <h2>Trending Gear</h2>
+                <p>Our top-selling merchandise loved by the cycling community.</p>
+            </div>
+            <div class="nav-arrows" style="display: flex; gap: 12px;">
+                <button class="btn btn-outline" style="color: var(--dark); border-color: var(--border);"><i class="fa-solid fa-arrow-left"></i></button>
+                <button class="btn btn-dark"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="products-scroll-container animate-up" style="transition-delay: 0.1s;">
+            <div class="product-card">
+                <div class="product-badge">New</div>
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=500&q=80" alt="Aero Sprint T-Shirt" style="border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-cat">Apparel</span>
+                    <h3 class="product-title">Enjoy Club Graphic Tee</h3>
+                    <div class="product-bottom">
+                        <div class="product-price">$35.00</div>
+                        <button class="add-cart-circle"><i class="fa-solid fa-plus"></i></button>
                     </div>
-                    <div class="avatars">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Member">
-                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Member">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Member">
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-badge sale">Sale</div>
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=500&q=80" alt="Carbon Edge Shoes" style="border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-cat">Footwear</span>
+                    <h3 class="product-title">Carbon Pro Ride Shoes</h3>
+                    <div class="product-bottom">
+                        <div class="product-price">$180.00 <span>$220.00</span></div>
+                        <button class="add-cart-circle"><i class="fa-solid fa-plus"></i></button>
                     </div>
-                    <a href="#" class="icon-btn-primary"><i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=500&q=80" alt="Classic Ridge Cap" style="border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-cat">Accessories</span>
+                    <h3 class="product-title">Classic Ridge Cap</h3>
+                    <div class="product-bottom">
+                        <div class="product-price">$24.00</div>
+                        <button class="add-cart-circle"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1542272604-780c8d1976a4?auto=format&fit=crop&w=500&q=80" alt="Performance Gloves" style="border-radius: 8px;">
+                </div>
+                <div class="product-info">
+                    <span class="product-cat">Apparel</span>
+                    <h3 class="product-title">Aero Performance Jersey</h3>
+                    <div class="product-bottom">
+                        <div class="product-price">$85.00</div>
+                        <button class="add-cart-circle"><i class="fa-solid fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
             
-            <div class="precision-right animate-up" style="transition-delay: 0.2s;">
-                <div class="filter-tags">
-                    <span class="tag active">Cycling Life</span>
-                    <span class="tag">Community Rides</span>
-                    <span class="tag">Pro Gear Room</span>
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1555274175-75f4056dfd05?auto=format&fit=crop&w=500&q=80" alt="Water Bottle" style="border-radius: 8px;">
                 </div>
-                
-                <div class="main-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&q=80&w=1000" alt="Cyclist resting and drinking water">
-                </div>
-                
-                <div class="nav-arrows">
-                    <button class="arrow-btn"><i class="fa-solid fa-arrow-left"></i> Prev</button>
-                    <button class="arrow-btn btn-dark">Next <i class="fa-solid fa-arrow-right"></i></button>
+                <div class="product-info">
+                    <span class="product-cat">Accessories</span>
+                    <h3 class="product-title">Thermal Water Flask</h3>
+                    <div class="product-bottom">
+                        <div class="product-price">$28.00</div>
+                        <button class="add-cart-circle"><i class="fa-solid fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section-pad experience">
+    <section class="lookbook">
         <div class="container">
-            <h2 class="animate-up">Master Our Cycling Technology Experience</h2>
+            <h2 class="animate-up">Shop The Look</h2>
             
             <div class="exp-grid">
                 <div class="exp-card animate-up">
-                    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=600" alt="Road cycling">
+                    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=600" alt="Road cycling kit">
                     <div class="exp-overlay">
-                        <a href="#" class="btn btn-primary" style="margin-bottom: auto; border-radius: 8px; padding: 10px 20px;">See Their Stories <i class="fa-solid fa-arrow-right"></i></a>
-                        <p style="color: white; text-align: left; font-size: 0.9rem; margin-bottom: 0;">"The advanced metrics helped me shave minutes off my personal best."</p>
+                        <span class="shop-tag"><i class="fa-solid fa-tag"></i> Aero Jersey - $85</span>
+                        <h3 style="margin-top: auto; font-size: 1.5rem;">The Alpine Kit</h3>
                     </div>
                 </div>
                 
                 <div class="exp-card animate-up" style="transition-delay: 0.1s;">
                     <img src="https://images.unsplash.com/photo-1520114093922-4467c65fce31?auto=format&fit=crop&q=80&w=800" alt="Mountain landscape cycling">
                     <div class="exp-overlay">
-                        <span class="exp-tag"><i class="fa-solid fa-location-dot"></i> Alpine Routes</span>
+                        <span class="shop-tag"><i class="fa-solid fa-tag"></i> Windbreaker - $110</span>
+                        <h3 style="margin-top: auto; font-size: 1.5rem;">Endurance Layers</h3>
                     </div>
                 </div>
                 
                 <div class="exp-card animate-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?auto=format&fit=crop&q=80&w=600" alt="Sunset ride">
+                    <img src="https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?auto=format&fit=crop&q=80&w=600" alt="Sunset ride gear">
                     <div class="exp-overlay">
-                        <span class="exp-tag"><i class="fa-regular fa-clock"></i> Evening Sprints</span>
+                        <span class="shop-tag"><i class="fa-solid fa-tag"></i> Pro Shorts - $95</span>
+                        <h3 style="margin-top: auto; font-size: 1.5rem;">Sunset Sprint</h3>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="track-section">
+    <section class="promo-section">
         <div class="track-banner animate-up">
-            <img src="https://images.unsplash.com/photo-1571333179267-3395d3dc65ec?auto=format&fit=crop&q=80&w=1400" alt="Cyclist smiling with water bottle">
+            <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=1400" alt="Cyclist riding fast">
             
             <div class="track-content">
-                <div class="track-top">
-                    <div class="track-title">
-                        <h2>Track Every<br>Turn, Relive</h2>
-                        <p>Our app syncs flawlessly with your gear to capture every heartbeat, cadence push, and elevation gain.</p>
-                    </div>
-                    
-                    <div class="track-stats">
-                        <div class="stat-item">
-                            <span>Distance</span>
-                            <strong>89.9 Km</strong>
-                        </div>
-                        <div class="stat-item">
-                            <span>Date</span>
-                            <strong>11/06/23</strong>
-                        </div>
-                        <div class="stat-item">
-                            <span>Riding Time</span>
-                            <strong>04:30 H</strong>
-                        </div>
-                    </div>
+                <div class="track-title">
+                    <h2>Gear Up For<br>Every Ride</h2>
+                    <p>Get 20% off all Enjoy Cycling Club apparel when you use code ENJOY20 at checkout.</p>
+                    <a href="#" class="btn btn-dark" style="padding: 16px 36px; font-size: 1.1rem;">Shop The Sale</a>
                 </div>
-                
-                <div class="giant-banner-text">Every Ride</div>
             </div>
         </div>
     </section>
 
     <section class="testimonials">
         <div class="container">
-            <h2 class="animate-up">Voices of <span>Our Riders</span></h2>
-            <p class="animate-up">Learn from the community, train with power, and ride with grace.</p>
+            <h2 class="animate-up">Voices of <span>Our Customers</span></h2>
             
             <div class="quote-wrap animate-up" style="transition-delay: 0.1s;">
-                <button class="arrow-btn" style="background:transparent; border-color: #333; color: white;"><i class="fa-solid fa-arrow-left"></i> Prev</button>
+                <button class="btn btn-outline" style="color: var(--dark); border-color: var(--border);"><i class="fa-solid fa-arrow-left"></i></button>
                 <div class="quote-text">
-                    "Enjoy Cycling Club changed how I ride. The tech workshops taught me more in a day than I learned in years. My speed and confidence on the road skyrocketed!"
+                    "The Aero Performance Jersey fits perfectly and breathes incredibly well on hot climbs. Best piece of merch I've bought all year. Quality is top-notch."
                 </div>
-                <button class="arrow-btn" style="color: black;">Next <i class="fa-solid fa-arrow-right"></i></button>
+                <button class="btn btn-outline" style="color: var(--dark); border-color: var(--border);"><i class="fa-solid fa-arrow-right"></i></button>
             </div>
             
             <div class="user-nav animate-up" style="transition-delay: 0.2s;">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="User 1" class="user-avatar">
-                
                 <div class="active-user-info">
                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Julian K.">
                     <div>
                         <h4>Julian K.</h4>
-                        <span>Pro Event Finisher</span>
+                        <span>Verified Buyer <i class="fa-solid fa-circle-check"></i></span>
                     </div>
                 </div>
-                
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" alt="User 3" class="user-avatar">
             </div>
         </div>
     </section>
@@ -389,34 +474,37 @@
             <div class="footer-grid">
                 <div class="footer-col" style="display: flex; gap: 40px;">
                     <div>
-                        <h4>Home</h4>
+                        <h4>Shop</h4>
                         <ul>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Membership</a></li>
-                            <li><a href="#">Coaches</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>Community</h4>
-                        <ul>
-                            <li><a href="#">Discussions</a></li>
-                            <li><a href="#">Team Admissions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Men's Apparel</a></li>
+                            <li><a href="#">Women's Apparel</a></li>
+                            <li><a href="#">Cycling Shoes</a></li>
+                            <li><a href="#">Accessories</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4>Support</h4>
                         <ul>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Track Order</a></li>
+                            <li><a href="#">Shipping & Returns</a></li>
+                            <li><a href="#">Size Guide</a></li>
                             <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Help Center</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Club Members</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="footer-col" style="grid-column: span 3;">
                     <div class="newsletter">
-                        <h3>Sign up for updates<br>and VIP deals.</h3>
+                        <h3>Get 10% off your<br>first gear order.</h3>
                         <form class="newsletter-form">
                             <input type="email" placeholder="Enter your email address" required>
                             <button type="submit" class="btn btn-dark">Subscribe <i class="fa-solid fa-arrow-right"></i></button>
@@ -426,8 +514,8 @@
             </div>
             
             <div class="footer-bottom-img">
-                <img src="https://images.unsplash.com/photo-1557330359-ffb0deed6163?auto=format&fit=crop&q=80&w=1200" alt="Cyclist sprinting">
-                <div class="footer-brand">EnjoyCycling</div>
+                <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&q=80&w=1200" alt="Cyclist with bike">
+                <div class="footer-brand">EnjoyMerch</div>
             </div>
         </div>
     </footer>
@@ -444,7 +532,7 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
-                        observer.unobserve(entry.target); // Run animation once
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
