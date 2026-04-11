@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSG — Pulse Sport Gear</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@300;400;500&family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --black: #0a0a0a;
+  --orange: #ff4500;
+  --orange-dim: #cc3700;
+  --white: #fafaf7;
+  --gray: #6b6b6b;
+  --gray-light: #e8e4dc;
+  --card: #ffffff;
+  --green: #00c853;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--black);
+  font-family:'Archivo',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* LOADER */
+#loader{
+  position:fixed;inset:0;background:var(--black);z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 0.8s ease, visibility 0.8s ease;
+}
+#loader.gone{opacity:0;visibility:hidden;pointer-events:none}
+.loader-logo{
+  font-family:'Anton',sans-serif;font-size:72px;
+  color:var(--white);letter-spacing:8px;
+  margin-bottom:40px;
+  animation:loader-pop 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+.loader-logo span{color:var(--orange)}
+.loader-bar-wrap{width:280px;height:2px;background:rgba(255,255,255,0.1)}
+.loader-bar{height:100%;background:var(--orange);width:0;transition:width 1.8s cubic-bezier(0.4,0,0.2,1)}
+.loader-pct{
+  font-family:'DM Mono',monospace;font-size:12px;letter-spacing:3px;
+  color:rgba(255,255,255,0.4);margin-top:16px;
+}
+@keyframes loader-pop{from{opacity:0;transform:scale(0.7)}to{opacity:1;transform:scale(1)}}
+
+/* CUSTOM CURSOR */
+#cur{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--orange);position:fixed;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width 0.3s,height 0.3s,background 0.3s;
+}
+#cur2{
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px solid var(--orange);
+  position:fixed;pointer-events:none;z-index:9997;
+  transform:translate(-50%,-50%);
+  transition:transform 0.35s ease;
+  opacity:0.5;
+}
+.cursor-grow #cur{width:44px;height:44px;background:rgba(255,69,0,0.15)}
+.cursor-grow #cur2{opacity:0}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:0 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:68px;
+  background:var(--white);
+  border-bottom:2px solid var(--black);
+  transition:height 0.3s;
+}
+.nav-left{display:flex;align-items:center;gap:48px}
+.nav-brand{
+  font-family:'Anton',sans-serif;font-size:28px;
+  letter-spacing:6px;color:var(--black);text-decoration:none;
+  display:flex;align-items:center;gap:2px;
+}
+.nav-brand span{color:var(--orange)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--gray);text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--orange)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-tag{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:2px;background:var(--orange);color:var(--white);
+  padding:5px 12px;text-transform:uppercase;
+}
+.nav-cta{
+  background:var(--black);color:var(--white);
+  border:none;padding:11px 28px;cursor:pointer;
+  font-family:'Archivo',sans-serif;font-weight:700;
+  font-size:12px;letter-spacing:1px;
+  transition:background 0.25s,transform 0.2s;
+  text-transform:uppercase;text-decoration:none;
+  display:inline-block;
+}
+.nav-cta:hover{background:var(--orange);transform:translateY(-1px)}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  padding-top:68px;
+  display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+}
+.hero-left{
+  padding:80px 48px 80px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-right:2px solid var(--black);
+  position:relative;
+  background:var(--white);
+}
+.hero-left::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;
+  height:2px;background:var(--black);
+}
+.hero-kicker{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:4px;text-transform:uppercase;
+  color:var(--orange);margin-bottom:32px;
+  display:flex;align-items:center;gap:12px;
+  opacity:0;animation:up 0.7s 2s forwards;
+}
+.hero-kicker::before{content:'';width:28px;height:1px;background:var(--orange)}
+.hero-h1{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(80px,11vw,140px);
+  line-height:0.9;letter-spacing:-1px;
+  color:var(--black);
+  overflow:hidden;
+}
+.hero-h1 .line{
+  display:block;
+  opacity:0;transform:translateY(110%);
+  animation:slide-up 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-h1 .line:nth-child(1){animation-delay:2.2s}
+.hero-h1 .line:nth-child(2){animation-delay:2.4s;color:var(--orange)}
+.hero-h1 .line:nth-child(3){animation-delay:2.6s}
+.hero-desc{
+  font-size:16px;line-height:1.8;color:var(--gray);
+  max-width:400px;margin-top:36px;
+  opacity:0;animation:up 0.8s 3s forwards;
+}
+.hero-actions{
+  display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;
+  opacity:0;animation:up 0.8s 3.2s forwards;
+}
+.btn-fill{
+  background:var(--black);color:var(--white);
+  padding:16px 38px;border:2px solid var(--black);
+  font-family:'Archivo',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;transition:all 0.25s;text-decoration:none;
+  display:inline-block;
+}
+.btn-fill:hover{background:var(--orange);border-color:var(--orange)}
+.btn-ghost{
+  background:transparent;color:var(--black);
+  padding:16px 38px;border:2px solid var(--black);
+  font-family:'Archivo',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;transition:all 0.25s;text-decoration:none;
+  display:inline-block;
+}
+.btn-ghost:hover{background:var(--black);color:var(--white)}
+.hero-stats{
+  display:flex;gap:0;margin-top:60px;
+  border-top:1px solid var(--gray-light);padding-top:32px;
+  opacity:0;animation:up 0.8s 3.4s forwards;
+}
+.hstat{flex:1;padding-right:24px}
+.hstat:not(:last-child){border-right:1px solid var(--gray-light);margin-right:24px}
+.hstat-n{
+  font-family:'Anton',sans-serif;font-size:42px;
+  color:var(--black);letter-spacing:-1px;line-height:1;
+}
+.hstat-n span{color:var(--orange)}
+.hstat-l{font-size:12px;color:var(--gray);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+
+.hero-right{
+  position:relative;background:var(--black);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;min-height:100vh;
+}
+.hero-right-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 80% at 60% 40%, rgba(255,69,0,0.15) 0%, transparent 70%);
+}
+.hero-paddle-wrap{
+  position:relative;z-index:2;
+  opacity:0;animation:hero-paddle-in 1.2s cubic-bezier(0.34,1.56,0.64,1) 2.8s forwards;
+  filter:drop-shadow(0 40px 80px rgba(255,69,0,0.3));
+}
+@keyframes hero-paddle-in{
+  from{opacity:0;transform:scale(0.6) rotate(-15deg)}
+  to{opacity:1;transform:scale(1) rotate(-8deg)}
+}
+.hero-float{animation:float 6s ease-in-out infinite}
+@keyframes float{
+  0%,100%{transform:rotate(-8deg) translateY(0)}
+  50%{transform:rotate(-8deg) translateY(-20px)}
+}
+.hero-tag{
+  position:absolute;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--orange);
+  border:1px solid var(--orange);padding:8px 16px;
+  background:rgba(255,69,0,0.08);
+}
+.hero-tag.t1{top:100px;left:40px}
+.hero-tag.t2{bottom:140px;right:40px}
+.hero-tag.t3{top:50%;left:20px;transform:translateY(-50%)}
+.hero-number{
+  position:absolute;right:30px;top:50%;
+  font-family:'Anton',sans-serif;font-size:200px;
+  color:rgba(255,255,255,0.03);letter-spacing:-8px;
+  line-height:1;pointer-events:none;user-select:none;
+  transform:translateY(-50%);
+}
+
+/* TICKER */
+.ticker{
+  background:var(--orange);padding:14px 0;
+  overflow:hidden;border-top:2px solid var(--black);
+  border-bottom:2px solid var(--black);
+}
+.ticker-inner{
+  display:flex;animation:ticker 18s linear infinite;
+  white-space:nowrap;
+}
+.ticker-item{
+  flex-shrink:0;padding:0 48px;
+  font-family:'Anton',sans-serif;font-size:18px;
+  letter-spacing:3px;color:var(--white);
+  display:flex;align-items:center;gap:20px;
+}
+.ticker-item::before{content:'✦';font-size:10px;opacity:0.7}
+
+/* PRODUCTS */
+#products{padding:120px 0;background:var(--bg)}
+.section-head{
+  padding:0 80px;margin-bottom:70px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;
+}
+.sec-label{
+  font-family:'DM Mono',monospace;font-size:11px;
+  letter-spacing:4px;text-transform:uppercase;color:var(--orange);
+  margin-bottom:12px;
+}
+.sec-title{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(60px,8vw,100px);
+  line-height:0.88;letter-spacing:-1px;color:var(--black);
+}
+.sec-title em{font-style:normal;color:var(--orange);display:block}
+.sec-sub{font-size:15px;color:var(--gray);max-width:260px;line-height:1.7;align-self:flex-end}
+
+/* PRODUCT GRID */
+.products-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:2px solid var(--black);
+}
+.prod-card{
+  border-right:2px solid var(--black);border-bottom:2px solid var(--black);
+  position:relative;overflow:hidden;cursor:pointer;
+  background:var(--white);
+  transition:background 0.3s;
+}
+.prod-card:last-child{border-right:none}
+.prod-card:hover{background:var(--black)}
+.prod-img-area{
+  padding:48px 32px 28px;
+  min-height:340px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  border-bottom:1px solid var(--gray-light);
+  transition:border-color 0.3s;
+  perspective:800px;
+}
+.prod-card:hover .prod-img-area{border-color:rgba(255,255,255,0.08)}
+.prod-svg{
+  transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),filter 0.5s;
+  transform-style:preserve-3d;
+  filter:drop-shadow(0 16px 32px rgba(0,0,0,0.15));
+}
+.prod-card:hover .prod-svg{
+  transform:scale(1.1) translateY(-10px) rotate(2deg);
+  filter:drop-shadow(0 30px 50px rgba(255,69,0,0.35));
+}
+.prod-badge{
+  position:absolute;top:16px;left:16px;
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;background:var(--orange);color:var(--white);
+  padding:4px 10px;
+}
+.prod-info{padding:24px 28px 28px}
+.prod-num{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;
+  color:var(--gray);margin-bottom:8px;
+  transition:color 0.3s;
+}
+.prod-card:hover .prod-num{color:rgba(255,255,255,0.4)}
+.prod-name{
+  font-family:'Anton',sans-serif;font-size:28px;letter-spacing:0.5px;
+  color:var(--black);margin-bottom:6px;line-height:1.1;
+  transition:color 0.3s;
+}
+.prod-card:hover .prod-name{color:var(--white)}
+.prod-type{font-size:12px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;transition:color 0.3s}
+.prod-card:hover .prod-type{color:rgba(255,255,255,0.4)}
+.prod-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:20px;padding-top:20px;
+  border-top:1px solid var(--gray-light);
+  transition:border-color 0.3s;
+}
+.prod-card:hover .prod-bottom{border-color:rgba(255,255,255,0.08)}
+.prod-price{
+  font-family:'Anton',sans-serif;font-size:34px;
+  color:var(--orange);letter-spacing:-0.5px;
+}
+.prod-btn{
+  background:transparent;border:1.5px solid var(--black);
+  padding:8px 18px;font-family:'Archivo',sans-serif;
+  font-weight:700;font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;
+  transition:all 0.25s;color:var(--black);
+}
+.prod-card:hover .prod-btn{
+  background:var(--orange);border-color:var(--orange);color:var(--white);
+}
+/* HOVER REVEAL SPECS */
+.prod-specs-overlay{
+  position:absolute;inset:0;
+  background:rgba(10,10,10,0.95);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:32px;
+  opacity:0;transform:translateY(10px);
+  transition:opacity 0.35s,transform 0.35s;
+  pointer-events:none;
+}
+.prod-card:hover .prod-specs-overlay{opacity:1;transform:translateY(0);pointer-events:all}
+.specs-title{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--orange);margin-bottom:20px;
+}
+.spec-row{
+  display:flex;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+  font-size:13px;
+}
+.spec-key{color:rgba(255,255,255,0.4);font-size:12px}
+.spec-val{color:var(--white);font-weight:600}
+.specs-cta{
+  margin-top:24px;background:var(--orange);color:var(--white);
+  border:none;padding:12px;cursor:pointer;width:100%;
+  font-family:'Archivo',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:background 0.25s;
+}
+.specs-cta:hover{background:#ff6a33}
+
+/* STATEMENT BAND */
+.statement{
+  background:var(--black);padding:100px 80px;
+  border-top:2px solid var(--black);border-bottom:2px solid var(--black);
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.statement-left{}
+.st-eyebrow{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--orange);margin-bottom:24px;
+}
+.st-h2{
+  font-family:'Anton',sans-serif;font-size:clamp(50px,7vw,90px);
+  line-height:0.9;color:var(--white);letter-spacing:-1px;
+}
+.st-h2 em{font-style:normal;color:var(--orange)}
+.statement-right{}
+.st-desc{font-size:17px;line-height:1.9;color:rgba(255,255,255,0.55);margin-bottom:40px}
+.st-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.st-item{
+  border:1px solid rgba(255,255,255,0.07);
+  padding:24px 20px;transition:border-color 0.3s;
+}
+.st-item:hover{border-color:var(--orange)}
+.st-item-n{
+  font-family:'Anton',sans-serif;font-size:48px;
+  color:var(--orange);letter-spacing:-1px;line-height:1;margin-bottom:4px;
+}
+.st-item-l{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+
+/* TECHNOLOGY */
+#tech{padding:0;background:var(--bg)}
+.tech-wrapper{display:grid;grid-template-columns:1fr 1fr;min-height:700px}
+.tech-left{
+  background:var(--white);
+  border-right:2px solid var(--black);
+  border-bottom:2px solid var(--black);
+  padding:80px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.tech-bars{margin-top:48px;display:flex;flex-direction:column;gap:28px}
+.tbar-label{
+  display:flex;justify-content:space-between;
+  font-size:13px;font-weight:600;letter-spacing:0.5px;margin-bottom:10px;
+}
+.tbar-pct{color:var(--orange);font-family:'DM Mono',monospace}
+.tbar-track{height:4px;background:var(--gray-light);position:relative}
+.tbar-fill{
+  height:100%;background:var(--black);width:0;
+  transition:width 1.4s cubic-bezier(0.4,0,0.2,1);
+}
+.tbar-fill.orange{background:var(--orange)}
+.tbar-fill.active{width:var(--w)}
+
+.tech-right{
+  background:var(--black);
+  border-bottom:2px solid var(--black);
+  padding:80px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.tech-right .sec-label{color:rgba(255,255,255,0.4)}
+.tech-right .sec-title{color:var(--white)}
+.tech-features{margin-top:48px;display:flex;flex-direction:column;gap:0}
+.tf{
+  padding:24px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:grid;grid-template-columns:40px 1fr;gap:20px;
+  cursor:default;transition:background 0.2s;
+}
+.tf:hover{background:rgba(255,255,255,0.02);padding-left:10px;padding-right:10px;margin:0 -10px}
+.tf-num{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--orange);padding-top:3px;
+}
+.tf-name{
+  font-family:'Archivo',sans-serif;font-weight:700;
+  font-size:16px;color:var(--white);margin-bottom:6px;
+}
+.tf-desc{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7}
+
+/* COMPARISON */
+#compare{padding:120px 0;background:var(--white);border-top:2px solid var(--black)}
+.compare-table-wrap{overflow-x:auto;margin-top:60px}
+.compare-table{
+  width:100%;border-collapse:collapse;min-width:700px;
+}
+.compare-table th{
+  background:var(--black);color:var(--white);
+  font-family:'Anton',sans-serif;font-size:20px;
+  letter-spacing:2px;padding:20px 28px;text-align:left;
+  border-right:2px solid var(--bg);
+}
+.compare-table th:first-child{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-size:11px}
+.compare-table th.featured-col{background:var(--orange)}
+.compare-table td{
+  padding:18px 28px;
+  border-bottom:1px solid var(--gray-light);
+  border-right:1px solid var(--gray-light);
+  font-size:14px;color:var(--gray);
+  transition:background 0.2s;
+}
+.compare-table tr:hover td{background:rgba(255,69,0,0.03)}
+.compare-table td:first-child{font-weight:600;color:var(--black);font-size:13px;letter-spacing:0.5px;text-transform:uppercase}
+.compare-table td.featured-col{background:rgba(255,69,0,0.04);font-weight:600;color:var(--black)}
+.check{color:var(--green);font-size:16px}
+.cross{color:rgba(0,0,0,0.2)}
+
+/* TESTIMONIALS */
+#reviews{padding:0;background:var(--black);border-top:2px solid var(--black)}
+.reviews-inner{display:grid;grid-template-columns:340px 1fr}
+.reviews-left{
+  padding:80px 60px;
+  border-right:1px solid rgba(255,255,255,0.07);
+  display:flex;flex-direction:column;justify-content:center;
+  position:sticky;top:68px;
+  height:calc(100vh - 68px);
+}
+.reviews-left .sec-label{color:rgba(255,255,255,0.4)}
+.reviews-left .sec-title{color:var(--white)}
+.big-num{
+  font-family:'Anton',sans-serif;font-size:120px;
+  color:var(--orange);line-height:1;letter-spacing:-4px;
+  margin-top:40px;
+}
+.big-stars{color:var(--orange);font-size:24px;letter-spacing:4px;margin-top:8px}
+.big-label{font-size:14px;color:rgba(255,255,255,0.3);margin-top:8px;letter-spacing:1px}
+.reviews-right{padding:0}
+.review-card{
+  padding:52px 60px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  transition:background 0.3s;
+}
+.review-card:hover{background:rgba(255,255,255,0.03)}
+.rev-stars{color:var(--orange);letter-spacing:4px;font-size:14px;margin-bottom:20px}
+.rev-text{
+  font-size:19px;line-height:1.7;color:rgba(255,255,255,0.75);
+  font-style:italic;margin-bottom:28px;font-weight:300;
+}
+.rev-author{display:flex;align-items:center;gap:16px}
+.rev-av{
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Anton',sans-serif;font-size:18px;
+  flex-shrink:0;
+}
+.rev-name{font-weight:700;font-size:15px;color:var(--white)}
+.rev-role{font-size:12px;color:rgba(255,255,255,0.35);margin-top:2px;letter-spacing:0.5px}
+
+/* CTA BAND */
+.cta-band{
+  background:var(--orange);padding:100px 80px;
+  border-top:2px solid var(--black);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:40px;flex-wrap:wrap;
+}
+.cta-band h2{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(50px,6vw,80px);
+  line-height:0.9;color:var(--white);
+  letter-spacing:-1px;
+}
+.cta-band h2 span{color:var(--black)}
+.cta-right{display:flex;flex-direction:column;gap:16px;min-width:320px}
+.email-form{display:flex;gap:0}
+.email-form input{
+  flex:1;background:rgba(255,255,255,0.15);
+  border:2px solid rgba(255,255,255,0.3);border-right:none;
+  color:var(--white);padding:16px 20px;
+  font-family:'Archivo',sans-serif;font-size:14px;outline:none;
+  transition:border-color 0.25s;
+}
+.email-form input::placeholder{color:rgba(255,255,255,0.5)}
+.email-form input:focus{border-color:var(--white)}
+.email-form button{
+  background:var(--black);color:var(--white);border:2px solid var(--black);
+  padding:16px 24px;cursor:pointer;
+  font-family:'Archivo',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;
+  text-transform:uppercase;transition:background 0.25s;flex-shrink:0;
+}
+.email-form button:hover{background:#222}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:0.5px}
+
+/* FAQ */
+#faq{background:var(--bg);padding:120px 0;border-top:2px solid var(--black)}
+.faq-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;padding:0 80px;margin-top:60px}
+.faq-intro p{font-size:16px;color:var(--gray);line-height:1.8;margin-top:20px}
+.faq-items{}
+.faq-i{border-top:2px solid var(--black)}
+.faq-i:last-child{border-bottom:2px solid var(--black)}
+.faq-q2{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px 0;cursor:pointer;
+  font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;
+  transition:color 0.25s;user-select:none;
+}
+.faq-q2:hover{color:var(--orange)}
+.faq-icon2{
+  width:32px;height:32px;border:2px solid var(--black);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:300;flex-shrink:0;
+  transition:background 0.25s,color 0.25s,transform 0.35s;
+}
+.faq-i.open .faq-icon2{background:var(--orange);border-color:var(--orange);color:var(--white);transform:rotate(45deg)}
+.faq-a2{
+  font-size:14px;color:var(--gray);line-height:1.9;
+  max-height:0;overflow:hidden;
+  transition:max-height 0.5s ease,padding-bottom 0.4s;
+}
+.faq-i.open .faq-a2{max-height:200px;padding-bottom:22px}
+
+/* FOOTER */
+footer{background:var(--black);border-top:2px solid var(--black)}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;padding:80px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.footer-brand-name{
+  font-family:'Anton',sans-serif;font-size:48px;
+  letter-spacing:6px;color:var(--white);margin-bottom:4px;
+}
+.footer-brand-name span{color:var(--orange)}
+.footer-tagline{font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+.footer-desc{font-size:14px;color:rgba(255,255,255,0.35);line-height:1.8;max-width:280px}
+.socials{display:flex;gap:10px;margin-top:28px}
+.soc-btn{
+  width:40px;height:40px;border:1px solid rgba(255,255,255,0.12);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,0.4);font-size:14px;text-decoration:none;
+  transition:all 0.25s;
+}
+.soc-btn:hover{border-color:var(--orange);color:var(--orange)}
+.footer-col h4{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:20px;
+}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:12px}
+.footer-links a{font-size:14px;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.25s}
+.footer-links a:hover{color:var(--orange)}
+.footer-bottom{
+  padding:24px 80px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,0.2);letter-spacing:0.5px}
+
+/* MODAL */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,0.8);
+  z-index:2000;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.35s;
+  backdrop-filter:blur(8px);
+}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal-box{
+  background:var(--white);max-width:540px;width:100%;
+  border:2px solid var(--black);position:relative;
+  transform:translateY(30px) scale(0.95);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  overflow:hidden;
+}
+.modal-bg.open .modal-box{transform:translateY(0) scale(1)}
+.modal-header{
+  background:var(--black);padding:32px 36px 28px;
+  position:relative;
+}
+.modal-close{
+  position:absolute;top:20px;right:20px;
+  background:none;border:none;color:rgba(255,255,255,0.5);
+  font-size:22px;cursor:pointer;transition:color 0.2s;line-height:1;
+}
+.modal-close:hover{color:var(--orange)}
+.modal-sku{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--orange);margin-bottom:8px;
+}
+.modal-name{
+  font-family:'Anton',sans-serif;font-size:44px;
+  color:var(--white);letter-spacing:1px;line-height:1;
+}
+.modal-price-tag{
+  font-family:'Anton',sans-serif;font-size:32px;
+  color:var(--orange);margin-top:8px;
+}
+.modal-body{padding:36px}
+.mf-group{margin-bottom:20px}
+.mf-label{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gray);margin-bottom:8px;display:block;
+}
+.mf-input{
+  width:100%;border:2px solid var(--gray-light);
+  background:var(--white);padding:13px 16px;
+  font-family:'Archivo',sans-serif;font-size:14px;outline:none;
+  color:var(--black);transition:border-color 0.25s;
+}
+.mf-input:focus{border-color:var(--black)}
+.mf-select{
+  width:100%;border:2px solid var(--gray-light);
+  background:var(--white);padding:13px 16px;
+  font-family:'Archivo',sans-serif;font-size:14px;
+  color:var(--black);outline:none;cursor:pointer;
+  transition:border-color 0.25s;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%230a0a0a'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;
+}
+.mf-select:focus{border-color:var(--black)}
+.mf-submit{
+  width:100%;background:var(--black);color:var(--white);
+  border:2px solid var(--black);padding:16px;cursor:pointer;
+  font-family:'Archivo',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:background 0.25s;margin-top:8px;
+}
+.mf-submit:hover{background:var(--orange);border-color:var(--orange)}
+.mf-note{font-size:12px;color:var(--gray);margin-top:14px;text-align:center;letter-spacing:0.3px}
+
+/* KEYFRAMES */
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slide-up{from{opacity:0;transform:translateY(110%)}to{opacity:1;transform:translateY(0)}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SCROLL REVEAL */
+.sr{opacity:0;transform:translateY(36px);transition:opacity 0.8s ease,transform 0.8s ease}
+.sr.vis{opacity:1;transform:translateY(0)}
+.sr-l{opacity:0;transform:translateX(-36px);transition:opacity 0.8s ease,transform 0.8s ease}
+.sr-l.vis{opacity:1;transform:translateX(0)}
+.sr-r{opacity:0;transform:translateX(36px);transition:opacity 0.8s ease,transform 0.8s ease}
+.sr-r.vis{opacity:1;transform:translateX(0)}
+
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr}
+  .hero-right{min-height:50vh}
+  .products-grid{grid-template-columns:1fr 1fr}
+  .statement{grid-template-columns:1fr;padding:60px 32px}
+  .tech-wrapper{grid-template-columns:1fr}
+  .reviews-inner{grid-template-columns:1fr}
+  .reviews-left{position:relative;height:auto}
+  .compare-table-wrap{padding:0 24px}
+  .footer-top{grid-template-columns:1fr 1fr;padding:48px 32px}
+  .footer-bottom{padding:24px 32px}
+  .section-head{padding:0 32px}
+  .tech-left,.tech-right{padding:60px 32px}
+  .cta-band{padding:60px 32px}
+  .faq-grid{padding:0 32px;grid-template-columns:1fr}
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  .hero-left{padding:60px 32px}
+  .review-card{padding:40px 32px}
+  .hero-badge,.hero-number{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">P<span>S</span>G</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-left">
+    <a href="#" class="nav-brand">P<span>S</span>G</a>
+    <ul class="nav-links">
+      <li><a href="#products">Paddles</a></li>
+      <li><a href="#tech">Technology</a></li>
+      <li><a href="#compare">Compare</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <span class="nav-tag">Free Ship $150+</span>
+    <button class="nav-cta" onclick="openModal('strike')">Order Now</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-kicker">2025 PRO COLLECTION</div>
+    <h1 class="hero-h1">
+      <span class="line">RAISE</span>
+      <span class="line">YOUR</span>
+      <span class="line">GAME</span>
+    </h1>
+    <p class="hero-desc">Tournament-grade pickleball paddles engineered with raw carbon fiber technology. Built for players who refuse to lose.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-fill">Shop Paddles</a>
+      <a href="#tech" class="btn-ghost">See Technology</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-n"><span id="c1">0</span>K+</div>
+        <div class="hstat-l">Players</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n"><span id="c2">0</span></div>
+        <div class="hstat-l">Pro Athletes</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n"><span id="c3">0</span>-Day</div>
+        <div class="hstat-l">Trial Guarantee</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg"></div>
+    <div class="hero-number">01</div>
+    <div class="hero-tag t1">16mm Carbon Core</div>
+    <div class="hero-tag t2">USAPA Approved</div>
+    <div class="hero-tag t3">Pro Series</div>
+    <div class="hero-paddle-wrap">
+      <div class="hero-float">
+        <!-- APEX ELITE — Large Hero Paddle SVG -->
+        <svg width="260" height="480" viewBox="0 0 260 480" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#2a2a2a"/>
+              <stop offset="50%" stop-color="#1a1a1a"/>
+              <stop offset="100%" stop-color="#0d0d0d"/>
+            </linearGradient>
+            <linearGradient id="hg2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff4500" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#cc3700" stop-opacity="0.9"/>
+            </linearGradient>
+            <linearGradient id="hg3" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3a3a3a"/>
+              <stop offset="50%" stop-color="#555"/>
+              <stop offset="100%" stop-color="#3a3a3a"/>
+            </linearGradient>
+            <filter id="shadow">
+              <feDropShadow dx="0" dy="20" stdDeviation="20" flood-color="#ff4500" flood-opacity="0.3"/>
+            </filter>
+            <!-- Carbon fiber pattern -->
+            <pattern id="cf" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+              <rect width="4" height="4" fill="#222"/>
+              <rect x="4" y="4" width="4" height="4" fill="#222"/>
+              <rect width="4" height="4" fill="#1a1a1a" x="0" y="0"/>
+              <rect x="4" y="0" width="4" height="4" fill="#252525"/>
+              <rect x="0" y="4" width="4" height="4" fill="#252525"/>
+              <rect x="4" y="4" width="4" height="4" fill="#1a1a1a"/>
+            </pattern>
+            <clipPath id="face-clip">
+              <rect x="20" y="10" width="220" height="310" rx="24"/>
+            </clipPath>
+          </defs>
+
+          <!-- PADDLE FACE -->
+          <g filter="url(#shadow)">
+            <!-- Main body -->
+            <rect x="20" y="10" width="220" height="310" rx="24" fill="url(#hg1)"/>
+            <!-- CF texture -->
+            <rect x="20" y="10" width="220" height="310" rx="24" fill="url(#cf)" opacity="0.6"/>
+            <!-- Top highlight -->
+            <rect x="20" y="10" width="220" height="80" rx="24" fill="url(#hg2)" clip-path="url(#face-clip)"/>
+            <!-- Side edge lighting -->
+            <rect x="20" y="10" width="8" height="310" rx="4" fill="rgba(255,255,255,0.08)"/>
+            <rect x="232" y="10" width="8" height="310" rx="4" fill="rgba(0,0,0,0.2)"/>
+            <!-- Top edge lighting -->
+            <rect x="20" y="10" width="220" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+
+            <!-- Brand stripe -->
+            <rect x="20" y="64" width="220" height="52" fill="url(#hg2)" clip-path="url(#face-clip)"/>
+
+            <!-- PSG Text on face -->
+            <text x="130" y="100" text-anchor="middle" font-family="Anton, sans-serif" font-size="38" fill="white" letter-spacing="10" opacity="0.95">PSG</text>
+
+            <!-- Horizontal grip lines texture on face -->
+            <line x1="32" y1="130" x2="228" y2="130" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="150" x2="228" y2="150" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="170" x2="228" y2="170" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="190" x2="228" y2="190" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="210" x2="228" y2="210" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="230" x2="228" y2="230" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="250" x2="228" y2="250" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="270" x2="228" y2="270" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="32" y1="290" x2="228" y2="290" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+            <!-- Model label -->
+            <text x="130" y="165" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" fill="rgba(255,255,255,0.4)" letter-spacing="3">APEX ELITE</text>
+            <text x="130" y="182" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.25)" letter-spacing="2">CARBON SERIES 16MM</text>
+
+            <!-- Circular detail -->
+            <circle cx="130" cy="240" r="35" fill="none" stroke="rgba(255,69,0,0.25)" stroke-width="1"/>
+            <circle cx="130" cy="240" r="20" fill="none" stroke="rgba(255,69,0,0.15)" stroke-width="1"/>
+            <text x="130" y="244" text-anchor="middle" font-family="Anton, sans-serif" font-size="10" fill="rgba(255,255,255,0.35)" letter-spacing="1">PRO</text>
+
+            <!-- Bottom of face -->
+            <rect x="20" y="298" width="220" height="22" rx="4" fill="rgba(0,0,0,0.3)" clip-path="url(#face-clip)"/>
+          </g>
+
+          <!-- THROAT / NECK -->
+          <rect x="88" y="318" width="84" height="22" fill="#111" rx="4"/>
+          <rect x="92" y="318" width="76" height="22" fill="#1a1a1a" rx="3"/>
+
+          <!-- HANDLE - wrapped grip -->
+          <rect x="92" y="336" width="76" height="130" rx="10" fill="#0d0d0d"/>
+          <!-- Grip wrap stripes -->
+          <rect x="92" y="340" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="352" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="364" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="376" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="388" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="400" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="412" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="424" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="436" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+          <rect x="92" y="448" width="76" height="8" fill="url(#hg3)" rx="2" opacity="0.8"/>
+
+          <!-- Handle center line detail -->
+          <rect x="127" y="336" width="6" height="130" fill="rgba(255,69,0,0.3)" rx="1"/>
+
+          <!-- Butt cap -->
+          <rect x="88" y="462" width="84" height="16" rx="8" fill="#1a1a1a"/>
+          <rect x="96" y="465" width="68" height="8" rx="4" fill="rgba(255,255,255,0.06)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item">PSG 2025</div>
+    <div class="ticker-item">Carbon Fiber Technology</div>
+    <div class="ticker-item">USAPA Approved</div>
+    <div class="ticker-item">30-Day Trial</div>
+    <div class="ticker-item">Pro Certified</div>
+    <div class="ticker-item">Free Returns</div>
+    <div class="ticker-item">PSG 2025</div>
+    <div class="ticker-item">Carbon Fiber Technology</div>
+    <div class="ticker-item">USAPA Approved</div>
+    <div class="ticker-item">30-Day Trial</div>
+    <div class="ticker-item">Pro Certified</div>
+    <div class="ticker-item">Free Returns</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-head sr">
+    <div>
+      <div class="sec-label">The Lineup</div>
+      <h2 class="sec-title">OUR<em>PADDLES</em></h2>
+    </div>
+    <p class="sec-sub">Every model is engineered for a specific style of play. Hover to explore specs.</p>
+  </div>
+  <div class="products-grid">
+
+    <!-- PADDLE 1: STRIKE PRO -->
+    <div class="prod-card" onclick="openModal('strike')">
+      <div class="prod-img-area">
+        <span class="prod-badge">Bestseller</span>
+        <svg class="prod-svg" width="160" height="340" viewBox="0 0 160 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="p1g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e3a8a"/><stop offset="100%" stop-color="#0f1f4a"/></linearGradient>
+            <pattern id="cf1" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+              <rect width="3" height="3" fill="#1a2f6e"/><rect x="3" y="3" width="3" height="3" fill="#1a2f6e"/>
+              <rect x="3" y="0" width="3" height="3" fill="#152660"/><rect x="0" y="3" width="3" height="3" fill="#152660"/>
+            </pattern>
+          </defs>
+          <rect x="15" y="8" width="130" height="220" rx="18" fill="url(#p1g)"/>
+          <rect x="15" y="8" width="130" height="220" rx="18" fill="url(#cf1)" opacity="0.5"/>
+          <rect x="15" y="8" width="130" height="55" rx="18" fill="#ff4500" opacity="0.9" clip-path="url(#c1clip)"/>
+          <clipPath id="c1clip"><rect x="15" y="8" width="130" height="228"/></clipPath>
+          <text x="80" y="48" text-anchor="middle" font-family="Anton" font-size="28" fill="white" letter-spacing="6">PSG</text>
+          <text x="80" y="100" text-anchor="middle" font-family="DM Mono" font-size="9" fill="rgba(255,255,255,0.5)" letter-spacing="2">STRIKE PRO</text>
+          <text x="80" y="115" text-anchor="middle" font-family="DM Mono" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="2">16MM</text>
+          <circle cx="80" cy="165" r="26" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <text x="80" y="169" text-anchor="middle" font-family="Anton" font-size="9" fill="rgba(255,255,255,0.4)" letter-spacing="1">ELITE</text>
+          <rect x="15" y="220" width="130" height="8" rx="2" fill="rgba(0,0,0,0.25)" clip-path="url(#c1clip)"/>
+          <rect x="58" y="228" width="44" height="14" fill="#111" rx="3"/>
+          <rect x="58" y="240" width="44" height="86" rx="7" fill="#0d0d0d"/>
+          <line x1="58" y1="250" x2="102" y2="250" stroke="#222" stroke-width="4"/>
+          <line x1="58" y1="260" x2="102" y2="260" stroke="#222" stroke-width="4"/>
+          <line x1="58" y1="270" x2="102" y2="270" stroke="#222" stroke-width="4"/>
+          <line x1="58" y1="280" x2="102" y2="280" stroke="#222" stroke-width="4"/>
+          <line x1="58" y1="290" x2="102" y2="290" stroke="#222" stroke-width="4"/>
+          <line x1="58" y1="300" x2="102" y2="300" stroke="#222" stroke-width="4"/>
+          <rect x="78" y="240" width="4" height="86" fill="rgba(255,69,0,0.4)" rx="1"/>
+          <rect x="54" y="324" width="52" height="12" rx="6" fill="#1a1a1a"/>
+        </svg>
+        <div class="prod-specs-overlay">
+          <div class="specs-title">Strike Pro 16 — Specs</div>
+          <div class="spec-row"><span class="spec-key">Face</span><span class="spec-val">Raw Carbon Fiber</span></div>
+          <div class="spec-row"><span class="spec-key">Core</span><span class="spec-val">16mm Polypropylene</span></div>
+          <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">7.9 – 8.3 oz</span></div>
+          <div class="spec-row"><span class="spec-key">Grip</span><span class="spec-val">4¼" Cushion Wrap</span></div>
+          <div class="spec-row"><span class="spec-key">USAPA</span><span class="spec-val">Approved ✓</span></div>
+          <button class="specs-cta" onclick="event.stopPropagation();openModal('strike')">Order This Paddle →</button>
+        </div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-num">/ 001</div>
+        <div class="prod-name">STRIKE<br>PRO 16</div>
+        <div class="prod-type">Power + Control</div>
+        <div class="prod-bottom">
+          <div class="prod-price">$249</div>
+          <button class="prod-btn" onclick="event.stopPropagation();openModal('strike')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PADDLE 2: PULSE CORE -->
+    <div class="prod-card" onclick="openModal('pulse')">
+      <div class="prod-img-area">
+        <span class="prod-badge" style="background:#0a0a0a">Most Popular</span>
+        <svg class="prod-svg" width="160" height="340" viewBox="0 0 160 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="p2g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient>
+            <pattern id="cf2" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+              <rect width="3" height="3" fill="#1f1f1f"/><rect x="3" y="3" width="3" height="3" fill="#1f1f1f"/>
+              <rect x="3" y="0" width="3" height="3" fill="#171717"/><rect x="0" y="3" width="3" height="3" fill="#171717"/>
+            </pattern>
+          </defs>
+          <rect x="10" y="8" width="140" height="215" rx="22" fill="url(#p2g)"/>
+          <rect x="10" y="8" width="140" height="215" rx="22" fill="url(#cf2)" opacity="0.7"/>
+          <rect x="10" y="8" width="140" height="58" rx="22" fill="#ff4500" clip-path="url(#c2clip)"/>
+          <clipPath id="c2clip"><rect x="10" y="8" width="140" height="223"/></clipPath>
+          <text x="80" y="50" text-anchor="middle" font-family="Anton" font-size="30" fill="white" letter-spacing="6">PSG</text>
+          <!-- Pulse/heartbeat line -->
+          <polyline points="22,130 40,130 50,105 60,155 70,115 80,130 95,130 105,130" fill="none" stroke="#ff4500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="80" y="175" text-anchor="middle" font-family="DM Mono" font-size="9" fill="rgba(255,255,255,0.4)" letter-spacing="2">PULSE CORE</text>
+          <text x="80" y="190" text-anchor="middle" font-family="DM Mono" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="2">14MM · OVERSIZED</text>
+          <rect x="10" y="215" width="140" height="8" rx="2" fill="rgba(0,0,0,0.3)" clip-path="url(#c2clip)"/>
+          <rect x="60" y="223" width="40" height="12" fill="#111" rx="3"/>
+          <rect x="60" y="233" width="40" height="90" rx="7" fill="#0d0d0d"/>
+          <line x1="60" y1="244" x2="100" y2="244" stroke="#222" stroke-width="4"/>
+          <line x1="60" y1="255" x2="100" y2="255" stroke="#222" stroke-width="4"/>
+          <line x1="60" y1="266" x2="100" y2="266" stroke="#222" stroke-width="4"/>
+          <line x1="60" y1="277" x2="100" y2="277" stroke="#222" stroke-width="4"/>
+          <line x1="60" y1="288" x2="100" y2="288" stroke="#222" stroke-width="4"/>
+          <line x1="60" y1="299" x2="100" y2="299" stroke="#222" stroke-width="4"/>
+          <line x1="60" y1="310" x2="100" y2="310" stroke="#222" stroke-width="4"/>
+          <rect x="78" y="233" width="4" height="90" fill="rgba(255,69,0,0.5)" rx="1"/>
+          <rect x="56" y="321" width="48" height="10" rx="5" fill="#1a1a1a"/>
+        </svg>
+        <div class="prod-specs-overlay">
+          <div class="specs-title">Pulse Core 14 — Specs</div>
+          <div class="spec-row"><span class="spec-key">Face</span><span class="spec-val">Fiberglass Hybrid</span></div>
+          <div class="spec-row"><span class="spec-key">Core</span><span class="spec-val">14mm Honeycomb PP</span></div>
+          <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">7.5 – 8.0 oz</span></div>
+          <div class="spec-row"><span class="spec-key">Shape</span><span class="spec-val">Oversized Wide Body</span></div>
+          <div class="spec-row"><span class="spec-key">USAPA</span><span class="spec-val">Approved ✓</span></div>
+          <button class="specs-cta" onclick="event.stopPropagation();openModal('pulse')">Order This Paddle →</button>
+        </div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-num">/ 002</div>
+        <div class="prod-name">PULSE<br>CORE 14</div>
+        <div class="prod-type">Control + Forgiveness</div>
+        <div class="prod-bottom">
+          <div class="prod-price">$189</div>
+          <button class="prod-btn" onclick="event.stopPropagation();openModal('pulse')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PADDLE 3: APEX ELITE -->
+    <div class="prod-card" onclick="openModal('apex')">
+      <div class="prod-img-area">
+        <span class="prod-badge" style="background:#ff4500">Pro Series</span>
+        <svg class="prod-svg" width="145" height="360" viewBox="0 0 145 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="p3g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2d2d2d"/><stop offset="100%" stop-color="#111"/></linearGradient>
+            <pattern id="cf3" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+              <rect width="2.5" height="2.5" fill="#282828"/><rect x="2.5" y="2.5" width="2.5" height="2.5" fill="#282828"/>
+              <rect x="2.5" y="0" width="2.5" height="2.5" fill="#202020"/><rect x="0" y="2.5" width="2.5" height="2.5" fill="#202020"/>
+            </pattern>
+          </defs>
+          <!-- Elongated shape -->
+          <rect x="18" y="8" width="109" height="250" rx="16" fill="url(#p3g)"/>
+          <rect x="18" y="8" width="109" height="250" rx="16" fill="url(#cf3)" opacity="0.8"/>
+          <!-- Orange side accent stripe -->
+          <rect x="18" y="8" width="14" height="250" rx="7" fill="#ff4500" opacity="0.85" clip-path="url(#c3clip)"/>
+          <clipPath id="c3clip"><rect x="18" y="8" width="109" height="258"/></clipPath>
+          <rect x="18" y="8" width="109" height="52" rx="16" fill="rgba(0,0,0,0.5)" clip-path="url(#c3clip)"/>
+          <text x="72" y="44" text-anchor="middle" font-family="Anton" font-size="24" fill="white" letter-spacing="5">PSG</text>
+          <text x="80" y="105" text-anchor="middle" font-family="DM Mono" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="2">APEX ELITE</text>
+          <!-- Diamond pattern detail -->
+          <polygon points="72,135 90,160 72,185 54,160" fill="none" stroke="rgba(255,69,0,0.4)" stroke-width="1.5"/>
+          <polygon points="72,148 83,160 72,172 61,160" fill="rgba(255,69,0,0.1)" stroke="rgba(255,69,0,0.3)" stroke-width="1"/>
+          <text x="72" y="164" text-anchor="middle" font-family="Anton" font-size="9" fill="rgba(255,69,0,0.7)" letter-spacing="1">A</text>
+          <text x="80" y="215" text-anchor="middle" font-family="DM Mono" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="2">TOUR · SPEC</text>
+          <rect x="18" y="248" width="109" height="10" rx="2" fill="rgba(0,0,0,0.4)" clip-path="url(#c3clip)"/>
+          <rect x="52" y="258" width="41" height="12" fill="#0d0d0d" rx="3"/>
+          <rect x="52" y="268" width="41" height="82" rx="7" fill="#0a0a0a"/>
+          <line x1="52" y1="278" x2="93" y2="278" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="52" y1="289" x2="93" y2="289" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="52" y1="300" x2="93" y2="300" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="52" y1="311" x2="93" y2="311" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="52" y1="322" x2="93" y2="322" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="52" y1="333" x2="93" y2="333" stroke="#1f1f1f" stroke-width="4"/>
+          <rect x="70" y="268" width="5" height="82" fill="rgba(255,69,0,0.6)" rx="1"/>
+          <rect x="48" y="348" width="49" height="10" rx="5" fill="#111"/>
+        </svg>
+        <div class="prod-specs-overlay">
+          <div class="specs-title">Apex Elite — Specs</div>
+          <div class="spec-row"><span class="spec-key">Face</span><span class="spec-val">FT-700 Raw Carbon</span></div>
+          <div class="spec-row"><span class="spec-key">Core</span><span class="spec-val">Hexagonal PP 16mm</span></div>
+          <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">8.1 – 8.5 oz</span></div>
+          <div class="spec-row"><span class="spec-key">Shape</span><span class="spec-val">Elongated Pro</span></div>
+          <div class="spec-row"><span class="spec-key">USAPA</span><span class="spec-val">Approved ✓</span></div>
+          <button class="specs-cta" onclick="event.stopPropagation();openModal('apex')">Order This Paddle →</button>
+        </div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-num">/ 003</div>
+        <div class="prod-name">APEX<br>ELITE</div>
+        <div class="prod-type">Max Spin + Power</div>
+        <div class="prod-bottom">
+          <div class="prod-price">$319</div>
+          <button class="prod-btn" onclick="event.stopPropagation();openModal('apex')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PADDLE 4: VOLT JR -->
+    <div class="prod-card" onclick="openModal('volt')">
+      <div class="prod-img-area">
+        <span class="prod-badge" style="background:#555">Junior</span>
+        <svg class="prod-svg" width="170" height="310" viewBox="0 0 170 310" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="p4g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a4a1a"/><stop offset="100%" stop-color="#0a200a"/></linearGradient>
+            <pattern id="cf4" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+              <rect width="4" height="4" fill="#163816"/><rect x="4" y="4" width="4" height="4" fill="#163816"/>
+              <rect x="4" y="0" width="4" height="4" fill="#122e12"/><rect x="0" y="4" width="4" height="4" fill="#122e12"/>
+            </pattern>
+          </defs>
+          <!-- Wide rounded face -->
+          <rect x="8" y="8" width="154" height="198" rx="28" fill="url(#p4g)"/>
+          <rect x="8" y="8" width="154" height="198" rx="28" fill="url(#cf4)" opacity="0.4"/>
+          <rect x="8" y="8" width="154" height="60" rx="28" fill="#ff4500" opacity="0.75" clip-path="url(#c4clip)"/>
+          <clipPath id="c4clip"><rect x="8" y="8" width="154" height="206"/></clipPath>
+          <text x="85" y="50" text-anchor="middle" font-family="Anton" font-size="30" fill="white" letter-spacing="6">PSG</text>
+          <!-- Lightning bolt -->
+          <polygon points="85,95 95,120 88,120 96,150 76,122 84,122" fill="#ff4500" opacity="0.8"/>
+          <text x="85" y="175" text-anchor="middle" font-family="DM Mono" font-size="9" fill="rgba(255,255,255,0.4)" letter-spacing="2">VOLT JUNIOR</text>
+          <text x="85" y="192" text-anchor="middle" font-family="DM Mono" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="2">LIGHTWEIGHT · 7.2OZ</text>
+          <rect x="63" y="204" width="44" height="12" fill="#0d0d0d" rx="3"/>
+          <rect x="63" y="214" width="44" height="80" rx="8" fill="#0a0a0a"/>
+          <line x1="63" y1="224" x2="107" y2="224" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="63" y1="235" x2="107" y2="235" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="63" y1="246" x2="107" y2="246" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="63" y1="257" x2="107" y2="257" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="63" y1="268" x2="107" y2="268" stroke="#1f1f1f" stroke-width="4"/>
+          <line x1="63" y1="279" x2="107" y2="279" stroke="#1f1f1f" stroke-width="4"/>
+          <rect x="83" y="214" width="4" height="80" fill="rgba(255,69,0,0.45)" rx="1"/>
+          <rect x="59" y="292" width="52" height="12" rx="6" fill="#111"/>
+        </svg>
+        <div class="prod-specs-overlay">
+          <div class="specs-title">Volt Junior — Specs</div>
+          <div class="spec-row"><span class="spec-key">Face</span><span class="spec-val">Fiberglass Composite</span></div>
+          <div class="spec-row"><span class="spec-key">Core</span><span class="spec-val">12mm Polymer</span></div>
+          <div class="spec-row"><span class="spec-key">Weight</span><span class="spec-val">7.0 – 7.4 oz</span></div>
+          <div class="spec-row"><span class="spec-key">Grip</span><span class="spec-val">4" Youth Grip</span></div>
+          <div class="spec-row"><span class="spec-key">Ages</span><span class="spec-val">10 – 17 yrs</span></div>
+          <button class="specs-cta" onclick="event.stopPropagation();openModal('volt')">Order This Paddle →</button>
+        </div>
+      </div>
+      <div class="prod-info">
+        <div class="prod-num">/ 004</div>
+        <div class="prod-name">VOLT<br>JUNIOR</div>
+        <div class="prod-type">Next-Gen Athletes</div>
+        <div class="prod-bottom">
+          <div class="prod-price">$129</div>
+          <button class="prod-btn" onclick="event.stopPropagation();openModal('volt')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <div class="statement-left sr-l">
+    <div class="st-eyebrow">Our Promise</div>
+    <h2 class="st-h2">BUILT<br>FOR THE<br><em>OBSESSED</em></h2>
+  </div>
+  <div class="statement-right sr-r">
+    <p class="st-desc">PSG paddles aren't made for casual Sunday games. They're engineered for players who study the game, train hard, and demand gear that matches their intensity.</p>
+    <div class="st-grid">
+      <div class="st-item"><div class="st-item-n" id="sc1">0</div><div class="st-item-l">Players Nationwide</div></div>
+      <div class="st-item"><div class="st-item-n" id="sc2">0</div><div class="st-item-l">Pro Athletes</div></div>
+      <div class="st-item"><div class="st-item-n" id="sc3">0</div><div class="st-item-l">Tournament Wins</div></div>
+      <div class="st-item"><div class="st-item-n" id="sc4">0</div><div class="st-item-l">5-Star Reviews</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TECHNOLOGY -->
+<section id="tech">
+  <div class="tech-wrapper">
+    <div class="tech-left sr-l">
+      <div class="sec-label">Performance Metrics</div>
+      <h2 class="sec-title" style="font-size:clamp(40px,5vw,70px)">HOW WE<em>MEASURE UP</em></h2>
+      <div class="tech-bars">
+        <div>
+          <div class="tbar-label"><span>Spin Generation</span><span class="tbar-pct">96%</span></div>
+          <div class="tbar-track"><div class="tbar-fill orange" style="--w:96%" data-w="96%"></div></div>
+        </div>
+        <div>
+          <div class="tbar-label"><span>Power Output</span><span class="tbar-pct">91%</span></div>
+          <div class="tbar-track"><div class="tbar-fill" style="--w:91%" data-w="91%"></div></div>
+        </div>
+        <div>
+          <div class="tbar-label"><span>Sweet Spot Coverage</span><span class="tbar-pct">88%</span></div>
+          <div class="tbar-track"><div class="tbar-fill orange" style="--w:88%" data-w="88%"></div></div>
+        </div>
+        <div>
+          <div class="tbar-label"><span>Touch &amp; Dink Control</span><span class="tbar-pct">94%</span></div>
+          <div class="tbar-track"><div class="tbar-fill" style="--w:94%" data-w="94%"></div></div>
+        </div>
+        <div>
+          <div class="tbar-label"><span>Durability Rating</span><span class="tbar-pct">99%</span></div>
+          <div class="tbar-track"><div class="tbar-fill orange" style="--w:99%" data-w="99%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tech-right sr-r">
+      <div class="sec-label">Technology</div>
+      <h2 class="sec-title" style="font-size:clamp(40px,5vw,70px);color:var(--white)">WHAT'S<em style="color:var(--orange)">INSIDE</em></h2>
+      <div class="tech-features">
+        <div class="tf"><div class="tf-num">01</div><div><div class="tf-name">FT-700 Raw Carbon Fiber Face</div><div class="tf-desc">Aerospace-grade unidirectional carbon fiber with a textured surface for maximum spin and an ultra-stiff face for explosive power transfer.</div></div></div>
+        <div class="tf"><div class="tf-num">02</div><div><div class="tf-name">Hexagonal Honeycomb PP Core</div><div class="tf-desc">Our proprietary hexagonal cell geometry maximizes the sweet spot while maintaining a buttery soft touch at the kitchen line.</div></div></div>
+        <div class="tf"><div class="tf-num">03</div><div><div class="tf-name">Shock Arrestor Edge Guard</div><div class="tf-desc">Patent-pending edge system absorbs rim strikes and rim forces, protecting the core and extending paddle life by up to 3x.</div></div></div>
+        <div class="tf"><div class="tf-num">04</div><div><div class="tf-name">EPP+EVA Dual Foam Frame</div><div class="tf-desc">Layered foam frame technology gives you explosive pop at contact with vibration dampening that protects your arm during long sessions.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare">
+  <div style="padding:0 80px">
+    <div class="sec-label sr">Model Comparison</div>
+    <h2 class="sec-title sr">FIND YOUR<em>MATCH</em></h2>
+  </div>
+  <div class="compare-table-wrap" style="padding:0 80px;margin-top:48px">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Strike Pro 16</th>
+          <th class="featured-col">Apex Elite ★</th>
+          <th>Pulse Core 14</th>
+          <th>Volt Junior</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Price</td><td>$249</td><td class="featured-col">$319</td><td>$189</td><td>$129</td></tr>
+        <tr><td>Face Material</td><td>Raw Carbon</td><td class="featured-col">FT-700 Carbon</td><td>Fiberglass</td><td>Composite</td></tr>
+        <tr><td>Core Thickness</td><td>16mm</td><td class="featured-col">16mm Hex</td><td>14mm</td><td>12mm</td></tr>
+        <tr><td>Weight</td><td>7.9–8.3oz</td><td class="featured-col">8.1–8.5oz</td><td>7.5–8.0oz</td><td>7.0–7.4oz</td></tr>
+        <tr><td>USAPA Approved</td><td class="check">✔</td><td class="featured-col check">✔</td><td class="check">✔</td><td class="cross">—</td></tr>
+        <tr><td>Spin Texture</td><td class="check">✔</td><td class="featured-col check">✔ Enhanced</td><td class="cross">—</td><td class="cross">—</td></tr>
+        <tr><td>Edge Guard</td><td class="check">✔</td><td class="featured-col check">✔ Shock Arrestor</td><td class="check">✔</td><td class="check">✔</td></tr>
+        <tr><td>Best For</td><td>All levels</td><td class="featured-col">Advanced/Pro</td><td>Beginner/Rec</td><td>Youth</td></tr>
+        <tr>
+          <td></td>
+          <td><button class="btn-fill" style="font-size:11px;padding:10px 20px" onclick="openModal('strike')">Order</button></td>
+          <td class="featured-col"><button class="btn-fill" style="font-size:11px;padding:10px 20px;background:var(--orange);border-color:var(--orange)" onclick="openModal('apex')">Order</button></td>
+          <td><button class="btn-fill" style="font-size:11px;padding:10px 20px" onclick="openModal('pulse')">Order</button></td>
+          <td><button class="btn-fill" style="font-size:11px;padding:10px 20px" onclick="openModal('volt')">Order</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" style="padding:0">
+  <div class="reviews-inner">
+    <div class="reviews-left">
+      <div class="sec-label">Reviews</div>
+      <h2 class="sec-title">PLAYER<em style="color:var(--white)">VOICES</em></h2>
+      <div class="big-num">4.9</div>
+      <div class="big-stars">★★★★★</div>
+      <div class="big-label">Based on 2,400+ reviews</div>
+    </div>
+    <div class="reviews-right">
+      <div class="review-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"I've played with $400 paddles. The Apex Elite goes toe-to-toe with all of them. The spin off the carbon face is absolutely unreal — I'm generating angles I've never had before."</p>
+        <div class="rev-author">
+          <div class="rev-av" style="background:#ff4500;color:#fff">DK</div>
+          <div><div class="rev-name">David K.</div><div class="rev-role">5.0 DUPR Rating · Tampa, FL</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Switched from a big-brand paddle and won my first club tournament two weeks later. Coincidence? Maybe. But the Strike Pro 16 felt like an unfair advantage at the net."</p>
+        <div class="rev-author">
+          <div class="rev-av" style="background:#1e3a8a;color:#fff">RC</div>
+          <div><div class="rev-name">Rachel C.</div><div class="rev-role">Club Champion · Seattle, WA</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Got the Pulse Core for my mom who was just starting out. She now plays 4 days a week and is already asking about upgrading to the Apex. PSG clearly works."</p>
+        <div class="rev-author">
+          <div class="rev-av" style="background:#555;color:#fff">MT</div>
+          <div><div class="rev-name">Marco T.</div><div class="rev-role">Recreational Player · Austin, TX</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"The Volt Junior is the best junior paddle on the market bar none. My 14-year-old's game improved dramatically within weeks. Lightweight, durable, and it looks incredible on court."</p>
+        <div class="rev-author">
+          <div class="rev-av" style="background:#1a4a1a;color:#fff">SP</div>
+          <div><div class="rev-name">Sarah P.</div><div class="rev-role">Parent + Coach · Portland, OR</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>BE <span>FIRST</span><br>TO THE<br>NEXT DROP.</h2>
+  <div class="cta-right">
+    <p style="font-size:15px;color:rgba(255,255,255,0.8);line-height:1.6">Limited edition releases. Pro collabs. Early access to new tech. Sign up and never miss a drop.</p>
+    <div class="email-form">
+      <input type="email" placeholder="your@email.com" id="emailIn">
+      <button onclick="handleEmail()">Join →</button>
+    </div>
+    <p class="cta-note" id="emailFb">No spam. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div style="padding:0 80px" class="sr">
+    <div class="sec-label">FAQ</div>
+    <h2 class="sec-title">COMMON<em>QUESTIONS</em></h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-intro sr-l">
+      <p>Still have questions? Our team of passionate pickleball players is available via live chat or email and typically responds within 2 hours.</p>
+      <div style="margin-top:32px">
+        <a href="#" class="btn-fill" style="display:inline-block;text-decoration:none">Chat with Us</a>
+      </div>
+    </div>
+    <div class="faq-items sr-r">
+      <div class="faq-i">
+        <div class="faq-q2" onclick="toggleFaq(this)">What makes PSG paddles different?<span class="faq-icon2">+</span></div>
+        <div class="faq-a2">PSG paddles use FT-700 unidirectional raw carbon fiber — the same material class found in aerospace applications. Combined with our proprietary hexagonal honeycomb core geometry and Shock Arrestor edge guard, you get performance that rivals paddles costing 2–3x more.</div>
+      </div>
+      <div class="faq-i">
+        <div class="faq-q2" onclick="toggleFaq(this)">Are these paddles USAPA tournament approved?<span class="faq-icon2">+</span></div>
+        <div class="faq-a2">Yes. The Strike Pro 16, Apex Elite, and Pulse Core 14 are all USAPA approved and appear on the official approved paddle list. You can compete with confidence in any sanctioned tournament at any level.</div>
+      </div>
+      <div class="faq-i">
+        <div class="faq-q2" onclick="toggleFaq(this)">What is your 30-day trial policy?<span class="faq-icon2">+</span></div>
+        <div class="faq-a2">Play it for 30 days. If you don't love it for any reason, return it for a full refund. No restocking fees, no questions asked. Pro and Elite bundle orders include a pre-paid return label — just box it up and drop it off.</div>
+      </div>
+      <div class="faq-i">
+        <div class="faq-q2" onclick="toggleFaq(this)">Which paddle is right for my skill level?<span class="faq-icon2">+</span></div>
+        <div class="faq-a2">Beginners: Start with the Pulse Core 14 — its oversized sweet spot is extremely forgiving. Intermediate players: Strike Pro 16 gives the best balance of power and control. Advanced/Pro: Apex Elite for maximum spin and precision. Youth: Volt Junior is purpose-built for players ages 10–17.</div>
+      </div>
+      <div class="faq-i">
+        <div class="faq-q2" onclick="toggleFaq(this)">Do you offer a warranty?<span class="faq-icon2">+</span></div>
+        <div class="faq-a2">All PSG paddles come with a minimum 1-year warranty against manufacturing defects. Elite bundle purchases include a lifetime warranty. Normal wear and edge chips from rim strikes are covered under our Shock Arrestor guarantee for 6 months.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">P<span>S</span>G</div>
+      <div class="footer-tagline">Pulse Sport Gear</div>
+      <p class="footer-desc">Premium pickleball paddles for players who demand more from their gear. Built different. Built better.</p>
+      <div class="socials">
+        <a href="#" class="soc-btn">𝕏</a>
+        <a href="#" class="soc-btn">ig</a>
+        <a href="#" class="soc-btn">yt</a>
+        <a href="#" class="soc-btn">fb</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Paddles</h4>
+      <ul class="footer-links">
+        <li><a href="#">Strike Pro 16</a></li>
+        <li><a href="#">Pulse Core 14</a></li>
+        <li><a href="#">Apex Elite</a></li>
+        <li><a href="#">Volt Junior</a></li>
+        <li><a href="#">Paddle Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul class="footer-links">
+        <li><a href="#">About PSG</a></li>
+        <li><a href="#">Technology</a></li>
+        <li><a href="#">Pro Team</a></li>
+        <li><a href="#">Affiliate</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul class="footer-links">
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Warranty</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Pulse Sport Gear (PSG). All rights reserved.</p>
+    <p>Privacy Policy · Terms of Service · Accessibility</p>
+  </div>
+</footer>
+
+<!-- ORDER MODAL -->
+<div class="modal-bg" id="modalBg" onclick="closeModalOut(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-sku" id="mSku">Pro Series · PSG-AP-001</div>
+      <div class="modal-name" id="mName">APEX ELITE</div>
+      <div class="modal-price-tag" id="mPrice">$319</div>
+    </div>
+    <div class="modal-body">
+      <div class="mf-group">
+        <label class="mf-label">Full Name</label>
+        <input class="mf-input" type="text" placeholder="e.g. Jordan Smith">
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">Email Address</label>
+        <input class="mf-input" type="email" placeholder="you@email.com">
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">Select Paddle</label>
+        <select class="mf-select" id="mSelect">
+          <option>Apex Elite — $319</option>
+          <option>Strike Pro 16 — $249</option>
+          <option>Pulse Core 14 — $189</option>
+          <option>Volt Junior — $129</option>
+        </select>
+      </div>
+      <div class="mf-group">
+        <label class="mf-label">Grip Size</label>
+        <select class="mf-select">
+          <option>4" (Small)</option>
+          <option>4¼" (Standard)</option>
+          <option>4½" (Large)</option>
+        </select>
+      </div>
+      <button class="mf-submit" onclick="submitOrder(this)">Secure Order — Pay at Checkout →</button>
+      <p class="mf-note">🔒 256-bit SSL · 30-day returns · Free shipping $150+</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// LOADER
+window.addEventListener('load',()=>{
+  const bar=document.getElementById('loaderBar');
+  const pct=document.getElementById('loaderPct');
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*18;
+    if(p>=100){p=100;clearInterval(iv)}
+    bar.style.width=p+'%';
+    pct.textContent=Math.floor(p)+'%';
+    if(p>=100)setTimeout(()=>{
+      document.getElementById('loader').classList.add('gone');
+      startCounters();
+    },400);
+  },80);
+});
+
+// CURSOR
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){
+  rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;
+  cur.style.cssText=`left:${mx}px;top:${my}px;transform:translate(-50%,-50%)`;
+  cur2.style.cssText=`left:${rx}px;top:${ry}px;transform:translate(-50%,-50%)`;
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.prod-card,.review-card,.faq-q2,.st-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-grow'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-grow'));
+});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');if(e.target.classList.contains('tbar-fill'))e.target.classList.add('active')}})},{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.sr,.sr-l,.sr-r').forEach(el=>obs.observe(el));
+document.querySelectorAll('.tbar-fill').forEach(el=>obs.observe(el));
+
+// COUNTER ANIMATION
+function countUp(el,target,suffix='',duration=2000){
+  let s=0,step=target/60;
+  const iv=setInterval(()=>{
+    s+=step;if(s>=target){s=target;clearInterval(iv)}
+    el.textContent=Math.floor(s)+suffix;
+  },duration/60);
+}
+function startCounters(){
+  setTimeout(()=>{
+    countUp(document.getElementById('c1'),10,'');
+    countUp(document.getElementById('c2'),24,'');
+    countUp(document.getElementById('c3'),30,'');
+  },2800);
+}
+// statement counters
+const stObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  countUp(document.getElementById('sc1'),10000,'+');
+  countUp(document.getElementById('sc2'),24,'');
+  countUp(document.getElementById('sc3'),140,'+');
+  countUp(document.getElementById('sc4'),2400,'+');
+  stObs.disconnect();
+}})},{threshold:0.3});
+const stEl=document.querySelector('.statement-right');
+if(stEl)stObs.observe(stEl);
+
+// FAQ
+function toggleFaq(el){
+  const item=el.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-i').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+// MODAL DATA
+const mdata={
+  strike:{sku:'Power Series · PSG-SP-001',name:'STRIKE PRO 16',price:'$249',sel:'Strike Pro 16 — $249'},
+  pulse:{sku:'Control Series · PSG-PC-002',name:'PULSE CORE 14',price:'$189',sel:'Pulse Core 14 — $189'},
+  apex:{sku:'Pro Series · PSG-AE-003',name:'APEX ELITE',price:'$319',sel:'Apex Elite — $319'},
+  volt:{sku:'Junior Series · PSG-VJ-004',name:'VOLT JUNIOR',price:'$129',sel:'Volt Junior — $129'},
+};
+function openModal(type){
+  const d=mdata[type]||mdata.apex;
+  document.getElementById('mSku').textContent=d.sku;
+  document.getElementById('mName').textContent=d.name;
+  document.getElementById('mPrice').textContent=d.price;
+  const sel=document.getElementById('mSelect');
+  for(let o of sel.options){if(o.text.startsWith(d.name.charAt(0)+d.name.slice(1,5)))sel.value=o.value}
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modalBg').classList.remove('open');document.body.style.overflow=''}
+function closeModalOut(e){if(e.target===document.getElementById('modalBg'))closeModal()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+function submitOrder(btn){
+  const orig=btn.textContent;
+  btn.textContent='✓ Order Confirmed! Redirecting…';
+  btn.style.background='#00c853';btn.style.borderColor='#00c853';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.borderColor='';closeModal();},2000);
+}
+
+// EMAIL
+function handleEmail(){
+  const v=document.getElementById('emailIn').value;
+  const fb=document.getElementById('emailFb');
+  if(v&&v.includes('@')){
+    fb.textContent='✓ You\'re on the list. Watch your inbox.';
+    fb.style.color='#fff';document.getElementById('emailIn').value='';
+  }else{fb.textContent='Please enter a valid email.';fb.style.color='rgba(255,255,255,0.6)'}
+}
+
+// 3D TILT on product cards
+document.querySelectorAll('.prod-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    card.querySelector('.prod-svg').style.transform=
+      `perspective(600px) rotateY(${x*18}deg) rotateX(${-y*12}deg) scale(1.08) translateY(-10px)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    const svg=card.querySelector('.prod-svg');
+    if(svg)svg.style.transform='';
+  });
+});
+</script>
+</body>
+</html>
