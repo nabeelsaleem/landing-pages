@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Massara — Real Estate Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #F2F4F7;
+  color: #111827;
+  min-height: 100vh;
+}
+
+/* TOPNAV */
+.topnav {
+  background: #fff;
+  border-bottom: 1px solid #E5E7EB;
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  height: 62px;
+  position: sticky; top: 0; z-index: 100;
+  gap: 32px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 18px; font-weight: 800;
+  color: #111827; text-decoration: none; flex-shrink: 0;
+}
+.nav-logo-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: #2563EB;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 14px; font-weight: 800;
+}
+.nav-tabs { display: flex; align-items: center; gap: 4px; }
+.nav-tab {
+  padding: 7px 18px; border-radius: 8px;
+  font-size: 13.5px; font-weight: 600; color: #6B7280;
+  cursor: pointer; border: none; background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s;
+}
+.nav-tab:hover { color: #111827; background: #F3F4F6; }
+.nav-tab.active { background: #2563EB; color: #fff; }
+.nav-spacer { flex: 1; }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+.nav-icon-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  border: 1.5px solid #E5E7EB; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  color: #6B7280; font-size: 15px; cursor: pointer;
+  position: relative; transition: all 0.15s;
+}
+.nav-icon-btn:hover { border-color: #2563EB; color: #2563EB; }
+.nav-add-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: #2563EB; border: none;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 18px; cursor: pointer; transition: background 0.15s;
+}
+.nav-add-btn:hover { background: #1D4ED8; }
+.nav-badge {
+  position: absolute; top: -4px; right: -4px;
+  width: 16px; height: 16px; background: #EF4444;
+  border-radius: 50%; border: 2px solid #fff;
+  font-size: 9px; color: #fff; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-user {
+  display: flex; align-items: center; gap: 9px;
+  cursor: pointer; padding: 6px 12px 6px 6px;
+  border-radius: 10px; border: 1.5px solid #E5E7EB; background: #fff;
+}
+.nav-avatar { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
+.nav-user-name { font-size: 13px; font-weight: 700; color: #111827; }
+.nav-user-role { font-size: 11px; color: #9CA3AF; }
+.nav-chevron { color: #9CA3AF; font-size: 12px; margin-left: 2px; }
+
+/* PAGE */
+.page { padding: 24px 28px; max-width: 1600px; margin: 0 auto; }
+
+/* KPI */
+.kpi-row {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 16px; margin-bottom: 20px;
+}
+.kpi-card {
+  background: #fff; border-radius: 14px; padding: 20px 22px;
+  border: 1px solid #E5E7EB; display: flex; align-items: flex-start; gap: 14px;
+}
+.kpi-icon {
+  width: 42px; height: 42px; border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.kpi-icon.blue { background: #EFF6FF; color: #2563EB; }
+.kpi-icon.amber { background: #FFFBEB; color: #D97706; }
+.kpi-icon.emerald { background: #ECFDF5; color: #059669; }
+.kpi-icon.violet { background: #F5F3FF; color: #7C3AED; }
+.kpi-label { font-size: 12px; color: #6B7280; font-weight: 500; margin-bottom: 4px; }
+.kpi-value { font-size: 26px; font-weight: 800; color: #111827; line-height: 1; margin-bottom: 6px; }
+.kpi-change {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11.5px; font-weight: 600; padding: 2px 7px; border-radius: 20px;
+}
+.kpi-change.up { color: #059669; background: #D1FAE5; }
+.kpi-change.down { color: #DC2626; background: #FEE2E2; }
+
+/* MAIN GRID */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 300px;
+  gap: 16px;
+}
+
+/* CARD */
+.card { background: #fff; border-radius: 14px; border: 1px solid #E5E7EB; overflow: hidden; }
+.card-action {
+  font-size: 12px; color: #6B7280; cursor: pointer;
+  display: flex; align-items: center; gap: 4px; font-weight: 500;
+}
+.card-action:hover { color: #2563EB; }
+
+/* CHART CARD */
+.chart-card { grid-column: 1 / 3; }
+.chart-header-row {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 18px 20px 12px;
+}
+.chart-legend { display: flex; gap: 16px; margin-top: 4px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7280; font-weight: 500; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+.period-btns { display: flex; align-items: center; gap: 4px; }
+.period-btn {
+  padding: 5px 12px; border-radius: 6px; font-size: 11.5px; font-weight: 600;
+  border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #6B7280; background: transparent; transition: all 0.15s;
+}
+.period-btn.active { background: #F3F4F6; color: #111827; }
+.chart-stat-row {
+  display: flex; align-items: center; gap: 20px;
+  padding: 0 20px 14px; border-bottom: 1px solid #F3F4F6;
+}
+.chart-stat-val { font-size: 22px; font-weight: 800; color: #111827; }
+.chart-stat-label { font-size: 11.5px; color: #9CA3AF; font-weight: 500; margin-top: 2px; }
+.chart-tag { font-size: 11px; font-weight: 600; color: #059669; background: #D1FAE5; padding: 3px 8px; border-radius: 20px; }
+.chart-wrap { padding: 14px 16px 16px; height: 190px; }
+
+/* FEATURED */
+.featured-card { grid-column: 1; }
+.featured-img { width: 100%; height: 155px; object-fit: cover; display: block; }
+.featured-body { padding: 14px 16px; }
+.featured-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #2563EB; color: #fff;
+  font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 9px;
+}
+.featured-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 2px; }
+.featured-type { font-size: 12px; color: #9CA3AF; margin-bottom: 12px; }
+.featured-stats {
+  display: flex; border-top: 1px solid #F3F4F6; margin: 0 -16px; padding: 0 16px;
+}
+.fstat { flex: 1; padding: 10px 0; text-align: center; border-right: 1px solid #F3F4F6; }
+.fstat:last-child { border-right: none; }
+.fstat-val { font-size: 14px; font-weight: 700; color: #111827; }
+.fstat-key { font-size: 10.5px; color: #9CA3AF; margin-top: 1px; }
+
+/* DEALS */
+.deals-card { grid-column: 2; padding: 18px 20px; }
+.deals-hdr { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+.progress-bar-bg { height: 10px; border-radius: 8px; background: #F3F4F6; overflow: hidden; margin-bottom: 4px; }
+.progress-bar-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, #2563EB, #60A5FA); }
+.progress-labels { display: flex; justify-content: space-between; font-size: 11.5px; color: #6B7280; }
+.progress-labels span { font-weight: 600; color: #111827; }
+.mini-prop-list { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+.mini-prop {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+  border-radius: 10px; border: 1px solid #F3F4F6; cursor: pointer; transition: border-color 0.15s;
+}
+.mini-prop:hover { border-color: #2563EB; }
+.mini-prop-img { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+.mini-prop-name { font-size: 13px; font-weight: 600; color: #111827; }
+.mini-prop-loc { font-size: 11px; color: #9CA3AF; }
+.mini-prop-price { font-size: 13px; font-weight: 700; color: #2563EB; margin-left: auto; white-space: nowrap; }
+
+/* RIGHT PANEL */
+.right-panel { grid-column: 3; grid-row: 1 / 5; display: flex; flex-direction: column; gap: 16px; }
+.reminder-card { padding: 18px 20px; }
+.reminder-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; color: #111827; display: flex; justify-content: space-between; align-items: center; }
+.reminder-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F9FAFB; }
+.reminder-item:last-child { border-bottom: none; }
+.reminder-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.reminder-icon.blue { background: #EFF6FF; color: #2563EB; }
+.reminder-icon.green { background: #ECFDF5; color: #059669; }
+.reminder-icon.amber { background: #FFFBEB; color: #D97706; }
+.reminder-label { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 2px; }
+.reminder-sub { font-size: 11px; color: #9CA3AF; }
+.reminder-arrow {
+  margin-left: auto; width: 26px; height: 26px;
+  border-radius: 8px; border: 1.5px solid #E5E7EB;
+  display: flex; align-items: center; justify-content: center;
+  color: #9CA3AF; font-size: 11px; cursor: pointer; flex-shrink: 0;
+}
+.avs { display: flex; margin-right: 6px; }
+.av { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #fff; margin-left: -7px; object-fit: cover; }
+.av:first-child { margin-left: 0; }
+.av-count { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #fff; margin-left: -7px; font-size: 9px; font-weight: 700; color: #6B7280; background: #F3F4F6; display: flex; align-items: center; justify-content: center; }
+
+/* CALENDAR */
+.calendar-card { padding: 18px 20px; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-month { font-size: 14px; font-weight: 700; color: #111827; }
+.cal-nav { display: flex; gap: 4px; }
+.cal-nav button { width: 26px; height: 26px; border-radius: 6px; border: 1.5px solid #E5E7EB; background: #fff; color: #6B7280; cursor: pointer; font-size: 11px; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', sans-serif; }
+.cal-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 0; margin-bottom: 6px; }
+.cal-day-label { font-size: 10.5px; font-weight: 600; color: #9CA3AF; text-align: center; padding: 4px 0; }
+.cal-dates { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+.cal-date { aspect-ratio: 1; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 500; color: #374151; cursor: pointer; transition: all 0.1s; position: relative; }
+.cal-date:hover { background: #F3F4F6; }
+.cal-date.other { color: #D1D5DB; }
+.cal-date.today { background: #2563EB; color: #fff; font-weight: 700; }
+.cal-date.has-event::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #2563EB; }
+.cal-date.today.has-event::after { background: #fff; }
+.cal-tabs { display: flex; gap: 0; border-bottom: 1px solid #F3F4F6; margin: 12px 0 10px; }
+.cal-tab { flex: 1; text-align: center; font-size: 11.5px; font-weight: 600; color: #9CA3AF; padding: 6px 0; cursor: pointer; border-bottom: 2px solid transparent; }
+.cal-tab.active { color: #111827; border-bottom-color: #2563EB; }
+.schedule-item { padding: 9px 0; border-bottom: 1px solid #F9FAFB; }
+.schedule-item:last-child { border-bottom: none; }
+.schedule-title { font-size: 12px; font-weight: 600; color: #111827; margin-bottom: 2px; }
+.schedule-addr { font-size: 11px; color: #9CA3AF; }
+
+/* TABLE SECTION */
+.table-section { grid-column: 1 / 3; }
+.table-card-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #F3F4F6; }
+.table-card-title { font-size: 14px; font-weight: 700; color: #111827; }
+.table-search-wrap { display: flex; align-items: center; gap: 10px; }
+.table-search { display: flex; align-items: center; gap: 7px; border: 1.5px solid #E5E7EB; border-radius: 9px; padding: 7px 12px; background: #fff; }
+.table-search input { border: none; outline: none; font-size: 12.5px; color: #374151; font-family: 'Plus Jakarta Sans', sans-serif; width: 140px; }
+.table-search input::placeholder { color: #9CA3AF; }
+.table-search i { color: #9CA3AF; font-size: 13px; }
+.tbl-expand { width: 28px; height: 28px; border-radius: 6px; border: 1.5px solid #E5E7EB; background: #fff; display: flex; align-items: center; justify-content: center; color: #6B7280; font-size: 13px; cursor: pointer; }
+table { width: 100%; border-collapse: collapse; }
+thead th { font-size: 11px; font-weight: 600; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; text-align: left; background: #FAFAFA; border-bottom: 1px solid #F3F4F6; white-space: nowrap; }
+tbody tr { border-bottom: 1px solid #F9FAFB; cursor: pointer; transition: background 0.1s; }
+tbody tr:hover { background: #FAFAFA; }
+tbody tr:last-child { border-bottom: none; }
+tbody td { padding: 11px 14px; font-size: 13px; color: #374151; vertical-align: middle; }
+.td-property { display: flex; align-items: center; gap: 10px; }
+.td-prop-img { width: 42px; height: 42px; border-radius: 9px; object-fit: cover; flex-shrink: 0; }
+.td-prop-name { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 1px; }
+.td-prop-loc { font-size: 11px; color: #9CA3AF; }
+.status-pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+.status-occupied { background: #DBEAFE; color: #1D4ED8; }
+.status-available { background: #D1FAE5; color: #065F46; }
+.status-sold { background: #FEE2E2; color: #991B1B; }
+.status-hold { background: #FEF3C7; color: #92400E; }
+.td-agents { display: flex; align-items: center; }
+.td-agent { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; margin-left: -6px; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; color: #fff; object-fit: cover; }
+.td-agent:first-child { margin-left: 0; }
+.td-agent-count { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; margin-left: -6px; font-size: 9px; font-weight: 600; color: #6B7280; background: #F3F4F6; display: flex; align-items: center; justify-content: center; }
+.td-arrow { color: #9CA3AF; font-size: 13px; cursor: pointer; }
+.td-arrow:hover { color: #2563EB; }
+
+/* LEADS */
+.leads-card { grid-column: 3; padding: 0; }
+.leads-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid #F3F4F6; }
+.leads-title { font-size: 14px; font-weight: 700; color: #111827; }
+.lead-item { display: flex; align-items: center; gap: 10px; padding: 10px 18px; cursor: pointer; transition: background 0.1s; }
+.lead-item:hover { background: #FAFAFA; }
+.lead-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.lead-name { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 1px; }
+.lead-loc { font-size: 11px; color: #9CA3AF; }
+.lead-call { margin-left: auto; width: 30px; height: 30px; border-radius: 8px; border: 1.5px solid #E5E7EB; background: #fff; display: flex; align-items: center; justify-content: center; color: #6B7280; font-size: 12px; cursor: pointer; flex-shrink: 0; transition: all 0.15s; }
+.lead-call:hover { border-color: #2563EB; color: #2563EB; }
+
+/* SECTION HEADER */
+.section-hdr { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; padding-top: 8px; }
+.section-title { font-size: 18px; font-weight: 800; color: #111827; margin-bottom: 3px; }
+.section-sub { font-size: 13px; color: #6B7280; }
+.section-actions { display: flex; gap: 8px; align-items: center; }
+.btn { padding: 8px 16px; border-radius: 9px; font-size: 13px; font-weight: 600; border: 1.5px solid #E5E7EB; background: #fff; color: #374151; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
+.btn:hover { border-color: #2563EB; color: #2563EB; }
+.btn.primary { background: #2563EB; color: #fff; border-color: #2563EB; }
+.btn.primary:hover { background: #1D4ED8; }
+.view-toggle { display: flex; padding: 3px; border: 1.5px solid #E5E7EB; border-radius: 9px; background: #fff; }
+.vt-btn { padding: 5px 12px; border-radius: 6px; border: none; font-size: 12.5px; font-weight: 600; cursor: pointer; color: #9CA3AF; background: transparent; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; align-items: center; gap: 5px; }
+.vt-btn.active { background: #F3F4F6; color: #111827; }
+
+/* LISTINGS GRID */
+.listings-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px; }
+.prop-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 14px; overflow: hidden; cursor: pointer; transition: all 0.2s; }
+.prop-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.10); transform: translateY(-2px); }
+.prop-img-wrap { position: relative; overflow: hidden; }
+.prop-img { width: 100%; height: 195px; object-fit: cover; display: block; transition: transform 0.35s; }
+.prop-card:hover .prop-img { transform: scale(1.04); }
+.prop-img-overlay { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: flex-start; }
+.prop-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; backdrop-filter: blur(8px); }
+.badge-new { background: rgba(37,99,235,0.92); color: #fff; }
+.badge-avail { background: rgba(5,150,105,0.92); color: #fff; }
+.badge-sold { background: rgba(220,38,38,0.92); color: #fff; }
+.badge-inv { background: rgba(124,58,237,0.92); color: #fff; }
+.prop-save { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.92); border: none; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #6B7280; cursor: pointer; transition: all 0.15s; }
+.prop-save:hover { color: #EF4444; }
+.prop-body { padding: 14px 16px; }
+.prop-price { font-size: 20px; font-weight: 800; color: #111827; margin-bottom: 3px; }
+.prop-name { font-size: 13.5px; font-weight: 600; color: #374151; margin-bottom: 2px; }
+.prop-loc { font-size: 12px; color: #9CA3AF; display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
+.prop-metrics { display: flex; border-top: 1px solid #F3F4F6; margin: 0 -16px; padding: 0 16px; }
+.pm { flex: 1; padding: 10px 0; text-align: center; border-right: 1px solid #F3F4F6; display: flex; align-items: center; justify-content: center; gap: 5px; }
+.pm:last-child { border-right: none; }
+.pm-val { font-size: 13px; font-weight: 700; color: #374151; }
+.pm-icon { font-size: 12px; color: #9CA3AF; }
+.pm-key { font-size: 10.5px; color: #9CA3AF; }
+.roi-tag { font-size: 12px; font-weight: 700; color: #059669; background: #D1FAE5; padding: 2px 7px; border-radius: 5px; }
+
+/* ANALYTICS */
+.analytics-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.analytics-2col { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 28px; }
+.a-pad { padding: 20px 22px; }
+.a-title { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 3px; }
+.a-sub { font-size: 11.5px; color: #9CA3AF; margin-bottom: 14px; }
+.a-value { font-size: 28px; font-weight: 800; color: #111827; margin-bottom: 4px; }
+.a-change { font-size: 12px; font-weight: 600; color: #059669; display: flex; align-items: center; gap: 4px; }
+.bars-area { display: flex; align-items: flex-end; gap: 6px; height: 100px; padding-top: 8px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.bar-fill { width: 100%; border-radius: 5px 5px 0 0; background: #DBEAFE; min-height: 4px; }
+.bar-fill.accent { background: #2563EB; }
+.bar-lbl { font-size: 10px; color: #9CA3AF; font-weight: 500; }
+.roi-bars { display: flex; flex-direction: column; gap: 11px; }
+.roi-top { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+.roi-label { color: #374151; font-weight: 500; }
+.roi-pct { font-weight: 700; color: #111827; }
+.roi-track { height: 7px; border-radius: 4px; background: #F3F4F6; overflow: hidden; }
+.roi-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg,#2563EB,#60A5FA); }
+.roi-fill.g2 { background: linear-gradient(90deg,#059669,#34D399); }
+.roi-fill.g3 { background: linear-gradient(90deg,#7C3AED,#A78BFA); }
+.roi-fill.g4 { background: linear-gradient(90deg,#D97706,#FCD34D); }
+.snap-rows { display: flex; flex-direction: column; }
+.snap-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #F9FAFB; font-size: 13px; }
+.snap-row:last-child { border-bottom: none; }
+.snap-key { color: #6B7280; }
+.snap-val { font-weight: 700; color: #111827; }
+.snap-val.green { color: #059669; }
+
+/* FOOTER */
+.site-footer { background: #fff; border-top: 1px solid #E5E7EB; padding: 28px; margin-top: 8px; }
+.footer-inner { max-width: 1600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.footer-logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 800; color: #111827; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; color: #6B7280; text-decoration: none; font-weight: 500; }
+.footer-links a:hover { color: #2563EB; }
+.footer-copy { font-size: 12px; color: #9CA3AF; }
+
+.mt-24 { margin-top: 24px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #F3F4F6; }
+::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- TOPNAV -->
+<nav class="topnav">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">M</div>
+    Massara
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active">Dashboard</button>
+    <button class="nav-tab">Leads</button>
+    <button class="nav-tab">Property</button>
+    <button class="nav-tab">Transaction</button>
+    <button class="nav-tab">Calendar</button>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-actions">
+    <button class="nav-add-btn"><i class="fa fa-plus"></i></button>
+    <button class="nav-icon-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <button class="nav-icon-btn">
+      <i class="fa-solid fa-bell"></i>
+      <span class="nav-badge">3</span>
+    </button>
+    <div class="nav-user">
+      <img class="nav-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt="Anne H.">
+      <div>
+        <div class="nav-user-name">Anne H.</div>
+        <div class="nav-user-role">Agent Sales</div>
+      </div>
+      <i class="fa-solid fa-chevron-down nav-chevron"></i>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-icon blue"><i class="fa-solid fa-users"></i></div>
+      <div>
+        <div class="kpi-label">Active Leads</div>
+        <div class="kpi-value">120</div>
+        <span class="kpi-change up"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon amber"><i class="fa-solid fa-coins"></i></div>
+      <div>
+        <div class="kpi-label">Total Revenue</div>
+        <div class="kpi-value">$96.7M</div>
+        <span class="kpi-change up"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon emerald"><i class="fa-solid fa-house"></i></div>
+      <div>
+        <div class="kpi-label">Active Listings</div>
+        <div class="kpi-value">23</div>
+        <span class="kpi-change down"><i class="fa-solid fa-arrow-trend-down"></i> -4% this month</span>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon violet"><i class="fa-solid fa-handshake"></i></div>
+      <div>
+        <div class="kpi-label">Total Closed</div>
+        <div class="kpi-value">42</div>
+        <span class="kpi-change up"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- PERFORMANCE CHART -->
+    <div class="card chart-card">
+      <div class="chart-header-row">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:4px;">Performance</div>
+          <div class="chart-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#2563EB;"></div>Revenue</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#D1D5DB;"></div>Visits</div>
+          </div>
+        </div>
+        <div class="period-btns">
+          <button class="period-btn">Weekly</button>
+          <button class="period-btn active">Monthly</button>
+          <button class="period-btn">Yearly</button>
+        </div>
+      </div>
+      <div class="chart-stat-row">
+        <div>
+          <div class="chart-stat-val">$96,700,050</div>
+          <div class="chart-stat-label">Total revenue · Target $120M</div>
+        </div>
+        <span class="chart-tag"><i class="fa-solid fa-arrow-trend-up"></i> +8.4%</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="perfChart"></canvas>
+      </div>
+    </div>
+
+    <!-- FEATURED PROPERTY -->
+    <div class="card featured-card">
+      <img class="featured-img"
+        src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&h=280&q=80"
+        alt="The Somerset">
+      <div class="featured-body">
+        <div class="featured-badge"><i class="fa-solid fa-star"></i> Recommended to 14 Leads</div>
+        <div class="featured-title">The Somerset</div>
+        <div class="featured-type">House &nbsp;·&nbsp; Columbus, Ohio</div>
+        <div class="featured-stats">
+          <div class="fstat"><div class="fstat-val">175</div><div class="fstat-key">Sold</div></div>
+          <div class="fstat"><div class="fstat-val">125</div><div class="fstat-key">Rented</div></div>
+          <div class="fstat"><div class="fstat-val">2K+</div><div class="fstat-key">Views</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <!-- Reminder -->
+      <div class="card reminder-card">
+        <div class="reminder-title">
+          Reminder
+          <span style="color:#9CA3AF;font-size:13px;cursor:pointer;"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+        </div>
+        <div class="reminder-item">
+          <div class="reminder-icon blue"><i class="fa-solid fa-rotate"></i></div>
+          <div>
+            <div class="reminder-label">Follow-Ups</div>
+            <div class="reminder-sub">15 leads need to be followed up</div>
+          </div>
+          <div class="avs">
+            <img class="av" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="">
+            <img class="av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="">
+            <div class="av-count">+11</div>
+          </div>
+          <div class="reminder-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="reminder-item">
+          <div class="reminder-icon green"><i class="fa-solid fa-eye"></i></div>
+          <div>
+            <div class="reminder-label">Visits</div>
+            <div class="reminder-sub">2 Properties · 3 Leads today</div>
+          </div>
+          <div class="reminder-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div class="reminder-item">
+          <div class="reminder-icon amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div>
+            <div class="reminder-label">Expire Listings</div>
+            <div class="reminder-sub">2 listings expiring in 5 days</div>
+          </div>
+          <div class="reminder-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="card calendar-card">
+        <div class="cal-header">
+          <div class="cal-month">June 2025</div>
+          <div class="cal-nav">
+            <button><i class="fa-solid fa-chevron-left"></i></button>
+            <button><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+        <div class="cal-days">
+          <div class="cal-day-label">Mon</div><div class="cal-day-label">Tue</div><div class="cal-day-label">Wed</div>
+          <div class="cal-day-label">Thu</div><div class="cal-day-label">Fri</div><div class="cal-day-label">Sat</div><div class="cal-day-label">Sun</div>
+        </div>
+        <div class="cal-dates">
+          <div class="cal-date other">27</div><div class="cal-date other">28</div><div class="cal-date other">29</div><div class="cal-date other">30</div><div class="cal-date other">31</div><div class="cal-date">1</div><div class="cal-date">2</div>
+          <div class="cal-date">3</div><div class="cal-date">4</div><div class="cal-date">5</div><div class="cal-date">6</div><div class="cal-date">7</div><div class="cal-date">8</div><div class="cal-date">9</div>
+          <div class="cal-date">10</div><div class="cal-date">11</div><div class="cal-date">12</div><div class="cal-date">13</div><div class="cal-date">14</div><div class="cal-date">15</div><div class="cal-date">16</div>
+          <div class="cal-date">17</div><div class="cal-date">18</div><div class="cal-date">19</div><div class="cal-date today has-event">20</div><div class="cal-date has-event">21</div><div class="cal-date">22</div><div class="cal-date">23</div>
+          <div class="cal-date has-event">24</div><div class="cal-date">25</div><div class="cal-date">26</div><div class="cal-date">27</div><div class="cal-date">28</div><div class="cal-date">29</div><div class="cal-date">30</div>
+        </div>
+        <div class="cal-tabs">
+          <div class="cal-tab active">All</div>
+          <div class="cal-tab">Assigned</div>
+          <div class="cal-tab">My Schedule</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-title">Visit Client Michael Reynolds</div>
+          <div class="schedule-addr"><i class="fa-solid fa-location-dot" style="color:#9CA3AF;font-size:10px;margin-right:3px;"></i>742 Oak Street, Denver, CO 80220</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-title">Visit Client Sarah Thompson</div>
+          <div class="schedule-addr"><i class="fa-solid fa-location-dot" style="color:#9CA3AF;font-size:10px;margin-right:3px;"></i>1256 Maple Ave, Austin, TX 78704</div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-title">Follow Up · Aaliyah Lovato</div>
+          <div class="schedule-addr"><i class="fa-solid fa-envelope" style="color:#9CA3AF;font-size:10px;margin-right:3px;"></i>aaliyah123@invite.co · (512) 555-0199</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEALS -->
+    <div class="card deals-card">
+      <div class="deals-hdr">
+        Deals
+        <span class="card-action">View all <i class="fa-solid fa-chevron-right"></i></span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" style="width:24%;"></div>
+      </div>
+      <div class="progress-labels">
+        <div><span>42</span> Closed Deals</div>
+        <div><span>132</span> On Progress</div>
+      </div>
+      <div class="mini-prop-list">
+        <div class="mini-prop">
+          <img class="mini-prop-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=80&h=80&q=80" alt="">
+          <div><div class="mini-prop-name">Maison Sterling</div><div class="mini-prop-loc">New York, Albany</div></div>
+          <div class="mini-prop-price">$1.56M</div>
+        </div>
+        <div class="mini-prop">
+          <img class="mini-prop-img" src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop&w=80&h=80&q=80" alt="">
+          <div><div class="mini-prop-name">Echelon West</div><div class="mini-prop-loc">Ohio, Columbus</div></div>
+          <div class="mini-prop-price">$960K</div>
+        </div>
+        <div class="mini-prop">
+          <img class="mini-prop-img" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=80&h=80&q=80" alt="">
+          <div><div class="mini-prop-name">La Residence</div><div class="mini-prop-loc">Ohio, Columbus</div></div>
+          <div class="mini-prop-price">$520K</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARKET SNAPSHOT (below deals) -->
+    <div class="card" style="grid-column:2;padding:18px 20px;">
+      <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:14px;">Market Overview</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:#F8FAFC;border-radius:10px;padding:14px;">
+          <div style="font-size:11px;color:#9CA3AF;font-weight:500;margin-bottom:4px;">Avg Days on Market</div>
+          <div style="font-size:22px;font-weight:800;color:#111827;">18</div>
+          <div style="font-size:11px;color:#059669;font-weight:600;margin-top:2px;"><i class="fa-solid fa-arrow-trend-down"></i> 23% faster</div>
+        </div>
+        <div style="background:#F8FAFC;border-radius:10px;padding:14px;">
+          <div style="font-size:11px;color:#9CA3AF;font-weight:500;margin-bottom:4px;">Avg ROI</div>
+          <div style="font-size:22px;font-weight:800;color:#111827;">7.3%</div>
+          <div style="font-size:11px;color:#059669;font-weight:600;margin-top:2px;"><i class="fa-solid fa-arrow-trend-up"></i> +1.2% YoY</div>
+        </div>
+        <div style="background:#F8FAFC;border-radius:10px;padding:14px;">
+          <div style="font-size:11px;color:#9CA3AF;font-weight:500;margin-bottom:4px;">Median Price</div>
+          <div style="font-size:22px;font-weight:800;color:#111827;">$870K</div>
+          <div style="font-size:11px;color:#059669;font-weight:600;margin-top:2px;"><i class="fa-solid fa-arrow-trend-up"></i> +8.4% YoY</div>
+        </div>
+        <div style="background:#F8FAFC;border-radius:10px;padding:14px;">
+          <div style="font-size:11px;color:#9CA3AF;font-weight:500;margin-bottom:4px;">Inventory</div>
+          <div style="font-size:22px;font-weight:800;color:#111827;">2,847</div>
+          <div style="font-size:11px;color:#059669;font-weight:600;margin-top:2px;"><i class="fa-solid fa-arrow-trend-up"></i> +12% MoM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE LISTING TABLE -->
+    <div class="card table-section">
+      <div class="table-card-header">
+        <div class="table-card-title">Active Listing</div>
+        <div class="table-search-wrap">
+          <div class="table-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search property…">
+          </div>
+          <div class="tbl-expand"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th><th>Type</th><th>Units</th><th>Cost</th><th>Active Leads</th><th>Views</th><th>Status</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="td-property"><img class="td-prop-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=80&h=80&q=80" alt=""><div><div class="td-prop-name">Maison Sterling</div><div class="td-prop-loc">New York, Albany</div></div></div></td>
+            <td>House</td><td>12</td><td>$1.5M</td>
+            <td><div class="td-agents"><img class="td-agent" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><img class="td-agent" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><div class="td-agent-count">+32</div></div></td>
+            <td>125</td><td><span class="status-pill status-occupied">8/12 Occupied</span></td>
+            <td class="td-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+          </tr>
+          <tr>
+            <td><div class="td-property"><img class="td-prop-img" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=80&h=80&q=80" alt=""><div><div class="td-prop-name">The Orchid</div><div class="td-prop-loc">Ohio, Columbus</div></div></div></td>
+            <td>Villa</td><td>9,300</td><td>$520K</td>
+            <td><div class="td-agents"><img class="td-agent" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><div class="td-agent-count">+15</div></div></td>
+            <td>930</td><td><span class="status-pill status-available">Available</span></td>
+            <td class="td-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+          </tr>
+          <tr>
+            <td><div class="td-property"><img class="td-prop-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=80&h=80&q=80" alt=""><div><div class="td-prop-name">Echelon West</div><div class="td-prop-loc">Ohio, Columbus</div></div></div></td>
+            <td>House</td><td>25</td><td>$700K</td>
+            <td><div class="td-agents"><img class="td-agent" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><img class="td-agent" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><div class="td-agent-count">+40</div></div></td>
+            <td>355</td><td><span class="status-pill status-available">Available</span></td>
+            <td class="td-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+          </tr>
+          <tr>
+            <td><div class="td-property"><img class="td-prop-img" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=80&h=80&q=80" alt=""><div><div class="td-prop-name">La Residence</div><div class="td-prop-loc">Ohio, Columbus</div></div></div></td>
+            <td>Apartment</td><td>17</td><td>$700K</td>
+            <td><div class="td-agents"><img class="td-agent" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><div class="td-agent-count">+11</div></div></td>
+            <td>425</td><td><span class="status-pill status-sold">Sold Out</span></td>
+            <td class="td-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+          </tr>
+          <tr>
+            <td><div class="td-property"><img class="td-prop-img" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=80&h=80&q=80" alt=""><div><div class="td-prop-name">Lotus Regency</div><div class="td-prop-loc">New York, Albany</div></div></div></td>
+            <td>House</td><td>32</td><td>$900K</td>
+            <td><div class="td-agents"><img class="td-agent" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><img class="td-agent" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><div class="td-agent-count">+28</div></div></td>
+            <td>2,106</td><td><span class="status-pill status-available">Available</span></td>
+            <td class="td-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+          </tr>
+          <tr>
+            <td><div class="td-property"><img class="td-prop-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=80&h=80&q=80" alt=""><div><div class="td-prop-name">The Sky View</div><div class="td-prop-loc">New York, Albany</div></div></div></td>
+            <td>Apartment</td><td>1</td><td>$2.4M</td>
+            <td><div class="td-agents"><img class="td-agent" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" alt="" style="object-fit:cover;border-radius:50%;"><div class="td-agent-count">+8</div></div></td>
+            <td>1,740</td><td><span class="status-pill status-hold">On Hold</span></td>
+            <td class="td-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LEADS CONTACT -->
+    <div class="card leads-card">
+      <div class="leads-header">
+        <div class="leads-title">Leads Contact</div>
+        <span class="card-action"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+      </div>
+      <div>
+        <div class="lead-item"><img class="lead-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="lead-name">Jessica Chen</div><div class="lead-loc"><i class="fa-solid fa-location-dot" style="font-size:10px;color:#9CA3AF;"></i> New York, Albany</div></div><button class="lead-call"><i class="fa-solid fa-phone"></i></button></div>
+        <div class="lead-item"><img class="lead-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="lead-name">John Doe</div><div class="lead-loc"><i class="fa-solid fa-location-dot" style="font-size:10px;color:#9CA3AF;"></i> California, LA</div></div><button class="lead-call"><i class="fa-solid fa-phone"></i></button></div>
+        <div class="lead-item"><img class="lead-avatar" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="lead-name">Hailee S.</div><div class="lead-loc"><i class="fa-solid fa-location-dot" style="font-size:10px;color:#9CA3AF;"></i> New York, Troy</div></div><button class="lead-call"><i class="fa-solid fa-phone"></i></button></div>
+        <div class="lead-item"><img class="lead-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="lead-name">Evan Chris</div><div class="lead-loc"><i class="fa-solid fa-location-dot" style="font-size:10px;color:#9CA3AF;"></i> Ohio, Columbus</div></div><button class="lead-call"><i class="fa-solid fa-phone"></i></button></div>
+        <div class="lead-item"><img class="lead-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="lead-name">Emily Paris</div><div class="lead-loc"><i class="fa-solid fa-location-dot" style="font-size:10px;color:#9CA3AF;"></i> California, LA</div></div><button class="lead-call"><i class="fa-solid fa-phone"></i></button></div>
+      </div>
+    </div>
+
+  </div><!-- END MAIN GRID -->
+
+  <!-- PROPERTY LISTINGS -->
+  <div class="section-hdr mt-24">
+    <div>
+      <div class="section-title">Property Listings</div>
+      <div class="section-sub">Browse all available properties across all markets</div>
+    </div>
+    <div class="section-actions">
+      <div class="view-toggle">
+        <button class="vt-btn active"><i class="fa-solid fa-grip"></i> Grid</button>
+        <button class="vt-btn"><i class="fa-solid fa-list"></i> List</button>
+      </div>
+      <button class="btn"><i class="fa-solid fa-sliders"></i> Filter</button>
+      <button class="btn primary"><i class="fa-solid fa-plus"></i> Add Property</button>
+    </div>
+  </div>
+
+  <div class="listings-grid">
+    <div class="prop-card">
+      <div class="prop-img-wrap">
+        <img class="prop-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&h=380&q=80" alt="Maison Sterling">
+        <div class="prop-img-overlay">
+          <span class="prop-badge badge-new"><i class="fa-solid fa-bolt"></i> New</span>
+          <button class="prop-save"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">$1,560,400</div>
+        <div class="prop-name">Maison Sterling</div>
+        <div class="prop-loc"><i class="fa-solid fa-location-dot"></i> New York, Albany</div>
+        <div class="prop-metrics">
+          <div class="pm"><i class="fa-solid fa-bed pm-icon"></i><div><div class="pm-val">6</div><div class="pm-key">Beds</div></div></div>
+          <div class="pm"><i class="fa-solid fa-shower pm-icon"></i><div><div class="pm-val">4</div><div class="pm-key">Baths</div></div></div>
+          <div class="pm"><i class="fa-solid fa-vector-square pm-icon"></i><div><div class="pm-val">4.2k</div><div class="pm-key">Sqft</div></div></div>
+          <div class="pm"><span class="roi-tag">5.8% ROI</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-img-wrap">
+        <img class="prop-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&h=380&q=80" alt="Echelon West">
+        <div class="prop-img-overlay">
+          <span class="prop-badge badge-avail"><i class="fa-solid fa-circle-check"></i> Available</span>
+          <button class="prop-save"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">$960,400</div>
+        <div class="prop-name">Echelon West</div>
+        <div class="prop-loc"><i class="fa-solid fa-location-dot"></i> Ohio, Columbus</div>
+        <div class="prop-metrics">
+          <div class="pm"><i class="fa-solid fa-bed pm-icon"></i><div><div class="pm-val">4</div><div class="pm-key">Beds</div></div></div>
+          <div class="pm"><i class="fa-solid fa-shower pm-icon"></i><div><div class="pm-val">3</div><div class="pm-key">Baths</div></div></div>
+          <div class="pm"><i class="fa-solid fa-vector-square pm-icon"></i><div><div class="pm-val">2.5k</div><div class="pm-key">Sqft</div></div></div>
+          <div class="pm"><span class="roi-tag">7.2% ROI</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-img-wrap">
+        <img class="prop-img" src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop&w=600&h=380&q=80" alt="The Orchid">
+        <div class="prop-img-overlay">
+          <span class="prop-badge badge-inv"><i class="fa-solid fa-chart-line"></i> Investor Pick</span>
+          <button class="prop-save"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">$700,500</div>
+        <div class="prop-name">The Orchid</div>
+        <div class="prop-loc"><i class="fa-solid fa-location-dot"></i> New York, Albany</div>
+        <div class="prop-metrics">
+          <div class="pm"><i class="fa-solid fa-bed pm-icon"></i><div><div class="pm-val">4</div><div class="pm-key">Beds</div></div></div>
+          <div class="pm"><i class="fa-solid fa-shower pm-icon"></i><div><div class="pm-val">3</div><div class="pm-key">Baths</div></div></div>
+          <div class="pm"><i class="fa-solid fa-vector-square pm-icon"></i><div><div class="pm-val">2.1k</div><div class="pm-key">Sqft</div></div></div>
+          <div class="pm"><span class="roi-tag">8.3% ROI</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-img-wrap">
+        <img class="prop-img" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&h=380&q=80" alt="La Residence">
+        <div class="prop-img-overlay">
+          <span class="prop-badge badge-avail"><i class="fa-solid fa-circle-check"></i> Available</span>
+          <button class="prop-save"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">$520,000</div>
+        <div class="prop-name">La Residence</div>
+        <div class="prop-loc"><i class="fa-solid fa-location-dot"></i> Ohio, Columbus</div>
+        <div class="prop-metrics">
+          <div class="pm"><i class="fa-solid fa-bed pm-icon"></i><div><div class="pm-val">3</div><div class="pm-key">Beds</div></div></div>
+          <div class="pm"><i class="fa-solid fa-shower pm-icon"></i><div><div class="pm-val">2</div><div class="pm-key">Baths</div></div></div>
+          <div class="pm"><i class="fa-solid fa-vector-square pm-icon"></i><div><div class="pm-val">1.8k</div><div class="pm-key">Sqft</div></div></div>
+          <div class="pm"><span class="roi-tag">9.1% ROI</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-img-wrap">
+        <img class="prop-img" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&h=380&q=80" alt="The Sky View">
+        <div class="prop-img-overlay">
+          <span class="prop-badge badge-sold"><i class="fa-solid fa-ban"></i> Sold Out</span>
+          <button class="prop-save"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">$2,400,000</div>
+        <div class="prop-name">The Sky View</div>
+        <div class="prop-loc"><i class="fa-solid fa-location-dot"></i> New York, Albany</div>
+        <div class="prop-metrics">
+          <div class="pm"><i class="fa-solid fa-bed pm-icon"></i><div><div class="pm-val">5</div><div class="pm-key">Beds</div></div></div>
+          <div class="pm"><i class="fa-solid fa-shower pm-icon"></i><div><div class="pm-val">5</div><div class="pm-key">Baths</div></div></div>
+          <div class="pm"><i class="fa-solid fa-vector-square pm-icon"></i><div><div class="pm-val">5.1k</div><div class="pm-key">Sqft</div></div></div>
+          <div class="pm"><span class="roi-tag">4.4% ROI</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-img-wrap">
+        <img class="prop-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&h=380&q=80" alt="Lotus Regency">
+        <div class="prop-img-overlay">
+          <span class="prop-badge badge-new"><i class="fa-solid fa-bolt"></i> New</span>
+          <button class="prop-save"><i class="fa-regular fa-heart"></i></button>
+        </div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price">$1,800,000</div>
+        <div class="prop-name">Lotus Regency</div>
+        <div class="prop-loc"><i class="fa-solid fa-location-dot"></i> New York, Albany</div>
+        <div class="prop-metrics">
+          <div class="pm"><i class="fa-solid fa-bed pm-icon"></i><div><div class="pm-val">5</div><div class="pm-key">Beds</div></div></div>
+          <div class="pm"><i class="fa-solid fa-shower pm-icon"></i><div><div class="pm-val">4</div><div class="pm-key">Baths</div></div></div>
+          <div class="pm"><i class="fa-solid fa-vector-square pm-icon"></i><div><div class="pm-val">3.8k</div><div class="pm-key">Sqft</div></div></div>
+          <div class="pm"><span class="roi-tag">6.5% ROI</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS -->
+  <div class="section-hdr">
+    <div>
+      <div class="section-title">Market Analytics</div>
+      <div class="section-sub">Data-driven insights to support smarter investment decisions</div>
+    </div>
+    <div class="section-actions">
+      <button class="btn"><i class="fa-solid fa-calendar"></i> Jun 2025</button>
+      <button class="btn"><i class="fa-solid fa-download"></i> Export</button>
+    </div>
+  </div>
+
+  <div class="analytics-3col">
+    <div class="card a-pad">
+      <div class="a-title">Avg. Property Value</div>
+      <div class="a-sub">Columbus Metro Area</div>
+      <div class="a-value">$1.24M</div>
+      <div class="a-change"><i class="fa-solid fa-arrow-trend-up"></i> +8.4% vs last year</div>
+      <div style="height:1px;background:#F3F4F6;margin:14px 0;"></div>
+      <div class="bars-area">
+        <div class="bar-col"><div class="bar-fill" style="height:55%;"></div><div class="bar-lbl">Jan</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:60%;"></div><div class="bar-lbl">Feb</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:52%;"></div><div class="bar-lbl">Mar</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:70%;"></div><div class="bar-lbl">Apr</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:65%;"></div><div class="bar-lbl">May</div></div>
+        <div class="bar-col"><div class="bar-fill accent" style="height:85%;"></div><div class="bar-lbl">Jun</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:75%;"></div><div class="bar-lbl">Jul</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:68%;"></div><div class="bar-lbl">Aug</div></div>
+      </div>
+    </div>
+
+    <div class="card a-pad">
+      <div class="a-title">Avg. ROI by Neighborhood</div>
+      <div class="a-sub">Annual return estimate</div>
+      <div class="roi-bars">
+        <div><div class="roi-top"><span class="roi-label">Downtown Core</span><span class="roi-pct" style="color:#059669;">9.1%</span></div><div class="roi-track"><div class="roi-fill" style="width:91%;"></div></div></div>
+        <div><div class="roi-top"><span class="roi-label">Midtown</span><span class="roi-pct" style="color:#2563EB;">7.2%</span></div><div class="roi-track"><div class="roi-fill g2" style="width:72%;"></div></div></div>
+        <div><div class="roi-top"><span class="roi-label">Westside</span><span class="roi-pct" style="color:#7C3AED;">6.5%</span></div><div class="roi-track"><div class="roi-fill g3" style="width:65%;"></div></div></div>
+        <div><div class="roi-top"><span class="roi-label">North Albany</span><span class="roi-pct" style="color:#D97706;">5.8%</span></div><div class="roi-track"><div class="roi-fill g4" style="width:58%;"></div></div></div>
+        <div><div class="roi-top"><span class="roi-label">Suburbs</span><span class="roi-pct">4.3%</span></div><div class="roi-track"><div class="roi-fill" style="width:43%;background:#E5E7EB;"></div></div></div>
+      </div>
+    </div>
+
+    <div class="card a-pad">
+      <div class="a-title">Market Snapshot</div>
+      <div class="a-sub">Current indicators</div>
+      <div class="snap-rows">
+        <div class="snap-row"><span class="snap-key">Active Listings</span><span class="snap-val">2,847</span></div>
+        <div class="snap-row"><span class="snap-key">Median Price</span><span class="snap-val">$870K</span></div>
+        <div class="snap-row"><span class="snap-key">Price / Sqft</span><span class="snap-val">$384</span></div>
+        <div class="snap-row"><span class="snap-key">Days on Market</span><span class="snap-val green">18 days</span></div>
+        <div class="snap-row"><span class="snap-key">Inventory Growth</span><span class="snap-val green">+12% MoM</span></div>
+        <div class="snap-row"><span class="snap-key">Rental Yield</span><span class="snap-val green">6.8% avg</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics-2col">
+    <div class="card">
+      <div style="padding:20px 22px 14px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:2px;">Price Trends — 12 Month</div>
+          <div style="font-size:11.5px;color:#9CA3AF;">Revenue vs transaction volume</div>
+        </div>
+        <div style="display:flex;gap:14px;">
+          <div class="legend-item"><div class="legend-dot" style="background:#2563EB;"></div>Avg Price</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#D1D5DB;"></div>Volume</div>
+        </div>
+      </div>
+      <div style="padding:0 16px 16px;height:200px;">
+        <canvas id="trendChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card a-pad">
+      <div class="a-title">Sales by Property Type</div>
+      <div class="a-sub">This quarter</div>
+      <div class="bars-area" style="height:120px;">
+        <div class="bar-col"><div class="bar-fill accent" style="height:80%;"></div><div class="bar-lbl">House</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:60%;background:#DBEAFE;"></div><div class="bar-lbl">Apt</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:45%;background:#EDE9FE;"></div><div class="bar-lbl">Villa</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:30%;background:#D1FAE5;"></div><div class="bar-lbl">Condo</div></div>
+        <div class="bar-col"><div class="bar-fill" style="height:18%;background:#FEF3C7;"></div><div class="bar-lbl">Land</div></div>
+      </div>
+      <div style="height:1px;background:#F3F4F6;margin:14px 0;"></div>
+      <div style="display:flex;justify-content:space-between;">
+        <div><div style="font-weight:800;color:#111827;font-size:20px;">342</div><div style="font-size:11px;color:#9CA3AF;margin-top:2px;">Total Sales</div></div>
+        <div><div style="font-weight:800;color:#059669;font-size:20px;">$96.7M</div><div style="font-size:11px;color:#9CA3AF;margin-top:2px;">Total Volume</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- END PAGE -->
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div class="nav-logo-icon">M</div>
+      Massara
+    </div>
+    <div class="footer-links">
+      <a href="#">Platform</a>
+      <a href="#">Properties</a>
+      <a href="#">Analytics</a>
+      <a href="#">Leads</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+    <div class="footer-copy">© 2025 Massara. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+/* PERFORMANCE CHART */
+const perfCtx = document.getElementById('perfChart').getContext('2d');
+const perfGrad = perfCtx.createLinearGradient(0,0,0,180);
+perfGrad.addColorStop(0,'rgba(37,99,235,0.15)');
+perfGrad.addColorStop(1,'rgba(37,99,235,0.00)');
+
+new Chart(perfCtx, {
+  type:'line',
+  data:{
+    labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'],
+    datasets:[
+      { label:'Revenue', data:[45,55,48,65,70,96.7,80,85], borderColor:'#2563EB', backgroundColor:perfGrad, borderWidth:2.5, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:'#2563EB', tension:0.4, fill:true },
+      { label:'Visits', data:[30,40,35,50,55,60,65,70], borderColor:'#D1D5DB', backgroundColor:'transparent', borderWidth:2, pointRadius:0, pointHoverRadius:4, tension:0.4 }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{ mode:'index', intersect:false },
+    plugins:{
+      legend:{ display:false },
+      tooltip:{ backgroundColor:'#1F2937', titleColor:'#F9FAFB', bodyColor:'#D1D5DB', padding:10, cornerRadius:8, callbacks:{ label: ctx => ` ${ctx.dataset.label}: $${ctx.raw}M` } }
+    },
+    scales:{
+      x:{ grid:{ display:false }, border:{ display:false }, ticks:{ color:'#9CA3AF', font:{ size:11, family:'Plus Jakarta Sans' } } },
+      y:{ grid:{ color:'#F3F4F6' }, border:{ display:false }, ticks:{ color:'#9CA3AF', font:{ size:11, family:'Plus Jakarta Sans' }, callback: v=>'$'+v+'M' } }
+    }
+  }
+});
+
+/* TREND CHART */
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+const trendGrad = trendCtx.createLinearGradient(0,0,0,180);
+trendGrad.addColorStop(0,'rgba(37,99,235,0.12)');
+trendGrad.addColorStop(1,'rgba(37,99,235,0.00)');
+
+new Chart(trendCtx, {
+  type:'line',
+  data:{
+    labels:['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'],
+    datasets:[
+      { label:'Avg Price ($M)', data:[0.95,1.0,1.02,1.05,1.10,1.08,1.12,1.15,1.18,1.20,1.22,1.24], borderColor:'#2563EB', backgroundColor:trendGrad, borderWidth:2.5, pointRadius:0, pointHoverRadius:5, tension:0.4, fill:true },
+      { label:'Volume', data:[28,32,30,35,38,34,40,42,39,44,41,42], borderColor:'#D1D5DB', backgroundColor:'transparent', borderWidth:2, pointRadius:0, borderDash:[5,3], tension:0.4 }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{ mode:'index', intersect:false },
+    plugins:{ legend:{ display:false }, tooltip:{ backgroundColor:'#1F2937', titleColor:'#F9FAFB', bodyColor:'#D1D5DB', padding:10, cornerRadius:8 } },
+    scales:{
+      x:{ grid:{ display:false }, border:{ display:false }, ticks:{ color:'#9CA3AF', font:{ size:11, family:'Plus Jakarta Sans' } } },
+      y:{ grid:{ color:'#F3F4F6' }, border:{ display:false }, ticks:{ color:'#9CA3AF', font:{ size:11, family:'Plus Jakarta Sans' } } }
+    }
+  }
+});
+
+/* INTERACTIONS */
+document.querySelectorAll('.nav-tab').forEach(t => {
+  t.addEventListener('click', () => { document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active')); t.classList.add('active'); });
+});
+document.querySelectorAll('.period-btn').forEach(b => {
+  b.addEventListener('click', () => { document.querySelectorAll('.period-btn').forEach(x => x.classList.remove('active')); b.classList.add('active'); });
+});
+document.querySelectorAll('.cal-tab').forEach(t => {
+  t.addEventListener('click', () => { document.querySelectorAll('.cal-tab').forEach(x => x.classList.remove('active')); t.classList.add('active'); });
+});
+document.querySelectorAll('.vt-btn').forEach(b => {
+  b.addEventListener('click', () => { b.closest('.view-toggle').querySelectorAll('.vt-btn').forEach(x => x.classList.remove('active')); b.classList.add('active'); });
+});
+document.querySelectorAll('.prop-save').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const icon = btn.querySelector('i');
+    icon.classList.contains('fa-regular') ? icon.classList.replace('fa-regular','fa-solid') : icon.classList.replace('fa-solid','fa-regular');
+    btn.style.color = icon.classList.contains('fa-solid') ? '#EF4444' : '';
+  });
+});
+</script>
+</body>
+</html>
