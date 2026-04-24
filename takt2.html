@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takt — App de rencontre 100% gratuite et vérifiée</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E11D48',
+                        'primary-light': '#FFE4E6',
+                        'primary-dark': '#BE123C',
+                        secondary: '#1F2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { cursor: none !important; }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        #heart-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 28px;
+            height: 28px;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease-out;
+            filter: drop-shadow(0 2px 4px rgba(225, 29, 72, 0.4));
+        }
+        .cursor-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            width: 14px;
+            height: 14px;
+            animation: trailFade 0.7s ease-out forwards;
+        }
+        @keyframes trailFade {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(0) translateY(-15px); opacity: 0; }
+        }
+
+        /* Floating Hearts Background */
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp linear infinite;
+            opacity: 0.12;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.4); opacity: 0; }
+            15% { opacity: 0.12; }
+            85% { opacity: 0.12; }
+            100% { transform: translateY(-120px) rotate(360deg) scale(1); opacity: 0; }
+        }
+
+        /* Sparkle */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: sparkleAnim ease-in-out infinite;
+        }
+        @keyframes sparkleAnim {
+            0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 0.25; }
+        }
+
+        /* Marquee */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marqueeScroll 35s linear infinite;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Scroll Reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Phone Float */
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-18px); }
+        }
+
+        /* Heart Beat */
+        .heart-beat {
+            animation: heartbeat 1.8s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.2); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.2); }
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #E11D48 0%, #FB7185 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Smooth theme transition */
+        body, div, section, nav, footer, article, aside, p, h1, h2, h3, h4, span {
+            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.3s ease;
+        }
+
+        /* Hide default cursor on interactive elements */
+        a, button, input, select, textarea, [role="button"] {
+            cursor: none !important;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="bg-white text-gray-900 dark:bg-gray-950 dark:text-white antialiased relative">
+
+    <!-- Custom Cursor -->
+    <div id="heart-cursor">
+        <svg viewBox="0 0 24 24" fill="#E11D48" class="w-full h-full">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+    </div>
+
+    <!-- Floating Hearts & Sparkles Container -->
+    <div id="floating-hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden z-[1]"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Left: Logo + Nav Links -->
+                <div class="flex items-center gap-8">
+                    <a href="#" class="flex items-center gap-2 shrink-0">
+                        <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight">Takt</span>
+                    </a>
+                    <div class="hidden lg:flex items-center gap-6">
+                        <a href="#fonctionnalites" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary transition">Fonctionnalités</a>
+                        <a href="#histoires" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary transition">Histoires</a>
+                        <a href="#couples" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary transition">Couples</a>
+                        <a href="#avis" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary transition">Avis</a>
+                    </div>
+                </div>
+
+                <!-- Right: Language + Theme + CTA -->
+                <div class="flex items-center gap-3">
+                    <!-- Language Selector -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition text-sm font-medium">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                            <span id="current-lang">FR</span>
+                            <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-36 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all origin-top-right">
+                            <button onclick="setLang('fr')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 rounded-t-xl transition flex items-center gap-2">
+                                <span>🇫🇷</span> Français
+                            </button>
+                            <button onclick="setLang('en')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 rounded-b-xl transition flex items-center gap-2">
+                                <span>🇬🇧</span> English
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition" aria-label="Toggle theme">
+                        <svg id="sun-icon" class="w-5 h-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        <svg id="moon-icon" class="w-5 h-5 block dark:hidden text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    </button>
+
+                    <button onclick="openSignup()" class="hidden sm:flex bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-lg shadow-primary/25 hover:shadow-primary/40 transform hover:-translate-y-0.5">
+                        Commencer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-28 pb-20 lg:pt-36 lg:pb-28 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left Content -->
+                <div class="text-left">
+                    <div class="inline-flex items-center gap-2 bg-primary-light dark:bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
+                        <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                        <span class="text-primary text-sm font-semibold">+50 000 célibataires actifs</span>
+                    </div>
+
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
+                        Trouve l'amour<br>
+                        <span class="gradient-text">sans payer.</span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-lg leading-relaxed">
+                        La première app de rencontre <strong class="text-gray-900 dark:text-white">100% gratuite</strong> et <strong class="text-gray-900 dark:text-white">100% vérifiée</strong> en France. Pas d'abonnement, pas de surprise.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                        <button onclick="openSignup()" class="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-2xl font-bold text-lg transition shadow-xl shadow-primary/30 hover:shadow-primary/50 transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74 1.18 0 2.21-.93 3.91-.93 1.45 0 2.96.74 3.83 2.15-3.35 1.84-2.23 5.98.22 7.13-.57 1.5-1.31 2.99-2.04 4.88zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                            App Store
+                        </button>
+                        <button onclick="openSignup()" class="bg-gray-900 dark:bg-white dark:text-gray-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-xl hover:shadow-2xl transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.24-.84-.76-.84-1.35zm13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27zm3.35-4.31c.34.27.59.69.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31zM6.05 2.66l10.76 6.22-2.27 2.27L6.05 2.66z"/></svg>
+                            Google Play
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-gray-500 dark:text-gray-400 text-sm">
+                        <div class="flex -space-x-2">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-950" alt="User">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-950" alt="User">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-950" alt="User">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-950" alt="User">
+                        </div>
+                        <p>Rejoins la communauté aujourd'hui</p>
+                    </div>
+                </div>
+
+                <!-- Right: Phone Mockup -->
+                <div class="relative flex justify-center lg:justify-end">
+                    <div class="float-animation relative">
+                        <div class="w-72 md:w-80 bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl shadow-primary/20 border-4 border-gray-800">
+                            <div class="bg-white dark:bg-gray-800 rounded-[2rem] overflow-hidden h-[580px] relative">
+                                <div class="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-20">
+                                    <span class="text-xs font-semibold dark:text-white">9:41</span>
+                                    <div class="flex gap-1">
+                                        <div class="w-4 h-2.5 bg-gray-800 dark:bg-white rounded-sm"></div>
+                                    </div>
+                                </div>
+                                <div class="pt-14 px-3 pb-4 h-full">
+                                    <div class="relative rounded-2xl overflow-hidden h-[420px] mb-4 shadow-md">
+                                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=600&fit=crop&crop=face" class="w-full h-full object-cover" alt="Profile">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                                        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <h3 class="text-xl font-bold">Sophie, 26</h3>
+                                                <svg class="w-5 h-5 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                            </div>
+                                            <p class="text-xs opacity-90">Paris · À 3 km</p>
+                                            <div class="flex gap-2 mt-2">
+                                                <span class="bg-white/20 backdrop-blur px-2.5 py-1 rounded-full text-[10px]">Photo</span>
+                                                <span class="bg-white/20 backdrop-blur px-2.5 py-1 rounded-full text-[10px]">Voyage</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-center gap-5">
+                                        <button class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:scale-110 transition">
+                                            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        </button>
+                                        <button class="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-110 transition heart-beat">
+                                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                        </button>
+                                        <button class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:scale-110 transition">
+                                            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="absolute -top-4 -right-4 bg-white dark:bg-gray-800 rounded-xl p-3 shadow-xl animate-bounce" style="animation-duration: 3s;">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
+                                <span class="text-sm font-bold dark:text-white">Profil vérifié</span>
+                            </div>
+                        </div>
+
+                        <div class="absolute -bottom-2 -left-6 bg-white dark:bg-gray-800 rounded-xl p-3 shadow-xl" style="animation: float 4s ease-in-out infinite;">
+                            <div class="flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full" alt="Match">
+                                <div>
+                                    <p class="text-sm font-bold dark:text-white">Nouveau Match !</p>
+                                    <p class="text-xs text-gray-500">Thomas vous a aimé</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="py-12 border-y border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="scroll-reveal">
+                    <div class="text-4xl font-extrabold gradient-text mb-1">50K+</div>
+                    <div class="text-gray-500 dark:text-gray-400 text-sm font-medium">Célibataires</div>
+                </div>
+                <div class="scroll-reveal" style="transition-delay: 100ms;">
+                    <div class="text-4xl font-extrabold gradient-text mb-1">100%</div>
+                    <div class="text-gray-500 dark:text-gray-400 text-sm font-medium">Gratuit</div>
+                </div>
+                <div class="scroll-reveal" style="transition-delay: 200ms;">
+                    <div class="text-4xl font-extrabold gradient-text mb-1">12K+</div>
+                    <div class="text-gray-500 dark:text-gray-400 text-sm font-medium">Couples formés</div>
+                </div>
+                <div class="scroll-reveal" style="transition-delay: 300ms;">
+                    <div class="text-4xl font-extrabold gradient-text mb-1">4.8★</div>
+                    <div class="text-gray-500 dark:text-gray-400 text-sm font-medium">Sur App Store</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Carousel -->
+    <section id="fonctionnalites" class="py-20 overflow-hidden bg-white dark:bg-gray-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="text-center max-w-3xl mx-auto scroll-reveal">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Découvre l'app</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mt-3 dark:text-white">Fonctionnalités qui <span class="gradient-text">cartonnent</span></h2>
+            </div>
+        </div>
+
+        <div class="overflow-hidden relative">
+            <div class="marquee-track">
+                <!-- First set -->
+                <div class="flex gap-6 px-3 shrink-0">
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Profils vérifiés</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Selfie en temps réel + modération humaine. Zéro fake.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Chat illimité</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Messages, photos, GIFs. Sans limite et sans payer.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Appel vidéo</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Visio intégrée avant le premier date. En toute sécurité.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Géolocalisation</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Trouve des célibataires proches de chez toi.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Mode privé</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Photos floutées, contrôle total de ta visibilité.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Boost gratuit</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Sois vu par 10x plus de personnes. Gratuit chaque jour.</p>
+                    </div>
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="flex gap-6 px-3 shrink-0">
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Profils vérifiés</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Selfie en temps réel + modération humaine. Zéro fake.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Chat illimité</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Messages, photos, GIFs. Sans limite et sans payer.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Appel vidéo</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Visio intégrée avant le premier date. En toute sécurité.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Géolocalisation</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Trouve des célibataires proches de chez toi.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Mode privé</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Photos floutées, contrôle total de ta visibilité.</p>
+                    </div>
+                    <div class="w-80 bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition hover:-translate-y-1 shrink-0">
+                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 dark:text-white">Boost gratuit</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Sois vu par 10x plus de personnes. Gratuit chaque jour.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-24 bg-gray-50 dark:bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Comment ça marche</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mt-3 dark:text-white">Trois étapes pour <span class="gradient-text">matcher</span></h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="scroll-reveal bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 text-center">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg shadow-primary/30">1</div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Crée ton profil</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Inscription en 30 secondes. Ajoute tes photos et dis-nous qui tu es.</p>
+                </div>
+                <div class="scroll-reveal bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 text-center" style="transition-delay: 150ms;">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg shadow-primary/30">2</div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Like & Match</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Swipe à droite sur les profils qui te plaisent. C'est réciproque ? C'est un match !</p>
+                </div>
+                <div class="scroll-reveal bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 text-center" style="transition-delay: 300ms;">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg shadow-primary/30">3</div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Discute & Rencontre</h3>
+                    <p class="text-gray-500 dark:text-gray-400">Chat, appel vidéo, puis rendez-vous dans la vraie vie. C'est aussi simple que ça.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Stories Section -->
+    <section id="histoires" class="py-24 bg-white dark:bg-gray-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Le blog Takt</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mt-3 dark:text-white">Histoires qui <span class="gradient-text">inspirent</span></h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-4 text-lg">Des rencontres authentiques, des conseils, et des témoignages de notre communauté.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Story 1 -->
+                <article class="scroll-reveal group">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/3] mb-5">
+                        <img src="https://images.unsplash.com/photo-1529634597503-139d3726fed5?w=800&h=600&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Couple story">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">Témoignage</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" class="w-8 h-8 rounded-full object-cover" alt="Author">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Marie, 27 ans · Lyon</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition">"J'ai trouvé l'amour en plein confinement"</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">On a commencé par des appels vidéo sur Takt pendant le confinement. Aujourd'hui on vit ensemble et on prépare notre voyage en Asie.</p>
+                </article>
+
+                <!-- Story 2 -->
+                <article class="scroll-reveal group" style="transition-delay: 100ms;">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/3] mb-5">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&h=600&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Couple story">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">Conseils</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" class="w-8 h-8 rounded-full object-cover" alt="Author">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Alexandre, 30 ans · Paris</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition">5 idées de premier rendez-vous à Paris</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Oublie le café classique. Voici nos spots préférés pour un premier date mémorable dans la capitale, testés et approuvés par la communauté.</p>
+                </article>
+
+                <!-- Story 3 -->
+                <article class="scroll-reveal group" style="transition-delay: 200ms;">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/3] mb-5">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=600&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Couple story">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">Succès</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" class="w-8 h-8 rounded-full object-cover" alt="Author">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Julie & Marc · Marseille</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition">Notre mariage, un an après notre match</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">On a matché le 14 février sur Takt. On s'est fiancés 6 mois plus tard. On vous raconte comment on a su que c'était le bon.</p>
+                </article>
+
+                <!-- Story 4 -->
+                <article class="scroll-reveal group" style="transition-delay: 0ms;">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/3] mb-5">
+                        <img src="https://images.unsplash.com/photo-1621624666561-84d0ce88f692?w=800&h=600&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Couple story">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">Témoignage</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face" class="w-8 h-8 rounded-full object-cover" alt="Author">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Camille, 24 ans · Bordeaux</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition">"Je ne croyais plus aux apps de rencontre"</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Après des expériences négatives ailleurs, Takt m'a redonné confiance. La vérification des profils fait toute la différence.</p>
+                </article>
+
+                <!-- Story 5 -->
+                <article class="scroll-reveal group" style="transition-delay: 100ms;">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/3] mb-5">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&h=600&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Couple story">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">Conseils</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" class="w-8 h-8 rounded-full object-cover" alt="Author">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Thomas, 29 ans · Lille</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition">Comment rédiger une bio qui attire</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Notre équipe analyse les profils les plus populaires. Voici les 3 secrets pour une bio qui fait matcher.</p>
+                </article>
+
+                <!-- Story 6 -->
+                <article class="scroll-reveal group" style="transition-delay: 200ms;">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/3] mb-5">
+                        <img src="https://images.unsplash.com/photo-1591608516485-a1a53df39498?w=800&h=600&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" alt="Couple story">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-primary">Succès</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" class="w-8 h-8 rounded-full object-cover" alt="Author">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Léa & Nathan · Nice</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition">De Takt à la vie commune à Nice</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">On habitait à 2 km l'un de l'autre sans jamais se croiser. Takt nous a réunis. Voici notre histoire.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Couples Section -->
+    <section id="couples" class="py-24 bg-gray-50 dark:bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Histoires vraies</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mt-3 dark:text-white">Ils se sont rencontrés <span class="gradient-text">sur Takt</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Couple 1 -->
+                <div class="scroll-reveal group">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/5] mb-4">
+                        <img src="https://images.unsplash.com/photo-1621624666561-84d0ce88f692?w=600&h=800&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Couple">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4 text-white">
+                            <div class="flex items-center gap-1 mb-1">
+                                <svg class="w-5 h-5 text-primary fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                <span class="font-bold">Matchés en mars 2025</span>
+                            </div>
+                            <p class="text-sm opacity-90">Engagés depuis janvier 2026</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold dark:text-white">Lucas & Emma</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Lyon · Ensemble depuis 10 mois</p>
+                </div>
+
+                <!-- Couple 2 -->
+                <div class="scroll-reveal group" style="transition-delay: 150ms;">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/5] mb-4">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&h=800&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Couple">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4 text-white">
+                            <div class="flex items-center gap-1 mb-1">
+                                <svg class="w-5 h-5 text-primary fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                <span class="font-bold">Matchés en juin 2025</span>
+                            </div>
+                            <p class="text-sm opacity-90">Mariés civilement en avril 2026</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold dark:text-white">Thomas & Sarah</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Paris · Mariés</p>
+                </div>
+
+                <!-- Couple 3 -->
+                <div class="scroll-reveal group" style="transition-delay: 300ms;">
+                    <div class="relative rounded-3xl overflow-hidden aspect-[4/5] mb-4">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=800&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Couple">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4 text-white">
+                            <div class="flex items-center gap-1 mb-1">
+                                <svg class="w-5 h-5 text-primary fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                <span class="font-bold">Matchés en août 2025</span>
+                            </div>
+                            <p class="text-sm opacity-90">Vivent ensemble à Marseille</p>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold dark:text-white">Nathan & Léa</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Marseille · En couple</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Section -->
+    <section class="py-24 bg-white dark:bg-gray-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="scroll-reveal">
+                    <span class="text-primary font-semibold text-sm uppercase tracking-wider">Sécurité</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mt-3 mb-6 dark:text-white">Ta sécurité, notre <span class="gradient-text">priorité absolue</span></h2>
+                    <p class="text-gray-500 dark:text-gray-400 text-lg mb-8">On ne fait pas de compromis quand il s'agit de te protéger. Notre équipe de modération travaille 24h/24 pour que tu puisses rencontrer l'amour en toute sérénité.</p>
+
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg dark:text-white">Vérification par selfie</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Chaque utilisateur doit prendre un selfie en temps réel pour prouver son identité.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg dark:text-white">Blocage instantané</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Un bouton de signalement et de blocage accessible à tout moment dans l'app.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg dark:text-white">Données chiffrées</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Tes messages et photos sont chiffrés de bout en bout. Personne d'autre ne peut les lire.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-reveal relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=700&fit=crop" class="w-full h-full object-cover" alt="Safety">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-xl border border-gray-100 dark:border-gray-700 max-w-xs">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            </div>
+                            <span class="font-bold dark:text-white">Modération 24/7</span>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Notre équipe vérifie chaque signalement en moins de 2 minutes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="avis" class="py-24 bg-gray-50 dark:bg-gray-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 scroll-reveal">
+                <span class="text-primary font-semibold text-sm uppercase tracking-wider">Avis</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold mt-3 dark:text-white">Ce qu'ils disent <span class="gradient-text">de nous</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="scroll-reveal bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">"J'avais tout essayé, Tinder, Bumble... Takt est la seule app où je ne me suis pas sentie comme un produit. Et j'ai trouvé l'amour en 3 semaines."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="Chloé">
+                        <div>
+                            <p class="font-bold dark:text-white">Chloé, 24</p>
+                            <p class="text-xs text-gray-500">Lyon</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-reveal bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition" style="transition-delay: 150ms;">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">"La vérification des profils est un game changer. Pas de bots, pas de faux comptes. J'ai trouvé ma petite amie ici et je recommande à 100%."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="Théo">
+                        <div>
+                            <p class="font-bold dark:text-white">Théo, 28</p>
+                            <p class="text-xs text-gray-500">Paris</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-reveal bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-lg transition" style="transition-delay: 300ms;">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">"Enfin une app gratuite qui ne ressemble pas à une arnaque. L'interface est belle, moderne, et les gens sont sérieux. Merci Takt !"</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="Inès">
+                        <div>
+                            <p class="font-bold dark:text-white">Inès, 26</p>
+                            <p class="text-xs text-gray-500">Marseille</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 scroll-reveal">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-white mb-6">Prêt à rencontrer<br>quelqu'un de spécial ?</h2>
+            <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">Rejoins les milliers de Français qui ont déjà téléchargé Takt. Ton prochain match n'est qu'à un swipe.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openSignup()" class="bg-white text-primary px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-50 transition shadow-2xl transform hover:-translate-y-1">
+                    Créer mon profil gratuit
+                </button>
+                <button onclick="openSignup()" class="bg-primary-dark text-white border-2 border-white/30 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-primary-dark/80 transition transform hover:-translate-y-1">
+                    Voir les célibataires
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </div>
+                        <span class="text-2xl font-bold">Takt</span>
+                    </div>
+                    <p class="text-gray-400 max-w-sm">La rencontre française, enfin gratuite et vérifiée. Parce que l'amour n'a pas de prix.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Légal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">CGU</a></li>
+                        <li><a href="#" class="hover:text-white transition">Confidentialité</a></li>
+                        <li><a href="#" class="hover:text-white transition">Cookies</a></li>
+                        <li><a href="#" class="hover:text-white transition">Mentions légales</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Réseaux</h4>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2026 Takt Dating. Tous droits réservés.</p>
+                <p class="text-gray-500 text-sm">Fait avec ❤️ en France</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeSignup()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-md p-8 relative transform transition-all scale-95 opacity-0" id="signup-content">
+                <button onclick="closeSignup()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold dark:text-white">Commence l'aventure</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Crée ton profil en 30 secondes</p>
+                </div>
+
+                <form onsubmit="handleSignup(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prénom</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition" placeholder="Ton prénom">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition" placeholder="ton@email.com">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ville</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition" placeholder="Paris">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Âge</label>
+                            <input type="number" min="18" max="99" required class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition" placeholder="25">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Je cherche</label>
+                        <select class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition">
+                            <option>Une relation sérieuse</option>
+                            <option>À voir</option>
+                            <option>Des amis</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-primary/30 transform hover:-translate-y-0.5">
+                        Créer mon profil
+                    </button>
+                </form>
+                <p class="text-center text-xs text-gray-400 mt-4">En t'inscrivant, tu acceptes nos CGU et notre politique de confidentialité.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exit Intent Modal -->
+    <div id="exit-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeExit()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-lg p-8 relative transform transition-all scale-95 opacity-0" id="exit-content">
+                <button onclick="closeExit()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+
+                <div class="text-center">
+                    <div class="relative inline-block mb-4">
+                        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                            <svg class="w-10 h-10 text-primary heart-beat" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-xs font-bold text-white">1</div>
+                    </div>
+                    <h3 class="text-2xl font-bold dark:text-white mb-2">Quelqu'un t'attend !</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">3 personnes près de chez toi veulent matcher avec toi. Ne pars pas sans avoir essayé.</p>
+
+                    <div class="bg-primary-light dark:bg-primary/10 rounded-2xl p-4 mb-6 border border-primary/20">
+                        <p class="text-primary font-bold text-sm">🎁 OFFRE EXCLUSIVE</p>
+                        <p class="text-gray-700 dark:text-gray-300 text-sm mt-1">Inscris-toi maintenant et reçois un <strong>Boost gratuit</strong> pour être vu par 10x plus de monde !</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="openSignup(); closeExit();" class="flex-1 bg-primary hover:bg-primary-dark text-white py-3.5 rounded-xl font-bold transition shadow-lg shadow-primary/30">
+                            Créer mon profil
+                        </button>
+                        <button onclick="closeExit()" class="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 py-3.5 rounded-xl font-semibold transition">
+                            Peut-être plus tard
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Language Switcher
+        function setLang(lang) {
+            document.getElementById('current-lang').textContent = lang.toUpperCase();
+        }
+
+        // Custom Cursor with Trail
+        const cursor = document.getElementById('heart-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let trailCounter = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            trailCounter++;
+            if (trailCounter % 3 === 0) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.innerHTML = `<svg viewBox="0 0 24 24" fill="#E11D48" class="w-full h-full"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+                setTimeout(() => trail.remove(), 700);
+            }
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Floating Hearts Background
+        function createFloatingHeart() {
+            const container = document.getElementById('floating-hearts-container');
+            if (!container) return;
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            const size = Math.random() * 24 + 12;
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 12 + 10) + 's';
+            heart.style.animationDelay = (Math.random() * 5) + 's';
+            heart.innerHTML = `<svg viewBox="0 0 24 24" fill="#E11D48" class="w-full h-full"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 22000);
+        }
+        setInterval(createFloatingHeart, 700);
+
+        // Sparkles
+        function createSparkle() {
+            const container = document.getElementById('floating-hearts-container');
+            if (!container) return;
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            const size = Math.random() * 14 + 6;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            sparkle.innerHTML = `<svg viewBox="0 0 24 24" fill="#FB7185" class="w-full h-full"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>`;
+            container.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 5000);
+        }
+        setInterval(createSparkle, 500);
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Signup Modal
+        function openSignup() {
+            const modal = document.getElementById('signup-modal');
+            const content = document.getElementById('signup-content');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeSignup() {
+            const modal = document.getElementById('signup-modal');
+            const content = document.getElementById('signup-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            alert('Bienvenue sur Takt ! Ton profil est créé.');
+            closeSignup();
+        }
+
+        // Exit Intent
+        let exitShown = false;
+        document.addEventListener('mouseleave', (e) => {
+            if (e.clientY <= 0 && !exitShown) {
+                const signupModal = document.getElementById('signup-modal');
+                if (signupModal && !signupModal.classList.contains('hidden')) return;
+
+                exitShown = true;
+                const modal = document.getElementById('exit-modal');
+                const content = document.getElementById('exit-content');
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            }
+        });
+
+        function closeExit() {
+            const modal = document.getElementById('exit-modal');
+            const content = document.getElementById('exit-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Mobile menu toggle (simple)
+        const mobileMenuBtn = document.createElement('button');
+        mobileMenuBtn.className = 'lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition';
+        mobileMenuBtn.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
+        mobileMenuBtn.onclick = () => alert('Menu mobile - ajoutez vos liens ici');
+        document.querySelector('nav .flex.items-center.gap-8').appendChild(mobileMenuBtn);
+    </script>
+</body>
+</html>
