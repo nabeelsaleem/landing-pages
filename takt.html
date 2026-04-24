@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takt — La dating app qui fait matcher l'authenticité</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            rose: { 50:'#FFF1F2', 100:'#FFE4E6', 200:'#FECDD3', 300:'#FDA4AF', 400:'#FB7185', 500:'#F43F5E', 600:'#E11D48', 700:'#BE123C', 800:'#9F1239', 900:'#881337' },
+            dark: { 50:'#F5F5F5', 100:'#E5E5E5', 200:'#D4D4D4', 300:'#A3A3A3', 400:'#737373', 500:'#525252', 600:'#404040', 700:'#303030', 800:'#1A1A1A', 900:'#111111', 950:'#0A0A0A' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #FFFFFF; --bg-alt: #FFF1F2; --bg-card: #FFFFFF; --bg-card-hover: #FFF1F2;
+      --text: #111111; --text-muted: #525252; --text-light: #737373;
+      --border: #FECDD3; --border-subtle: #FFE4E6;
+      --primary: #E11D48; --primary-light: #FB7185; --primary-pale: #FDA4AF;
+      --primary-bg: #FFF1F2; --primary-glow: rgba(225,29,72,0.15);
+      --primary-gradient: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
+      --shadow: rgba(225,29,72,0.08); --nav-bg: rgba(255,255,255,0.85); --overlay: rgba(0,0,0,0.5);
+    }
+    [data-theme="dark"] {
+      --bg: #0A0A0A; --bg-alt: #111111; --bg-card: #1A1A1A; --bg-card-hover: #222222;
+      --text: #F5F5F5; --text-muted: #A3A3A3; --text-light: #737373;
+      --border: #303030; --border-subtle: #262626;
+      --primary: #FB7185; --primary-light: #FDA4AF; --primary-pale: #9F1239;
+      --primary-bg: rgba(244,63,94,0.08); --primary-glow: rgba(251,113,133,0.12);
+      --primary-gradient: linear-gradient(135deg, #FB7185 0%, #E11D48 100%);
+      --shadow: rgba(0,0,0,0.3); --nav-bg: rgba(10,10,10,0.85); --overlay: rgba(0,0,0,0.7);
+    }
+    * { box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; transition: background 0.4s, color 0.4s; cursor: none; }
+    a, button { cursor: none; }
+
+    #cursor-heart { position: fixed; pointer-events: none; z-index: 9999; font-size: 20px; transform: translate(-50%, -50%); transition: transform 0.1s; filter: drop-shadow(0 2px 4px var(--primary-glow)); }
+    .floating-hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .float-heart { position: absolute; bottom: -40px; opacity: 0; animation: floatUp linear infinite; }
+    @keyframes floatUp { 0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.5); } 10% { opacity: 0.5; } 90% { opacity: 0.1; } 100% { opacity: 0; transform: translateY(-110vh) rotate(720deg) scale(1.2); } }
+    .sparkle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--primary); animation: sparkle-fade 1.5s ease-out forwards; pointer-events: none; }
+    @keyframes sparkle-fade { 0% { transform: scale(0); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.8; } 100% { transform: scale(0); opacity: 0; } }
+
+    ::selection { background: rgba(225,29,72,0.15); color: var(--primary); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .theme-card { background: var(--bg-card); border: 1px solid var(--border-subtle); transition: all 0.3s; }
+    .theme-card:hover { background: var(--bg-card-hover); border-color: var(--border); }
+
+    .carousel-track { display: flex; gap: 1.5rem; animation: carouselScroll 40s linear infinite; }
+    @keyframes carouselScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .carousel-track:hover { animation-play-state: paused; }
+
+    .popup-overlay { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; background: var(--overlay); backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: all 0.3s; }
+    .popup-overlay.active { opacity: 1; visibility: visible; }
+    .popup-content { background: var(--bg-card); border-radius: 1.5rem; max-width: 440px; width: 90%; padding: 2.5rem; border: 1px solid var(--border); transform: scale(0.9) translateY(20px); transition: transform 0.3s; position: relative; }
+    .popup-overlay.active .popup-content { transform: scale(1) translateY(0); }
+
+    .lang-dropdown { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.5rem; min-width: 140px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.2s; box-shadow: 0 20px 40px -10px var(--shadow); z-index: 60; }
+    .lang-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .lang-dropdown a { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; color: var(--text-muted); text-decoration: none; transition: all 0.15s; }
+    .lang-dropdown a:hover { background: var(--primary-bg); color: var(--primary); }
+
+    .gradient-text { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .btn-primary { background: var(--primary-gradient); color: #fff; box-shadow: 0 8px 30px -6px var(--primary-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px -6px var(--primary-glow); }
+    .nav-glass { background: var(--nav-bg); backdrop-filter: blur(16px); }
+
+    /* Android Mockup */
+    .android-mockup {
+      width: 280px; background: #111; border-radius: 2rem; padding: 12px; position: relative;
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.3), 0 0 40px var(--primary-glow);
+      border: 2px solid #333;
+    }
+    [data-theme="light"] .android-mockup { box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15), 0 0 40px var(--primary-glow); border-color: #ddd; }
+    .android-screen { border-radius: 1.4rem; overflow: hidden; background: var(--bg); position: relative; }
+    .android-notch { width: 80px; height: 24px; background: #111; border-radius: 0 0 12px 12px; position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 10; }
+    [data-theme="light"] .android-notch { background: #fff; }
+    .android-camera { width: 10px; height: 10px; background: #333; border-radius: 50%; position: absolute; top: 7px; right: 40px; z-index: 11; }
+
+    .match-line { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--primary); left: 50%; opacity: 0.3; }
+    .match-heart { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: var(--primary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5; box-shadow: 0 0 20px var(--primary-glow); }
+
+    @media (max-width: 768px) {
+      #cursor-heart { display: none; }
+      body, a, button { cursor: auto; }
+      .android-mockup { width: 220px; }
+    }
+  </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+  <div id="cursor-heart">❤️</div>
+  <div class="floating-hearts" id="floating-hearts"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 w-full z-50 nav-glass border-b transition-colors duration-300" style="border-color: var(--border-subtle)">
+    <div class="max-w-7xl mx-auto flex items-center justify-between py-3.5 px-6">
+      <div class="flex items-center gap-10">
+        <a href="#" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: var(--primary-gradient)">
+            <iconify-icon icon="lucide:heart" width="16" class="text-white"></iconify-icon>
+          </div>
+          <span class="text-lg font-bold tracking-tight" style="color: var(--text)">takt</span>
+          <span class="text-[10px] font-medium tracking-wider uppercase" style="color: var(--text-light)">.dating</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6 text-[13px] font-medium" style="color: var(--text-muted)">
+          <a href="#features" class="hover:text-rose-500 transition-colors">Fonctionnalités</a>
+          <a href="#intent" class="hover:text-rose-500 transition-colors">Sérieux</a>
+          <a href="#app-flow" class="hover:text-rose-500 transition-colors">L'App</a>
+          <a href="#couples" class="hover:text-rose-500 transition-colors">Couples</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <button id="lang-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" style="color: var(--text-muted); border: 1px solid var(--border-subtle)">
+            🇫🇷 FR <iconify-icon icon="lucide:chevron-down" width="12"></iconify-icon>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <a href="#" style="color: var(--primary)">🇫🇷 Français</a>
+            <a href="#">🇬🇧 English</a>
+            <a href="#">🇪🇸 Español</a>
+            <a href="#">🇩🇪 Deutsch</a>
+          </div>
+        </div>
+        <button id="theme-toggle" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-300" style="border: 1px solid var(--border-subtle); color: var(--text-muted)">
+          <iconify-icon icon="lucide:moon" width="16" id="theme-icon"></iconify-icon>
+        </button>
+        <button onclick="openSignup()" class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full btn-primary text-sm font-semibold text-white transition-all duration-300">
+          <iconify-icon icon="lucide:heart" width="14"></iconify-icon> Commencer
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="min-h-screen pt-20 relative overflow-hidden">
+    <div class="absolute top-20 right-1/4 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none" style="background: var(--primary-glow)"></div>
+    <div class="max-w-7xl mx-auto px-6 pt-12 lg:pt-20">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 space-y-8 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide" style="background: var(--primary-bg); color: var(--primary); border: 1px solid var(--border)">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> N°1 EN FRANCE
+          </div>
+          <h1 class="text-5xl lg:text-[4.2rem] font-extrabold leading-[1.05] tracking-tight" style="color: var(--text)">
+            L'amour,<br><span class="gradient-text">avec tact.</span>
+          </h1>
+          <p class="text-base leading-relaxed max-w-md" style="color: var(--text-muted)">La dating app française pour des rencontres authentiques. Trouvez votre futur(e) époux(se), pas juste un match.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button onclick="openSignup()" class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full btn-primary text-base font-bold text-white transition-all duration-300">
+              <iconify-icon icon="lucide:heart" width="18"></iconify-icon> Trouver l'amour
+            </button>
+            <a href="#app-flow" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-300" style="border: 1px solid var(--border); color: var(--text)">
+              Voir l'app <iconify-icon icon="lucide:arrow-down" width="16"></iconify-icon>
+            </a>
+          </div>
+          <div class="flex gap-10 pt-2">
+            <div><div class="text-2xl font-bold gradient-text">2M+</div><div class="text-[11px] tracking-wide uppercase font-medium" style="color: var(--text-light)">Membres</div></div>
+            <div><div class="text-2xl font-bold gradient-text">350K</div><div class="text-[11px] tracking-wide uppercase font-medium" style="color: var(--text-light)">Couples</div></div>
+            <div><div class="text-2xl font-bold gradient-text">4.8★</div><div class="text-[11px] tracking-wide uppercase font-medium" style="color: var(--text-light)">App Store</div></div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 relative flex justify-center items-center min-h-[520px]">
+          <div class="absolute w-72 h-72 rounded-full" style="border: 1px solid var(--border-subtle)"></div>
+          <div class="relative z-20" style="animation: float 4s ease-in-out infinite">
+            <div class="w-60 sm:w-64 rounded-[2rem] overflow-hidden shadow-2xl" style="border: 3px solid var(--border); box-shadow: 0 30px 60px -15px var(--shadow), 0 0 40px var(--primary-glow)">
+              <div class="relative aspect-[9/19]">
+                <img src="https://picsum.photos/seed/takt-hero-main/400/840.jpg" alt="Takt App" class="w-full h-full object-cover">
+                <div class="absolute inset-0" style="background: linear-gradient(to top, var(--bg) 0%, transparent 50%)"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-5">
+                  <div class="flex items-center gap-1.5 mb-1.5"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="text-[10px] font-semibold text-green-500">En ligne</span></div>
+                  <h3 class="text-base font-bold" style="color: var(--text)">Camille, 28</h3>
+                  <p class="text-[11px]" style="color: var(--text-light)">Paris · Veut se marier</p>
+                  <div class="flex gap-2.5 mt-3">
+                    <button class="w-10 h-10 rounded-full flex items-center justify-center" style="border: 1px solid var(--border)"><iconify-icon icon="lucide:x" width="18" style="color: var(--text-light)"></iconify-icon></button>
+                    <button class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary-gradient)"><iconify-icon icon="lucide:heart" width="18" class="text-white"></iconify-icon></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute right-2 sm:right-8 top-10 z-10 opacity-50 scale-[0.85]" style="animation: float 5s ease-in-out infinite">
+            <div class="w-48 sm:w-56 rounded-[1.5rem] overflow-hidden shadow-xl" style="border: 2px solid var(--border)">
+              <div class="relative aspect-[9/19]">
+                <img src="https://picsum.photos/seed/takt-hero-chat/360/760.jpg" alt="Chat" class="w-full h-full object-cover">
+                <div class="absolute inset-0" style="background: linear-gradient(to top, var(--bg) 10%, transparent 60%)"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                  <div class="rounded-xl p-3" style="background: var(--bg-card); border: 1px solid var(--border)"><p class="text-[11px] font-medium" style="color: var(--text)">Tu veux te marier un jour ? 💍</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTENT SECTION: Better Bride/Groom/Date -->
+  <section id="intent" class="py-24 px-6" style="background: var(--bg-alt)">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-5" style="background: var(--primary-bg); color: var(--primary); border: 1px solid var(--border)">
+          <iconify-icon icon="lucide:gem" width="13"></iconify-icon> RELATION SÉRIEUSE
+        </div>
+        <h2 class="text-3xl lg:text-5xl font-extrabold tracking-tight" style="color: var(--text)">
+          Trouvez <span class="gradient-text">l'âme sœur</span>,<br>pas juste un match
+        </h2>
+        <p class="mt-4 text-base" style="color: var(--text-muted)">Takt filtre par intention. Si vous cherchez le mariage, une relation durable, ou un vrai rendez-vous, nous comprenons.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="theme-card rounded-2xl p-8 text-center group">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: var(--primary-bg)">
+            <iconify-icon icon="lucide:heart-handshake" width="32" style="color: var(--primary)"></iconify-icon>
+          </div>
+          <h3 class="text-lg font-bold mb-3" style="color: var(--text)">Cherche Époux/Épouse</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted)">Notre filtre "Mariage" ne vous montre que les personnes qui partagent votre objectif de vie. Fini les perdus de temps.</p>
+          <div class="mt-5 inline-flex items-center gap-2 text-xs font-bold" style="color: var(--primary)">
+            45% de nos membres cherchent le mariage <iconify-icon icon="lucide:arrow-right" width="14"></iconify-icon>
+          </div>
+        </div>
+
+        <div class="theme-card rounded-2xl p-8 text-center group relative overflow-hidden">
+          <div class="absolute top-0 right-0 px-3 py-1 rounded-bl-xl text-[10px] font-bold text-white" style="background: var(--primary-gradient)">POPULAIRE</div>
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: var(--primary-bg)">
+            <iconify-icon icon="lucide:couple" width="32" style="color: var(--primary)"></iconify-icon>
+          </div>
+          <h3 class="text-lg font-bold mb-3" style="color: var(--text)">Relation Durable</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted)">Compatibilité profonde basée sur vos valeurs, croyances et mode de vie. Le matching par affinité, pas par hasard.</p>
+          <div class="mt-5 inline-flex items-center gap-2 text-xs font-bold" style="color: var(--primary)">
+            Score de compatibilité unique <iconify-icon icon="lucide:arrow-right" width="14"></iconify-icon>
+          </div>
+        </div>
+
+        <div class="theme-card rounded-2xl p-8 text-center group">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: var(--primary-bg)">
+            <iconify-icon icon="lucide:calendar-heart" width="32" style="color: var(--primary)"></iconify-icon>
+          </div>
+          <h3 class="text-lg font-bold mb-3" style="color: var(--text)">Vrais Rendez-vous</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted)">Notre assistant propose des lieux et activités pour des dates réussies. Passez du virtuel au réel, intelligemment.</p>
+          <div class="mt-5 inline-flex items-center gap-2 text-xs font-bold" style="color: var(--primary)">
+            Dates organisés chaque jour <iconify-icon icon="lucide:arrow-right" width="14"></iconify-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="flex flex-wrap justify-center gap-6 mt-12">
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold" style="background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-muted)">
+          <iconify-icon icon="lucide:shield-check" width="14" style="color: var(--primary)"></iconify-icon> 100% Profils Vérifiés
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold" style="background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-muted)">
+          <iconify-icon icon="lucide:scan-face" width="14" style="color: var(--primary)"></iconify-icon> Vérification Photo IA
+        </div>
+        <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold" style="background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-muted)">
+          <iconify-icon icon="lucide:ban" width="14" style="color: var(--primary)"></iconify-icon> Zéro Faux Profils
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES CAROUSEL -->
+  <section id="features" class="py-24 px-6 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-5" style="background: var(--primary-bg); color: var(--primary); border: 1px solid var(--border)">
+          <iconify-icon icon="lucide:sparkles" width="13"></iconify-icon> FONCTIONNALITÉS
+        </div>
+        <h2 class="text-3xl lg:text-5xl font-extrabold tracking-tight" style="color: var(--text)">
+          Des rencontres <span class="gradient-text">pensées avec soin</span>
+        </h2>
+      </div>
+      <div class="relative">
+        <div class="absolute left-0 top-0 bottom-0 w-16 z-10" style="background: linear-gradient(to right, var(--bg), transparent)"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-16 z-10" style="background: linear-gradient(to left, var(--bg), transparent)"></div>
+        <div class="overflow-hidden"><div class="carousel-track" id="feature-carousel"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANDROID APP FLOW -->
+  <section id="app-flow" class="py-24 px-6" style="background: var(--bg-alt)">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-5" style="background: var(--primary-bg); color: var(--primary); border: 1px solid var(--border)">
+          <iconify-icon icon="lucide:smartphone" width="13"></iconify-icon> L'APPLICATION
+        </div>
+        <h2 class="text-3xl lg:text-5xl font-extrabold tracking-tight" style="color: var(--text)">
+          Comment <span class="gradient-text">Takt</span> fonctionne
+        </h2>
+        <p class="mt-4 text-base" style="color: var(--text-muted)">De l'inscription au mariage, en 4 étapes simples sur l'app Android & iOS.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left: Steps -->
+        <div class="space-y-6">
+          <div class="flex gap-5 group">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: var(--primary-gradient)">1</div>
+            <div>
+              <h3 class="text-lg font-bold mb-1" style="color: var(--text)">Créez & Vérifiez</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--text-muted)">Inscrivez-vous en 30s. Notre IA vérifie votre selfie en temps réel pour garantir votre identité.</p>
+            </div>
+          </div>
+          <div class="flex gap-5 group">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: var(--primary-gradient)">2</div>
+            <div>
+              <h3 class="text-lg font-bold mb-1" style="color: var(--text)">Découvrez des Profils Intent</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--text-muted)">Filtrez par intention (Mariage, Relation durable, etc.). 10 profils compatibles par jour, pas plus.</p>
+            </div>
+          </div>
+          <div class="flex gap-5 group">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: var(--primary-gradient)">3</div>
+            <div>
+              <h3 class="text-lg font-bold mb-1" style="color: var(--text)">Match & Visio</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--text-muted)">Quand c'est un match, lancez un appel vidéo intégré. Voyez-vous en vrai avant le premier RDV.</p>
+            </div>
+          </div>
+          <div class="flex gap-5 group">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold" style="background: var(--primary-gradient)">4</div>
+            <div>
+              <h3 class="text-lg font-bold mb-1" style="color: var(--text)">Rencontrez pour de Vrai</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--text-muted)">Notre assistant suggère le lieu parfait. Passez du virtuel à la vraie vie en toute sécurité.</p>
+            </div>
+          </div>
+          <div class="pt-4 flex gap-3">
+            <button onclick="openSignup()" class="inline-flex items-center gap-2 px-6 py-3 rounded-full btn-primary text-sm font-bold text-white transition-all duration-300">
+              <iconify-icon icon="lucide:download" width="16"></iconify-icon> Télécharger l'App
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Android Mockup -->
+        <div class="flex justify-center">
+          <div class="android-mockup">
+            <div class="android-screen relative">
+              <div class="android-notch"></div>
+              <div class="android-camera"></div>
+              <div class="relative" style="aspect-ratio: 9/19.5;">
+                <img src="https://picsum.photos/seed/takt-android-app/560/1220.jpg" alt="Takt Android App" class="w-full h-full object-cover">
+                <div class="absolute inset-0" style="background: linear-gradient(to top, var(--bg) 5%, transparent 40%, transparent 85%, var(--bg) 100%)"></div>
+                
+                <!-- App UI Overlay -->
+                <div class="absolute top-12 left-4 right-4">
+                  <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-bold" style="color: var(--text)">Découvrir</span>
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--primary-bg)">
+                      <iconify-icon icon="lucide:sliders-horizontal" width="14" style="color: var(--primary)"></iconify-icon>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 overflow-hidden">
+                    <span class="px-3 py-1 rounded-full text-[10px] font-bold text-white" style="background: var(--primary-gradient)">💍 Mariage</span>
+                    <span class="px-3 py-1 rounded-full text-[10px] font-medium" style="background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-muted)">❤️ Durée</span>
+                    <span class="px-3 py-1 rounded-full text-[10px] font-medium" style="background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-muted)">☕ Date</span>
+                  </div>
+                </div>
+
+                <!-- Match Animation in center -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-[0.85]">
+                  <div class="relative w-56 h-72">
+                    <img src="https://picsum.photos/seed/match-female/200/280.jpg" class="absolute top-0 left-0 w-40 h-52 object-cover rounded-2xl shadow-lg" style="border: 3px solid var(--primary); transform: rotate(-8deg);">
+                    <img src="https://picsum.photos/seed/match-male/200/280.jpg" class="absolute top-4 right-0 w-40 h-52 object-cover rounded-2xl shadow-lg" style="border: 3px solid var(--primary); transform: rotate(8deg);">
+                    <div class="match-heart animate-bounce">
+                      <iconify-icon icon="lucide:heart" width="20" class="text-white"></iconify-icon>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom Nav -->
+                <div class="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-8">
+                  <div class="flex items-center justify-around py-3 rounded-2xl" style="background: var(--bg-card); border: 1px solid var(--border-subtle); box-shadow: 0 -10px 30px -5px var(--shadow)">
+                    <iconify-icon icon="lucide:flame" width="20" style="color: var(--primary)"></iconify-icon>
+                    <iconify-icon icon="lucide:message-circle" width="20" style="color: var(--text-light)"></iconify-icon>
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center -mt-6" style="background: var(--primary-gradient); box-shadow: 0 4px 15px var(--primary-glow)">
+                      <iconify-icon icon="lucide:heart" width="18" class="text-white"></iconify-icon>
+                    </div>
+                    <iconify-icon icon="lucide:video" width="20" style="color: var(--text-light)"></iconify-icon>
+                    <iconify-icon icon="lucide:user" width="20" style="color: var(--text-light)"></iconify-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REAL COUPLES GALLERY -->
+  <section id="couples" class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-5" style="background: var(--primary-bg); color: var(--primary); border: 1px solid var(--border)">
+          <iconify-icon icon="lucide:heart" width="13"></iconify-icon> COUPLES RÉELS
+        </div>
+        <h2 class="text-3xl lg:text-5xl font-extrabold tracking-tight" style="color: var(--text)">
+          Ils se sont <span class="gradient-text">trouvés sur Takt</span>
+        </h2>
+        <p class="mt-4 text-base" style="color: var(--text-muted)">Des vraies histoires d'amour. Des fiançailles. Des mariages. Tout a commencé avec un match.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Couple 1 - Married -->
+        <div class="group relative rounded-2xl overflow-hidden aspect-[3/4]" style="border: 2px solid var(--border-subtle)">
+          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=530&fit=crop" alt="Couple Marié" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)"></div>
+          <div class="absolute top-3 right-3 px-2 py-0.5 rounded-full text-[9px] font-bold text-white" style="background: var(--primary-gradient)">MARIÉS</div>
+          <div class="absolute bottom-0 left-0 right-0 p-4">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-5 h-5 rounded-full flex items-center justify-center" style="background: var(--primary-gradient)"><iconify-icon icon="lucide:heart" width="10" class="text-white"></iconify-icon></div>
+              <span class="text-white text-xs font-semibold">Match Takt</span>
+            </div>
+            <p class="text-white text-sm font-bold">Sarah & Hugo</p>
+            <p class="text-white/60 text-[11px]">Ensemble depuis 2022 · Paris</p>
+          </div>
+        </div>
+
+        <!-- Couple 2 - Engaged -->
+        <div class="group relative rounded-2xl overflow-hidden aspect-[3/4]" style="border: 2px solid var(--border-subtle)">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=530&fit=crop" alt="Couple Fiancé" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)"></div>
+          <div class="absolute top-3 right-3 px-2 py-0.5 rounded-full text-[9px] font-bold text-white bg-yellow-500">💍 FIANCÉS</div>
+          <div class="absolute bottom-0 left-0 right-0 p-4">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-5 h-5 rounded-full flex items-center justify-center" style="background: var(--primary-gradient)"><iconify-icon icon="lucide:heart" width="10" class="text-white"></iconify-icon></div>
+              <span class="text-white text-xs font-semibold">Match Takt</span>
+            </div>
+            <p class="text-white text-sm font-bold">Léa & Antoine</p>
+            <p class="text-white/60 text-[11px]">Ensemble depuis 2023 · Lyon</p>
+          </div>
+        </div>
+
+        <!-- Couple 3 - Married -->
+        <div class="group relative rounded-2xl overflow-hidden aspect-[3/4]" style="border: 2px solid var(--border-subtle)">
+          <img src="https://images.unsplash.com/photo-1529634597503-139d3726fed5?w=400&h=530&fit=crop" alt="Couple Marié" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)"></div>
+          <div class="absolute top-3 right-3 px-2 py-0.5 rounded-full text-[9px] font-bold text-white" style="background: var(--primary-gradient)">MARIÉS</div>
+          <div class="absolute bottom-0 left-0 right-0 p-4">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-5 h-5 rounded-full flex items-center justify-center" style="background: var(--primary-gradient)"><iconify-icon icon="lucide:heart" width="10" class="text-white"></iconify-icon></div>
+              <span class="text-white text-xs font-semibold">Match Takt</span>
+            </div>
+            <p class="text-white text-sm font-bold">Clara & Mathieu</p>
+            <p class="text-white/60 text-[11px]">Ensemble depuis 2021 · Bordeaux</p>
+          </div>
+        </div>
+
+        <!-- Couple 4 - New Couple -->
+        <div class="group relative rounded-2xl overflow-hidden aspect-[3/4]" style="border: 2px solid var(--border-subtle)">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=530&fit=crop" alt="Couple" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)"></div>
+          <div class="absolute top-3 right-3 px-2 py-0.5 rounded-full text-[9px] font-bold text-white bg-green-500">❤️ EN COUPLE</div>
+          <div class="absolute bottom-0 left-0 right-0 p-4">
+            <div class="flex items-center gap-2 mb-1">
+              <div class="w-5 h-5 rounded-full flex items-center justify-center" style="background: var(--primary-gradient)"><iconify-icon icon="lucide:heart" width="10" class="text-white"></iconify-icon></div>
+              <span class="text-white text-xs font-semibold">Match Takt</span>
+            </div>
+            <p class="text-white text-sm font-bold">Julie & Thomas</p>
+            <p class="text-white/60 text-[11px]">Ensemble depuis 2024 · Nantes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Match Connection Visualization -->
+      <div class="mt-12 theme-card rounded-2xl p-8 md:p-12">
+        <div class="grid md:grid-cols-3 gap-8 items-center text-center">
+          <div>
+            <div class="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden" style="border: 3px solid var(--primary)">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop" class="w-full h-full object-cover" alt="Emma">
+            </div>
+            <h4 class="font-bold" style="color: var(--text)">Emma, 29</h4>
+            <p class="text-xs" style="color: var(--text-light)">Cherche: Mariage</p>
+            <div class="flex justify-center gap-1 mt-2">
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold" style="background: var(--primary-bg); color: var(--primary)">Famille</span>
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold" style="background: var(--primary-bg); color: var(--primary)">Voyage</span>
+            </div>
+          </div>
+          <div>
+            <div class="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 animate-bounce" style="background: var(--primary-gradient); box-shadow: 0 0 40px var(--primary-glow)">
+              <iconify-icon icon="lucide:heart" width="28" class="text-white"></iconify-icon>
+            </div>
+            <div class="text-2xl font-extrabold gradient-text mb-1">98%</div>
+            <p class="text-sm font-semibold" style="color: var(--text)">Compatibilité</p>
+            <p class="text-xs mt-2" style="color: var(--text-light)">Même intention · Mêmes valeurs<br>Connectés le 14 Février 2023</p>
+          </div>
+          <div>
+            <div class="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden" style="border: 3px solid var(--primary)">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" class="w-full h-full object-cover" alt="Lucas">
+            </div>
+            <h4 class="font-bold" style="color: var(--text)">Lucas, 31</h4>
+            <p class="text-xs" style="color: var(--text-light)">Cherche: Mariage</p>
+            <div class="flex justify-center gap-1 mt-2">
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold" style="background: var(--primary-bg); color: var(--primary)">Famille</span>
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold" style="background: var(--primary-bg); color: var(--primary)">Cuisine</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-8">
+          <p class="text-sm font-medium" style="color: var(--primary)">💍 Emma & Lucas se sont mariés en Juin 2024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="stories" class="py-24 px-6" style="background: var(--bg-alt)">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-5" style="background: var(--primary-bg); color: var(--primary); border: 1px solid var(--border)">
+          <iconify-icon icon="lucide:message-circle" width="13"></iconify-icon> TÉMOIGNAGES
+        </div>
+        <h2 class="text-3xl lg:text-5xl font-extrabold tracking-tight" style="color: var(--text)">
+          Ce qu'ils en <span class="gradient-text">disent</span>
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="theme-card rounded-2xl p-7">
+          <div class="flex gap-0.5 mb-5"><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon></div>
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--text-muted)">« Le filtre "Mariage" a changé ma vie. J'ai tout de su que Lucas cherchait la même chose que moi. Pas de malentendu. On se marie cet été. »</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop" alt="Emma" class="w-10 h-10 rounded-full object-cover" style="border: 2px solid var(--border)">
+            <div><div class="text-sm font-semibold" style="color: var(--text)">Emma, 29</div><div class="text-[11px]" style="color: var(--text-light)">Paris · 💍 Bientôt mariée</div></div>
+          </div>
+        </div>
+        <div class="theme-card rounded-2xl p-7">
+          <div class="flex gap-0.5 mb-5"><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon></div>
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--text-muted)">« Sur les autres apps, on perd du temps. Sur Takt, les femmes sont sérieuses. La visio intégrée m'a permis de vérifier avant de rencontrer. »</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop" alt="Karim" class="w-10 h-10 rounded-full object-cover" style="border: 2px solid var(--border)">
+            <div><div class="text-sm font-semibold" style="color: var(--text)">Karim, 33</div><div class="text-[11px]" style="color: var(--text-light)">Lyon · ❤️ En couple</div></div>
+          </div>
+        </div>
+        <div class="theme-card rounded-2xl p-7">
+          <div class="flex gap-0.5 mb-5"><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon><iconify-icon icon="lucide:star" width="14" style="color: var(--primary)"></iconify-icon></div>
+          <p class="text-sm leading-relaxed mb-6" style="color: var(--text-muted)">« Le score de compatibilité est bluffant. 97% avec mon fiancé. On partage les mêmes valeurs familiales. Merci Takt de prendre la recherche au sérieux. »</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=64&h=64&fit=crop" alt="Sophie" class="w-10 h-10 rounded-full object-cover" style="border: 2px solid var(--border)">
+            <div><div class="text-sm font-semibold" style="color: var(--text)">Sophie, 27</div><div class="text-[11px]" style="color: var(--text-light)">Bordeaux · 💍 Fiancée</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <section id="press" class="py-20 px-6" style="border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle)">
+    <div class="max-w-5xl mx-auto text-center">
+      <p class="text-xs tracking-widest uppercase font-semibold mb-8" style="color: var(--text-light)">Ils parlent de nous</p>
+      <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16" style="color: var(--text-light)">
+        <span class="text-xl font-bold opacity-30 hover:opacity-100 transition-opacity">Le Monde</span>
+        <span class="text-xl font-bold opacity-30 hover:opacity-100 transition-opacity">GQ France</span>
+        <span class="text-xl font-bold opacity-30 hover:opacity-100 transition-opacity">Elle</span>
+        <span class="text-xl font-bold opacity-30 hover:opacity-100 transition-opacity">Cosmopolitan</span>
+        <span class="text-xl font-bold opacity-30 hover:opacity-100 transition-opacity">TechCrunch</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD CTA -->
+  <section id="download" class="py-32 px-6 relative overflow-hidden" style="background: var(--bg-alt)">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none" style="background: var(--primary-glow)"></div>
+    <div class="max-w-3xl mx-auto text-center relative z-10">
+      <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8" style="background: var(--primary-gradient); box-shadow: 0 0 60px -10px var(--primary-glow)">
+        <iconify-icon icon="lucide:heart" width="36" class="text-white"></iconify-icon>
+      </div>
+      <h2 class="text-4xl lg:text-6xl font-extrabold tracking-tight mb-6" style="color: var(--text)">
+        Prêt à trouver <span class="gradient-text">l'âme sœur</span> ?
+      </h2>
+      <p class="text-base mb-10 max-w-lg mx-auto" style="color: var(--text-muted)">Rejoignez plus de 2 millions de Français. Téléchargez Takt gratuitement sur Android & iOS.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button onclick="openSignup()" class="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full btn-primary text-lg font-bold text-white transition-all duration-300">
+          <iconify-icon icon="lucide:heart" width="20"></iconify-icon> Commencer gratuitement
+        </button>
+      </div>
+      <p class="text-[11px] mt-4" style="color: var(--text-light)">Gratuit · Sans publicité · Désinscription en un clic</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-14 px-6" style="border-top: 1px solid var(--border-subtle)">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-10 mb-12">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-7 h-7 rounded-md flex items-center justify-center" style="background: var(--primary-gradient)"><iconify-icon icon="lucide:heart" width="14" class="text-white"></iconify-icon></div>
+            <span class="text-base font-bold" style="color: var(--text)">takt.dating</span>
+          </div>
+          <p class="text-xs leading-relaxed" style="color: var(--text-light)">La dating app française pour des rencontres authentiques et respectueuses.</p>
+        </div>
+        <div><h4 class="text-xs font-bold tracking-wider uppercase mb-4" style="color: var(--text)">Produit</h4><ul class="space-y-2 text-xs" style="color: var(--text-light)"><li><a href="#" class="hover:text-rose-500">Fonctionnalités</a></li><li><a href="#" class="hover:text-rose-500">Tarifs</a></li><li><a href="#" class="hover:text-rose-500">Sécurité</a></li></ul></div>
+        <div><h4 class="text-xs font-bold tracking-wider uppercase mb-4" style="color: var(--text)">Entreprise</h4><ul class="space-y-2 text-xs" style="color: var(--text-light)"><li><a href="#" class="hover:text-rose-500">À propos</a></li><li><a href="#" class="hover:text-rose-500">Carrières</a></li><li><a href="#" class="hover:text-rose-500">Contact</a></li></ul></div>
+        <div><h4 class="text-xs font-bold tracking-wider uppercase mb-4" style="color: var(--text)">Légal</h4><ul class="space-y-2 text-xs" style="color: var(--text-light)"><li><a href="#" class="hover:text-rose-500">CGU</a></li><li><a href="#" class="hover:text-rose-500">Confidentialité</a></li><li><a href="#" class="hover:text-rose-500">Cookies</a></li></ul></div>
+      </div>
+      <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-3" style="border-top: 1px solid var(--border-subtle)">
+        <p class="text-[11px]" style="color: var(--text-light)">© 2025 Takt Dating. Fait avec ❤️ à Paris.</p>
+        <div class="flex items-center gap-2 text-[11px]" style="color: var(--text-light)"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Tous les systèmes opérationnels</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EXIT INTENT POPUP -->
+  <div class="popup-overlay" id="exit-popup">
+    <div class="popup-content text-center">
+      <button onclick="closePopup('exit-popup')" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center" style="color: var(--text-light); border: 1px solid var(--border-subtle)"><iconify-icon icon="lucide:x" width="16"></iconify-icon></button>
+      <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style="background: var(--primary-bg)"><iconify-icon icon="lucide:heart-handshake" width="32" style="color: var(--primary)"></iconify-icon></div>
+      <h3 class="text-xl font-bold mb-2" style="color: var(--text)">Attendez ! 💕</h3>
+      <p class="text-sm mb-5" style="color: var(--text-muted)">Votre match vous attend. Obtenez <strong style="color: var(--primary)">50% de réduction</strong> sur Premium.</p>
+      <button onclick="closePopup('exit-popup'); openSignup()" class="w-full py-3 rounded-full btn-primary text-sm font-bold text-white transition-all duration-300 mb-3">Profiter de -50%</button>
+      <button onclick="closePopup('exit-popup')" class="text-xs font-medium" style="color: var(--text-light)">Non merci</button>
+    </div>
+  </div>
+
+  <!-- SIGNUP POPUP -->
+  <div class="popup-overlay" id="signup-popup">
+    <div class="popup-content">
+      <button onclick="closePopup('signup-popup')" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center" style="color: var(--text-light); border: 1px solid var(--border-subtle)"><iconify-icon icon="lucide:x" width="16"></iconify-icon></button>
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style="background: var(--primary-bg)"><iconify-icon icon="lucide:heart" width="28" style="color: var(--primary)"></iconify-icon></div>
+        <h3 class="text-xl font-bold" style="color: var(--text)">Trouvez votre âme sœur</h3>
+        <p class="text-sm mt-1" style="color: var(--text-muted)">Créez votre profil en 30 secondes</p>
+      </div>
+      <form onsubmit="handleSignup(event)" class="space-y-3">
+        <input type="text" placeholder="Prénom" required class="w-full px-4 py-3 rounded-xl text-sm font-medium outline-none transition-all focus:ring-2" style="background: var(--bg-alt); border: 1px solid var(--border-subtle); color: var(--text); --tw-ring-color: var(--primary)">
+        <input type="email" placeholder="Email" required class="w-full px-4 py-3 rounded-xl text-sm font-medium outline-none transition-all focus:ring-2" style="background: var(--bg-alt); border: 1px solid var(--border-subtle); color: var(--text); --tw-ring-color: var(--primary)">
+        <select required class="w-full px-4 py-3 rounded-xl text-sm font-medium outline-none transition-all focus:ring-2" style="background: var(--bg-alt); border: 1px solid var(--border-subtle); color: var(--text-muted); --tw-ring-color: var(--primary)">
+          <option value="">Je cherche...</option>
+          <option>💍 Le Mariage</option>
+          <option>❤️ Une relation durable</option>
+          <option>☕ Des rendez-vous</option>
+        </select>
+        <div class="flex gap-3">
+          <label class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium cursor-pointer" style="border: 1px solid var(--border-subtle); color: var(--text-muted)"><input type="radio" name="gender" value="F" required class="accent-rose-500"> Femme</label>
+          <label class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium cursor-pointer" style="border: 1px solid var(--border-subtle); color: var(--text-muted)"><input type="radio" name="gender" value="M" required class="accent-rose-500"> Homme</label>
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-full btn-primary text-sm font-bold text-white transition-all duration-300 mt-2">Commencer à matcher ❤️</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUCCESS TOAST -->
+  <div id="success-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-3 rounded-full text-sm font-semibold text-white shadow-lg transition-all duration-300 translate-y-20 opacity-0" style="background: var(--primary-gradient)">❤️ Bienvenue sur Takt ! Vérifiez votre email.</div>
+
+  <script>
+    // ── Cursor ──
+    const cursorEl = document.getElementById('cursor-heart');
+    let cX=0,cY=0,aX=0,aY=0;
+    document.addEventListener('mousemove', e => { cX=e.clientX; cY=e.clientY; if(Math.random()<0.06) spawnSparkle(e.clientX,e.clientY); });
+    function animCursor(){ aX+=(cX-aX)*0.15; aY+=(cY-aY)*0.15; cursorEl.style.left=aX+'px'; cursorEl.style.top=aY+'px'; requestAnimationFrame(animCursor); }
+    animCursor();
+
+    function spawnSparkle(x,y){ const el=document.createElement('div'); el.className='sparkle'; el.style.left=(x+(Math.random()-0.5)*30)+'px'; el.style.top=(y+(Math.random()-0.5)*30)+'px'; el.style.background=Math.random()>0.5?'var(--primary)':'var(--primary-light)'; const s=(2+Math.random()*4)+'px'; el.style.width=s; el.style.height=s; document.body.appendChild(el); setTimeout(()=>el.remove(),1500); }
+
+    // ── Floating Hearts ──
+    const hC=document.getElementById('floating-hearts');
+    const hE=['♥','♡','❤','💕','✦','❦'];
+    function cFH(){ const h=document.createElement('div'); h.className='float-heart'; h.textContent=hE[Math.floor(Math.random()*hE.length)]; h.style.left=Math.random()*100+'%'; h.style.fontSize=(10+Math.random()*18)+'px'; h.style.color='var(--primary)'; h.style.animationDuration=(8+Math.random()*12)+'s'; h.style.animationDelay=Math.random()*2+'s'; hC.appendChild(h); setTimeout(()=>h.remove(),22000); }
+    for(let i=0;i<10;i++) setTimeout(()=>cFH(),i*600);
+    setInterval(cFH,2500);
+
+    // ── Theme ──
+    const tT=document.getElementById('theme-toggle'), tI=document.getElementById('theme-icon');
+    tT.addEventListener('click',()=>{ const d=document.documentElement.getAttribute('data-theme')==='dark'; document.documentElement.setAttribute('data-theme',d?'light':'dark'); tI.setAttribute('icon',d?'lucide:moon':'lucide:sun'); localStorage.setItem('takt-theme',d?'light':'dark'); });
+    const sT=localStorage.getItem('takt-theme'); if(sT){ document.documentElement.setAttribute('data-theme',sT); tI.setAttribute('icon',sT==='dark'?'lucide:sun':'lucide:moon'); }
+
+    // ── Lang ──
+    const lB=document.getElementById('lang-btn'), lD=document.getElementById('lang-dropdown');
+    lB.addEventListener('click',e=>{ e.stopPropagation(); lD.classList.toggle('open'); });
+    document.addEventListener('click',()=>lD.classList.remove('open'));
+
+    // ── Carousel ──
+    const features=[
+      {icon:'lucide:shield-check',title:'Profils vérifiés',desc:'Chaque profil est vérifié par IA et humain. Pas de bots.'},
+      {icon:'lucide:message-circle-heart',title:'Chat intelligent',desc:'Suggestions pour briser la glace naturellement.'},
+      {icon:'lucide:video',title:'Visio intégrée',desc:'Voyez-vous en vidéo avant le premier RDV.'},
+      {icon:'lucide:lock',title:'Privacy d\'abord',desc:'Mode discret, photos éphémères, contrôle total.'},
+      {icon:'lucide:map-pin',title:'Dates à proximité',desc:'Suggestions de lieux pour un premier RDV parfait.'},
+      {icon:'lucide:brain',title:'Matching affinité',desc:'Vos valeurs, vos passions, votre sens de l\'humour.'},
+      {icon:'lucide:timer',title:'10 profils/jour',desc:'La qualité plutôt que la quantité.'},
+      {icon:'lucide:flag',title:'100% français',desc:'Conçu à Paris, pour les Français.'},
+    ];
+    const cEl=document.getElementById('feature-carousel');
+    function cFC(f){ return `<div class="flex-shrink-0 w-72 theme-card rounded-2xl p-7"><div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background:var(--primary-bg)"><iconify-icon icon="${f.icon}" width="22" style="color:var(--primary)"></iconify-icon></div><h3 class="text-base font-bold mb-2" style="color:var(--text)">${f.title}</h3><p class="text-sm leading-relaxed" style="color:var(--text-muted)">${f.desc}</p></div>`; }
+    const cH=features.map(cFC).join(''); cEl.innerHTML=cH+cH;
+
+    // ── Popups ──
+    function openSignup(){ document.getElementById('signup-popup').classList.add('active'); document.body.style.overflow='hidden'; }
+    function closePopup(id){ document.getElementById(id).classList.remove('active'); document.body.style.overflow=''; }
+    document.querySelectorAll('.popup-overlay').forEach(o=>{ o.addEventListener('click',e=>{ if(e.target===o){ o.classList.remove('active'); document.body.style.overflow=''; } }); });
+
+    // ── Exit Intent ──
+    let exitS=false;
+    document.addEventListener('mouseleave',e=>{ if(e.clientY<5&&!exitS){ exitS=true; document.getElementById('exit-popup').classList.add('active'); document.body.style.overflow='hidden'; } });
+
+    // ── Signup ──
+    function handleSignup(e){ e.preventDefault(); closePopup('signup-popup'); const t=document.getElementById('success-toast'); t.style.transform='translate(-50%,0)'; t.style.opacity='1'; setTimeout(()=>{ t.style.transform='translate(-50%,80px)'; t.style.opacity='0'; },4000); }
+
+    // ── Smooth Scroll ──
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const h=this.getAttribute('href'); if(h==='#') return; e.preventDefault(); const t=document.querySelector(h); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }); });
+  </script>
+</body>
+</html>
