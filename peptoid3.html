@@ -1,0 +1,3339 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symbiotic Peptides | Precision Engineered for the Next Generation of Research</title>
+    <meta name="description" content="High-purity peptide compounds engineered for modern research, with full analytical documentation, batch verification, and uncompromising transparency.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* ==========================================================================
+           1. DESIGN TOKENS
+           ========================================================================== */
+        :root {
+            --primary: #087A45;
+            --primary-soft: #0A8F50;
+            --deep: #023B27;
+            --dark: #031C14;
+            --darker: #020E0A;
+            --mint: #DDF8E9;
+            --soft-mint: #EFFBF3;
+            --off-white: #F8FAF6;
+            --white: #ffffff;
+            --gray-100: #E5EAE7;
+            --gray-200: #C5CEC9;
+            --gray-400: #8F9E98;
+            --gray-600: #5A6862;
+            --border-light: rgba(8, 122, 69, 0.10);
+            --border-mid: rgba(8, 122, 69, 0.18);
+            --border-dark: rgba(255, 255, 255, 0.08);
+            --border-dark-2: rgba(255, 255, 255, 0.14);
+
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-base: all 0.5s var(--ease-smooth);
+            --transition-fast: all 0.25s var(--ease-smooth);
+
+            --container: 1440px;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-pill: 999px;
+        }
+
+        /* ==========================================================================
+           2. RESET & BASE
+           ========================================================================== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--off-white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        img, svg { display: block; max-width: 100%; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+        input, textarea { font-family: inherit; }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            line-height: 1.05;
+            letter-spacing: -0.025em;
+            color: var(--dark);
+        }
+        ::selection { background: var(--primary); color: var(--white); }
+
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 5%; }
+        .section-padding { padding: 7rem 0; }
+        .section-padding-sm { padding: 5rem 0; }
+
+        /* ==========================================================================
+           3. TYPOGRAPHY
+           ========================================================================== */
+        .eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-weight: 600;
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .eyebrow::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--primary);
+        }
+        .eyebrow-light { color: var(--mint); }
+        .eyebrow-light::before { background: var(--mint); }
+
+        .headline-hero {
+            font-size: clamp(2.75rem, 7vw, 6.5rem);
+            text-transform: uppercase;
+            line-height: 0.92;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .headline-section {
+            font-size: clamp(2rem, 4.2vw, 4.25rem);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            line-height: 0.95;
+            font-weight: 500;
+        }
+        .headline-md { font-size: clamp(1.5rem, 2.5vw, 2.5rem); }
+        .body-large {
+            font-size: clamp(1rem, 1.15vw, 1.15rem);
+            color: var(--gray-600);
+            max-width: 620px;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            line-height: 1.65;
+        }
+        .mono { font-family: var(--font-mono); }
+
+        /* ==========================================================================
+           4. BUTTONS & BADGES
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: var(--font-display);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: var(--transition-base);
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .btn-primary { background: var(--primary); color: var(--white); }
+        .btn-primary:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(8, 122, 69, 0.22);
+        }
+        .btn-secondary { background: transparent; color: var(--dark); border-color: var(--dark); }
+        .btn-secondary:hover { background: var(--dark); color: var(--white); }
+        .btn-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.4); }
+        .btn-light:hover { background: var(--white); color: var(--dark); }
+        .btn-ghost { background: var(--soft-mint); color: var(--dark); }
+        .btn-ghost:hover { background: var(--mint); }
+        .btn-sm { padding: 0.6rem 1.25rem; font-size: 11px; }
+        .btn .arrow { transition: transform 0.3s var(--ease-smooth); }
+        .btn:hover .arrow { transform: translateX(4px); }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .pill-success { background: var(--soft-mint); color: var(--primary); border: 1px solid var(--border-mid); }
+        .pill-dark { background: rgba(255,255,255,0.06); color: var(--mint); border: 1px solid var(--border-dark-2); }
+        .pill-ghost { background: rgba(255,255,255,0.06); color: var(--white); border: 1px solid var(--border-dark-2); backdrop-filter: blur(10px); }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            display: inline-block;
+        }
+        .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* ==========================================================================
+           5. ANNOUNCEMENT BAR
+           ========================================================================== */
+        .announce {
+            background: var(--dark);
+            color: var(--white);
+            padding: 0.65rem 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 101;
+            font-size: 12px;
+            border-bottom: 1px solid var(--border-dark);
+        }
+        .announce-track {
+            display: flex;
+            gap: 4rem;
+            animation: marquee 40s linear infinite;
+            white-space: nowrap;
+            width: max-content;
+        }
+        .announce-item { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--gray-200); }
+        .announce-item strong { color: var(--mint); font-weight: 600; }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ==========================================================================
+           6. NAVIGATION
+           ========================================================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.25rem 0;
+            transition: var(--transition-base);
+        }
+        .announce + nav { top: 38px; }
+        nav.scrolled {
+            background: rgba(248, 250, 246, 0.88);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        nav.scrolled.dark-mode {
+            background: rgba(3, 28, 20, 0.88);
+            border-bottom: 1px solid var(--border-dark);
+        }
+        nav.scrolled.dark-mode .logo, nav.scrolled.dark-mode .nav-links a,
+        nav.scrolled.dark-mode .nav-actions > * { color: var(--white); }
+        nav.scrolled.dark-mode .logo svg { color: var(--mint); }
+
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            transition: var(--transition-base);
+        }
+        .logo svg { width: 22px; height: 22px; color: var(--primary); transition: var(--transition-base); }
+        .logo-mark { display: flex; align-items: center; justify-content: center; }
+
+        .nav-links {
+            display: flex;
+            gap: 2.25rem;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .nav-links a {
+            position: relative;
+            padding-bottom: 4px;
+            transition: var(--transition-fast);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--primary);
+            transition: var(--transition-base);
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        .nav-actions .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid transparent;
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+        .nav-actions .icon-btn:hover {
+            background: var(--soft-mint);
+            color: var(--primary);
+        }
+        .nav-actions .icon-btn i { width: 18px; height: 18px; }
+        .nav-actions .cart-badge {
+            position: relative;
+        }
+        .cart-badge::after {
+            content: '2';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+        }
+        .hamburger { display: none; cursor: pointer; padding: 8px; }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(420px, 90vw);
+            height: 100vh;
+            background: var(--off-white);
+            z-index: 200;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.5s var(--ease-smooth);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .mobile-menu.open { right: 0; box-shadow: -20px 0 60px rgba(0,0,0,0.15); }
+        .mobile-menu a {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .mobile-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .menu-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 28, 20, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 199;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .menu-backdrop.open { opacity: 1; pointer-events: auto; }
+
+        /* ==========================================================================
+           7. HERO
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 120px;
+            padding-bottom: 4rem;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle at 85% 35%, rgba(221, 248, 233, 0.7) 0%, transparent 45%),
+                radial-gradient(circle at 15% 90%, rgba(8, 122, 69, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(8, 122, 69, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(8, 122, 69, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content {
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-smooth) 0.2s forwards;
+        }
+        .hero-ctas {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .hero-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+        }
+        .hero-meta-item .num {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .hero-meta-item .lbl {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-600);
+            margin-top: 0.3rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeLeft 1s var(--ease-smooth) 0.4s forwards;
+        }
+        .vial-comp {
+            position: relative;
+            width: 200px;
+            height: 380px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.4));
+            backdrop-filter: blur(10px);
+            border-radius: 20px 20px 12px 12px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow:
+                0 40px 80px rgba(8, 122, 69, 0.18),
+                inset 0 0 30px rgba(255,255,255,0.6);
+            animation: float 7s ease-in-out infinite;
+            z-index: 2;
+        }
+        .vial-cap {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 44px;
+            background: linear-gradient(to right, #d8d8d8, #ffffff, #c8c8c8);
+            border-radius: 10px;
+            box-shadow: 0 8px 14px rgba(0,0,0,0.12);
+        }
+        .vial-cap::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 10%;
+            right: 10%;
+            height: 6px;
+            background: linear-gradient(to right, #888, #444, #888);
+            border-radius: 2px;
+        }
+        .vial-liquid {
+            position: absolute;
+            bottom: 6px;
+            left: 6px;
+            right: 6px;
+            height: 58%;
+            background: linear-gradient(to top, var(--primary) 0%, #0A8F50 50%, var(--mint) 100%);
+            border-radius: 0 0 9px 9px;
+            opacity: 0.95;
+            overflow: hidden;
+        }
+        .vial-liquid::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 18px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+        }
+        .vial-bubbles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        .bubble {
+            position: absolute;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            animation: bubble-up 4s ease-in infinite;
+        }
+        @keyframes bubble-up {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-220px); opacity: 0; }
+        }
+
+        .vial-label {
+            position: absolute;
+            top: 50px;
+            left: -12px;
+            right: -12px;
+            height: 130px;
+            background: var(--dark);
+            border-radius: 4px;
+            color: var(--white);
+            padding: 16px;
+            font-family: var(--font-display);
+            box-shadow: 0 14px 24px rgba(0,0,0,0.25);
+            transform: rotate(-2deg);
+            z-index: 3;
+        }
+        .vial-label-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--mint);
+        }
+        .vial-label-sub {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-top: 6px;
+            color: var(--gray-200);
+        }
+        .vial-label-barcode {
+            margin-top: 12px;
+            height: 18px;
+            background: repeating-linear-gradient(90deg, white 0 2px, transparent 2px 4px, white 4px 5px, transparent 5px 8px);
+            opacity: 0.6;
+        }
+        .vial-label-id {
+            font-family: var(--font-mono);
+            font-size: 7px;
+            color: var(--gray-200);
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+
+        .tech-annotation {
+            position: absolute;
+            background: rgba(255,255,255,0.95);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-display);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 3;
+            animation: float 7s ease-in-out infinite;
+            border: 1px solid var(--border-light);
+        }
+        .tech-annotation::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(8, 122, 69, 0.15);
+        }
+        .a-1 { top: 15%; right: -15%; animation-delay: 0s; }
+        .a-2 { bottom: 25%; left: -28%; animation-delay: 1.5s; }
+        .a-3 { top: 55%; right: -32%; animation-delay: 3s; }
+        .a-4 { top: 5%; left: -10%; animation-delay: 4.5s; }
+
+        /* Scroll indicator */
+        .scroll-cue {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gray-600);
+            z-index: 3;
+            font-weight: 500;
+        }
+        .scroll-cue .line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+            animation: scroll-line 2s ease-in-out infinite;
+        }
+        @keyframes scroll-line {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            51% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* ==========================================================================
+           8. TRUST MARQUEE
+           ========================================================================== */
+        .trust-strip {
+            background: var(--white);
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+        .trust-label-bar {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .trust-label-bar span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+        .trust-marquee {
+            overflow: hidden;
+            position: relative;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .trust-track {
+            display: flex;
+            gap: 4rem;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+            align-items: center;
+        }
+        .trust-item {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            white-space: nowrap;
+            transition: var(--transition-fast);
+        }
+        .trust-item:hover { color: var(--primary); }
+        .trust-item .icon-circle {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--soft-mint);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        .trust-item .icon-circle i { width: 16px; height: 16px; }
+
+        /* ==========================================================================
+           9. STATS COUNTER
+           ========================================================================== */
+        .stats-section {
+            background: var(--mint);
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(8, 122, 69, 0.06) 1px, transparent 1px);
+            background-size: 100% 32px;
+            pointer-events: none;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+        .stat-card {
+            text-align: left;
+            padding: 2rem 1.5rem;
+            border-left: 2px solid var(--primary);
+            transition: var(--transition-base);
+        }
+        .stat-card:hover { transform: translateX(4px); }
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 4vw, 3.75rem);
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+        }
+        .stat-num .unit { font-size: 0.5em; font-weight: 500; vertical-align: top; margin-left: 2px; }
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.4rem;
+        }
+        .stat-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           10. FEATURED PRODUCTS
+           ========================================================================== */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            gap: 2rem;
+        }
+        .section-header .header-text { max-width: 600px; }
+        .section-header .header-actions { display: flex; gap: 0.75rem; }
+
+        .category-nav {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            margin-bottom: 3rem;
+            scrollbar-width: none;
+        }
+        .category-nav::-webkit-scrollbar { display: none; }
+        .cat-btn {
+            padding: 0.55rem 1.4rem;
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: var(--transition-base);
+            border: 1px solid var(--border-mid);
+            color: var(--dark);
+            background: var(--white);
+            white-space: nowrap;
+        }
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--dark);
+            color: var(--white);
+            border-color: var(--dark);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.75rem;
+        }
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            transition: var(--transition-base);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--mint));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--ease-smooth);
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px rgba(8, 122, 69, 0.10);
+            border-color: var(--border-mid);
+        }
+        .product-card:hover::before { transform: scaleX(1); }
+
+        .product-image-container {
+            height: 220px;
+            background: linear-gradient(135deg, var(--soft-mint), rgba(221, 248, 233, 0.5));
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .product-image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 50% 50%, rgba(8, 122, 69, 0.05) 0%, transparent 70%);
+        }
+
+        .mini-vial {
+            width: 64px;
+            height: 130px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 8px 8px 4px 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+            box-shadow: inset -6px 0 12px rgba(0,0,0,0.06), 0 12px 24px rgba(8, 122, 69, 0.12);
+            transition: var(--transition-base);
+        }
+        .product-card:hover .mini-vial { transform: translateY(-4px) scale(1.04); }
+        .mini-cap { position: absolute; top: -10px; left: -2px; right: -2px; height: 16px; background: linear-gradient(to right, #ddd, #fff, #ccc); border-radius: 4px 4px 0 0; }
+        .mini-label { position: absolute; top: 16px; left: 0; right: 0; height: 42px; background: var(--dark); }
+        .mini-label::after {
+            content: '';
+            position: absolute;
+            bottom: 6px; left: 6px; right: 6px;
+            height: 1px;
+            background: var(--mint);
+        }
+        .mini-liquid { position: absolute; bottom: 4px; left: 4px; right: 4px; height: 45%; background: linear-gradient(to top, var(--primary), var(--mint)); border-radius: 0 0 3px 3px; }
+
+        .badge-purity {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: var(--radius-pill);
+            letter-spacing: 0.08em;
+            z-index: 2;
+            font-family: var(--font-display);
+        }
+        .badge-new {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--dark);
+            color: var(--mint);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: var(--radius-pill);
+            letter-spacing: 0.08em;
+            z-index: 2;
+            font-family: var(--font-display);
+        }
+
+        .product-category {
+            font-size: 10px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .product-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        .product-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.5;
+            flex: 1;
+        }
+        .product-specs {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border-light);
+            font-size: 10px;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: var(--font-mono);
+        }
+        .product-specs span { display: inline-flex; align-items: center; gap: 4px; }
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.25rem;
+        }
+        .product-price {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+        .product-price .old { font-size: 12px; color: var(--gray-400); text-decoration: line-through; margin-left: 6px; font-weight: 400; }
+        .view-btn {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .view-btn i { width: 14px; height: 14px; transition: transform 0.3s var(--ease-smooth); }
+        .product-card:hover .view-btn i { transform: translateX(4px); }
+
+        /* ==========================================================================
+           11. SPOTLIGHT PRODUCT
+           ========================================================================== */
+        .spotlight {
+            background: var(--dark);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .spotlight::before {
+            content: '';
+            position: absolute;
+            top: 0; right: -200px;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(8, 122, 69, 0.18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .spotlight-visual {
+            height: 500px;
+            background: linear-gradient(135deg, var(--deep), var(--darker));
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-dark-2);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .spotlight-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+        .big-vial {
+            width: 160px;
+            height: 320px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border-radius: 20px 20px 10px 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 2;
+            animation: float 7s ease-in-out infinite;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        }
+        .big-vial .vial-cap { background: linear-gradient(to right, #c0c0c0, #fff, #b0b0b0); }
+        .big-vial .vial-label {
+            position: absolute;
+            top: 60px;
+            left: -10px;
+            right: -10px;
+            height: 140px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            transform: rotate(-2deg);
+        }
+        .big-vial .vial-liquid { background: linear-gradient(to top, var(--primary), #4FCB89); height: 55%; }
+
+        .spotlight-info .eyebrow { margin-bottom: 1.5rem; }
+        .spotlight-info h2 { color: var(--white); }
+        .spotlight-info .body-large { color: rgba(255,255,255,0.7); }
+        .spotlight-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin: 2.5rem 0;
+        }
+        .feat-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+        .feat-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            background: rgba(8, 122, 69, 0.2);
+            border: 1px solid rgba(8, 122, 69, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mint);
+        }
+        .feat-icon i { width: 16px; height: 16px; }
+        .feat-text strong { display: block; font-size: 13px; margin-bottom: 2px; font-weight: 600; }
+        .feat-text span { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+        .spotlight-cta { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+
+        /* ==========================================================================
+           12. SCIENCE SECTION
+           ========================================================================== */
+        .science-section {
+            background: var(--white);
+            position: relative;
+        }
+        .science-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .science-visual {
+            position: relative;
+            height: 580px;
+            background: var(--dark);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .science-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(8, 122, 69, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(8, 122, 69, 0.06) 1px, transparent 1px);
+            background-size: 35px 35px;
+            pointer-events: none;
+        }
+        .cell-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            width: 75%;
+            position: relative;
+            z-index: 2;
+        }
+        .cell {
+            aspect-ratio: 1;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite alternate;
+            opacity: 0.5;
+        }
+        .cell:nth-child(even) { animation-delay: 1s; background: var(--mint); }
+        .cell:nth-child(3n) { animation-delay: 2s; background: #4FCB89; }
+        .cell:nth-child(4n) { animation-delay: 1.5s; }
+        .cell:nth-child(5n) { animation-delay: 2.5s; }
+        .center-label {
+            position: absolute;
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            z-index: 3;
+            text-align: center;
+        }
+        .center-label .big { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0; margin-bottom: 4px; color: var(--mint); }
+
+        .science-list { margin-top: 3rem; position: relative; }
+        .science-list::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+        }
+        .science-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        .science-item::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 8px;
+            width: 9px;
+            height: 9px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--mint);
+        }
+        .science-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+            letter-spacing: 0.1em;
+        }
+        .science-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .science-text {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================================================
+           13. INTERACTIVE MOLECULAR
+           ========================================================================== */
+        .molecular-section {
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .molecular-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 30% 40%, rgba(8, 122, 69, 0.18) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(8, 122, 69, 0.10) 0%, transparent 50%);
+        }
+        .molecular-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .molecular-container {
+            position: relative;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4rem;
+            z-index: 2;
+        }
+        .molecule-core {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, var(--primary), var(--deep));
+            border-radius: 50%;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 0 80px rgba(8, 122, 69, 0.6), inset 0 0 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: var(--transition-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .molecule-core::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 50%;
+            animation: spin 20s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .molecule-core i { color: var(--mint); width: 36px; height: 36px; }
+        .molecule-core:hover { transform: scale(1.1); }
+
+        .molecule-node {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: var(--transition-base);
+        }
+        .molecule-node::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(to right, rgba(8, 122, 69, 0.4), transparent);
+            top: 50%;
+        }
+        .n-1 { top: -80px; left: -120px; transition-delay: 0.1s; }
+        .n-1::after { left: 100%; }
+        .n-2 { top: -120px; right: -40px; transition-delay: 0.2s; }
+        .n-2::after { right: 100%; transform: rotate(180deg); }
+        .n-3 { bottom: -80px; right: -120px; transition-delay: 0.3s; }
+        .n-3::after { right: 100%; transform: rotate(180deg); }
+        .n-4 { bottom: -100px; left: -40px; transition-delay: 0.4s; }
+        .n-4::after { left: 100%; }
+
+        .molecular-container:hover .molecule-node {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .node-label {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            color: var(--mint);
+            text-transform: uppercase;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+        .molecule-node i { width: 18px; height: 18px; color: var(--mint); }
+
+        /* ==========================================================================
+           14. RESEARCH AREAS
+           ========================================================================== */
+        .research-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .res-card {
+            background: var(--soft-mint);
+            border-radius: var(--radius-md);
+            padding: 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-base);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .res-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(8, 122, 69, 0.15), transparent 70%);
+            opacity: 0;
+            transition: var(--transition-base);
+        }
+        .res-card:hover {
+            background: var(--dark);
+            color: var(--white);
+            transform: translateY(-6px);
+        }
+        .res-card:hover::before { opacity: 1; }
+        .res-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-base);
+        }
+        .res-icon i { width: 22px; height: 22px; }
+        .res-card:hover .res-icon { background: rgba(8, 122, 69, 0.2); color: var(--mint); }
+
+        .res-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--primary);
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+        .res-card:hover .res-num { color: var(--mint); }
+
+        .res-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .res-desc {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            transition: var(--transition-base);
+            line-height: 1.5;
+        }
+        .res-card:hover .res-desc { color: rgba(255,255,255,0.7); }
+        .res-arrow {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border-mid);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary);
+            transition: var(--transition-base);
+            background: var(--white);
+        }
+        .res-arrow i { width: 16px; height: 16px; }
+        .res-card:hover .res-arrow {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+            transform: rotate(45deg);
+        }
+
+        /* ==========================================================================
+           15. QUALITY SECTION
+           ========================================================================== */
+        .quality-section {
+            background: var(--deep);
+            color: var(--white);
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            position: relative;
+        }
+        .quality-section::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(8, 122, 69, 0.2), transparent 60%);
+            pointer-events: none;
+        }
+        .quality-header { max-width: 700px; margin-bottom: 5rem; }
+        .quality-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid var(--border-dark-2);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 5rem;
+            position: relative;
+            z-index: 2;
+        }
+        .q-module {
+            padding: 2.5rem 2rem;
+            border-right: 1px solid var(--border-dark-2);
+            background: rgba(3, 28, 20, 0.4);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-base);
+            position: relative;
+        }
+        .q-module:last-child { border-right: none; }
+        .q-module:hover { background: rgba(8, 122, 69, 0.18); }
+        .q-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--mint);
+            margin-bottom: 2rem;
+            display: block;
+            letter-spacing: 0.1em;
+        }
+        .q-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .q-text { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+        .q-icon {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(8, 122, 69, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mint);
+        }
+        .q-icon i { width: 16px; height: 16px; }
+
+        /* Batch UI */
+        .batch-ui-container {
+            background: var(--dark);
+            border: 1px solid var(--border-dark-2);
+            border-radius: var(--radius-lg);
+            padding: 3.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+        .batch-ui-container::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -10%;
+            width: 120%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(8, 122, 69, 0.15), transparent 60%);
+            pointer-events: none;
+        }
+        .batch-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(8, 122, 69, 0.2);
+            border: 1px solid rgba(8, 122, 69, 0.4);
+            border-radius: var(--radius-pill);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--mint);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .batch-input-group {
+            display: flex;
+            max-width: 560px;
+            margin: 2rem auto 0;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-dark-2);
+            border-radius: var(--radius-pill);
+            padding: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        .batch-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+        .batch-input::placeholder { color: rgba(255,255,255,0.3); }
+        .batch-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0 2rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition-base);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .batch-btn i { width: 14px; height: 14px; }
+        .batch-btn:hover { background: var(--mint); color: var(--dark); }
+        .batch-samples {
+            margin-top: 1.5rem;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .batch-samples strong { color: var(--mint); cursor: pointer; }
+        .batch-samples strong:hover { text-decoration: underline; }
+
+        /* ==========================================================================
+           16. COMPARISON TABLE
+           ========================================================================== */
+        .compare-section { background: var(--off-white); }
+        .compare-table {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+        }
+        .compare-head, .compare-row {
+            display: grid;
+            grid-template-columns: 2fr 1.2fr 1fr 1fr;
+            align-items: center;
+        }
+        .compare-head {
+            background: var(--dark);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            font-family: var(--font-display);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .compare-head > div:nth-child(2) { color: var(--mint); }
+        .compare-row {
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border-light);
+            transition: var(--transition-fast);
+            font-size: 14px;
+        }
+        .compare-row:last-child { border-bottom: none; }
+        .compare-row:hover { background: var(--soft-mint); }
+        .compare-row > div:first-child { font-weight: 500; }
+        .compare-row i { display: inline-block; vertical-align: middle; }
+        .check { color: var(--primary); width: 18px; height: 18px; }
+        .x-mark { color: var(--gray-400); width: 16px; height: 16px; opacity: 0.5; }
+        .compare-featured { background: rgba(8, 122, 69, 0.04); }
+        .compare-featured > div:first-child { color: var(--primary); font-weight: 600; }
+
+        /* ==========================================================================
+           17. HOW IT WORKS / TIMELINE
+           ========================================================================== */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 4rem;
+            gap: 1rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 5%;
+            right: 5%;
+            height: 1px;
+            background: linear-gradient(to right, var(--border-light), var(--primary), var(--border-light));
+            z-index: 1;
+        }
+        .step {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            text-align: center;
+            max-width: 220px;
+        }
+        .step-num {
+            width: 52px;
+            height: 52px;
+            background: var(--off-white);
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+        .step-num::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            transition: var(--transition-base);
+        }
+        .step:hover .step-num::after {
+            inset: -8px;
+            border-color: var(--primary);
+            opacity: 0.3;
+        }
+        .step-title { font-weight: 600; margin-bottom: 0.5rem; font-size: 1.05rem; }
+        .step-desc { font-size: 0.85rem; color: var(--gray-600); line-height: 1.5; }
+
+        /* ==========================================================================
+           18. TESTIMONIALS
+           ========================================================================== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .testimonial-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            transition: var(--transition-base);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .testimonial-card:hover {
+            border-color: var(--border-mid);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(8, 122, 69, 0.06);
+        }
+        .stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 1.25rem;
+            color: #FFB800;
+        }
+        .stars i { width: 14px; height: 14px; fill: currentColor; }
+        .testimonial-text {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            line-height: 1.55;
+            font-weight: 400;
+            color: var(--dark);
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-light);
+        }
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--mint));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 14px;
+        }
+        .author-info strong { display: block; font-size: 13px; font-weight: 600; }
+        .author-info span { font-size: 11px; color: var(--gray-600); }
+
+        /* ==========================================================================
+           19. DATA / METRICS
+           ========================================================================== */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        .data-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .data-bar-bg {
+            height: 8px;
+            background: var(--soft-mint);
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        .data-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--mint));
+            width: 0;
+            transition: width 1.5s var(--ease-smooth);
+            border-radius: 4px;
+        }
+        .data-meta {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .data-meta .pct { color: var(--primary); font-family: var(--font-mono); font-weight: 500; }
+
+        /* Logo strip */
+        .logo-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            padding: 2.5rem 0;
+            margin-top: 4rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .logo-placeholder {
+            font-family: var(--font-display);
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            color: var(--gray-400);
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-placeholder:hover { color: var(--dark); }
+        .logo-placeholder i { width: 18px; height: 18px; }
+
+        /* ==========================================================================
+           20. KNOWLEDGE LAB
+           ========================================================================== */
+        .article-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .article-card {
+            cursor: pointer;
+            transition: var(--transition-base);
+            display: flex;
+            flex-direction: column;
+        }
+        .article-card.featured { grid-row: span 2; }
+        .art-img {
+            border-radius: var(--radius-md);
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+            position: relative;
+            background: var(--dark);
+        }
+        .article-card.featured .art-img { height: 380px; }
+        .article-card:not(.featured) .art-img { height: 200px; }
+        .art-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 25px 25px;
+        }
+        .art-img-style-1 { background: linear-gradient(135deg, #023B27, #087A45); }
+        .art-img-style-2 { background: linear-gradient(135deg, var(--mint), #4FCB89); }
+        .art-img-style-3 { background: linear-gradient(135deg, #031C14, #4FCB89); }
+        .art-img-style-4 { background: linear-gradient(135deg, #087A45, #DDF8E9); }
+
+        .art-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255,255,255,0.95);
+            color: var(--dark);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            letter-spacing: 0.08em;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+        .art-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-600);
+            margin-bottom: 0.85rem;
+            font-weight: 500;
+        }
+        .art-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: var(--transition-base);
+            line-height: 1.3;
+            flex: 1;
+        }
+        .article-card.featured .art-title { font-size: 1.6rem; }
+        .article-card:hover .art-title { color: var(--primary); }
+        .art-excerpt {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 0.75rem;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           21. PRESS / NEWSLETTER
+           ========================================================================== */
+        .press-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            background: var(--white);
+            overflow: hidden;
+        }
+        .press-item {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-right: 1px solid var(--border-light);
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .press-item:last-child { border-right: none; }
+        .press-item:hover { background: var(--soft-mint); }
+        .press-item i { width: 24px; height: 24px; color: var(--primary); }
+        .press-item span { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); font-weight: 500; }
+
+        .newsletter {
+            background: var(--mint);
+            border-radius: var(--radius-lg);
+            padding: 4rem;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(8, 122, 69, 0.2), transparent 70%);
+        }
+        .newsletter h2 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); text-transform: none; letter-spacing: -0.02em; }
+        .newsletter-form {
+            display: flex;
+            background: var(--white);
+            border-radius: var(--radius-pill);
+            padding: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            position: relative;
+            z-index: 2;
+        }
+        .newsletter-form input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            font-size: 14px;
+            outline: none;
+            color: var(--dark);
+        }
+        .newsletter-form button {
+            background: var(--dark);
+            color: var(--white);
+            border-radius: var(--radius-pill);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: var(--transition-base);
+        }
+        .newsletter-form button:hover { background: var(--primary); }
+        .newsletter small { display: block; margin-top: 1rem; font-size: 11px; color: var(--gray-600); }
+
+        /* ==========================================================================
+           22. FAQ
+           ========================================================================== */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--border-light);
+            padding: 1.5rem 0;
+        }
+        .faq-q {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            gap: 1rem;
+        }
+        .faq-q-text { flex: 1; }
+        .faq-icon-wrap {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--soft-mint);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: var(--transition-base);
+            flex-shrink: 0;
+        }
+        .faq-icon-wrap i { width: 16px; height: 16px; transition: transform 0.3s ease; }
+        .faq-item.active .faq-icon-wrap { background: var(--primary); color: var(--white); }
+        .faq-item.active .faq-icon-wrap i { transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s var(--ease-smooth);
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .faq-a-inner { padding-top: 1rem; max-width: 700px; }
+
+        /* ==========================================================================
+           23. FINAL CTA
+           ========================================================================== */
+        .cta-section {
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(8, 122, 69, 0.25), transparent 65%);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulse-glow 6s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+        .cta-section .container { position: relative; z-index: 2; }
+        .cta-section h2 { color: var(--white); }
+        .cta-section .body-large { margin: 0 auto 3rem; color: rgba(255,255,255,0.7); }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .cta-cta-buttons .btn-primary { background: var(--white); color: var(--dark); }
+        .cta-cta-buttons .btn-primary:hover { background: var(--mint); }
+        .cta-cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .cta-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-dark-2);
+        }
+        .cta-stat .num {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--mint);
+            line-height: 1;
+        }
+        .cta-stat .lbl {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.5rem;
+        }
+
+        /* ==========================================================================
+           24. FOOTER
+           ========================================================================== */
+        footer {
+            background: var(--darker);
+            color: var(--white);
+            padding: 6rem 0 2rem;
+            border-top: 1px solid var(--border-dark);
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        .footer-brand .logo { color: var(--white); margin-bottom: 1.5rem; }
+        .footer-brand .logo svg { color: var(--mint); }
+        .footer-brand p { color: var(--gray-400); font-size: 0.9rem; max-width: 280px; line-height: 1.5; margin-bottom: 1.5rem; }
+        .social-links { display: flex; gap: 0.5rem; }
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-dark-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+        .social-link:hover { background: var(--primary); color: var(--white); border-color: var(--primary); }
+        .social-link i { width: 16px; height: 16px; }
+
+        .footer-col h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--mint);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .footer-col ul li { margin-bottom: 0.75rem; }
+        .footer-col ul li a {
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+        .footer-col ul li a:hover { color: var(--white); }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-dark);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--gray-400);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .footer-bottom-left { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+        .footer-bottom-left strong { color: var(--mint); }
+
+        /* ==========================================================================
+           25. BACK TO TOP
+           ========================================================================== */
+        .back-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(8, 122, 69, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: var(--transition-base);
+            z-index: 50;
+        }
+        .back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .back-top:hover { background: var(--dark); transform: translateY(-4px); }
+        .back-top i { width: 18px; height: 18px; }
+
+        /* ==========================================================================
+           26. ANIMATIONS
+           ========================================================================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeLeft {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0.7; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s var(--ease-smooth), transform 0.9s var(--ease-smooth);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-stagger > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+        }
+        .reveal-stagger.active > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.active > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.active > *:nth-child(3) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.active > *:nth-child(4) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.active > *:nth-child(5) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.active > *:nth-child(6) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+
+        /* ==========================================================================
+           27. RESPONSIVE
+           ========================================================================== */
+        @media (max-width: 1100px) {
+            .quality-grid { grid-template-columns: repeat(2, 1fr); }
+            .q-module:nth-child(2) { border-right: none; }
+            .q-module:nth-child(1), .q-module:nth-child(2) { border-bottom: 1px solid var(--border-dark-2); }
+            .research-cards { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat-card:nth-child(2) { border-left: none; border-top: 2px solid var(--primary); }
+            .spotlight-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .article-grid { grid-template-columns: 1fr 1fr; }
+            .article-card.featured { grid-row: auto; grid-column: span 2; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .press-grid { grid-template-columns: repeat(3, 1fr); }
+            .press-item:nth-child(3) { border-right: none; }
+            .press-item:nth-child(1), .press-item:nth-child(2), .press-item:nth-child(3) { border-bottom: 1px solid var(--border-light); }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .compare-head, .compare-row { grid-template-columns: 1.5fr 1fr 1fr 1fr; font-size: 12px; }
+        }
+
+        @media (max-width: 768px) {
+            .announce { font-size: 10px; }
+            .announce + nav { top: 32px; }
+            .nav-links, .nav-actions { display: none; }
+            .hamburger { display: flex; align-items: center; }
+
+            .hero { padding-top: 110px; min-height: auto; }
+            .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+            .hero-content { display: flex; flex-direction: column; align-items: center; }
+            .hero-ctas { justify-content: center; }
+            .hero-meta { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+            .hero-visual { height: 400px; }
+            .a-1, .a-2, .a-3, .a-4 { display: none; }
+
+            .science-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .science-visual { height: 350px; }
+            .product-grid { grid-template-columns: 1fr; }
+            .research-cards { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-card { border-left: none; border-top: 2px solid var(--primary); padding-top: 1.5rem; }
+            .stat-card:first-child { border-top: 2px solid var(--primary); }
+
+            .timeline { flex-direction: column; gap: 2.5rem; }
+            .timeline::before { left: 25px; top: 0; width: 1px; height: 100%; right: auto; }
+            .step { width: 100%; display: flex; gap: 1.5rem; align-items: flex-start; text-align: left; max-width: 100%; }
+            .step-num { margin: 0; flex-shrink: 0; }
+
+            .split-section { grid-template-columns: 1fr; gap: 2.5rem; }
+            .article-grid { grid-template-columns: 1fr; }
+            .article-card.featured { grid-column: auto; }
+            .article-card.featured .art-img { height: 220px; }
+            .article-card.featured .art-title { font-size: 1.25rem; }
+
+            .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-bottom-left { justify-content: center; }
+
+            .compare-head, .compare-row { grid-template-columns: 1.5fr 1fr 0.8fr 0.8fr; font-size: 11px; padding: 1rem; }
+            .compare-head > div, .compare-row > div { padding: 0 4px; }
+
+            .newsletter { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; }
+            .press-grid { grid-template-columns: 1fr 1fr; }
+            .press-item { border-right: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+            .press-item:nth-child(2n) { border-right: none; }
+            .press-item:nth-child(3) { border-right: 1px solid var(--border-light); }
+            .press-item:last-child { border-bottom: none; }
+
+            .logo-strip { flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+
+            .back-top { bottom: 1rem; right: 1rem; }
+            .scroll-cue { display: none; }
+            .section-padding { padding: 4rem 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="announce">
+        <div class="announce-track">
+            <div class="announce-item"><span class="dot pulse-dot" style="color: var(--mint);"></span> <strong>NEW</strong> &nbsp;BPC-157 lot SP-8922 verified at 99.6% purity</div>
+            <div class="announce-item"><i data-lucide="truck" style="width: 14px; color: var(--mint);"></i> Free climate-controlled shipping on orders over $250</div>
+            <div class="announce-item"><i data-lucide="shield-check" style="width: 14px; color: var(--mint);"></i> All batches COA verified — full documentation included</div>
+            <div class="announce-item"><i data-lucide="flask-conical" style="width: 14px; color: var(--mint);"></i> 14 new compounds added to the regenerative research line</div>
+            <div class="announce-item"><span class="dot pulse-dot" style="color: var(--mint);"></span> <strong>NEW</strong> &nbsp;BPC-157 lot SP-8922 verified at 99.6% purity</div>
+            <div class="announce-item"><i data-lucide="truck" style="width: 14px; color: var(--mint);"></i> Free climate-controlled shipping on orders over $250</div>
+            <div class="announce-item"><i data-lucide="shield-check" style="width: 14px; color: var(--mint);"></i> All batches COA verified — full documentation included</div>
+            <div class="announce-item"><i data-lucide="flask-conical" style="width: 14px; color: var(--mint);"></i> 14 new compounds added to the regenerative research line</div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 15c6.667-6 13.333 0 20-6"/>
+                        <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/>
+                        <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/>
+                        <path d="M2 9c6.667 6 13.333 0 20 6"/>
+                    </svg>
+                </span>
+                SYMBIOTIC
+            </a>
+            <div class="nav-links">
+                <a href="#shop">Shop</a>
+                <a href="#science">Science</a>
+                <a href="#quality">Quality</a>
+                <a href="#research">Research</a>
+                <a href="#faq">Support</a>
+            </div>
+            <div class="nav-actions">
+                <div class="icon-btn"><i data-lucide="search"></i></div>
+                <div class="icon-btn"><i data-lucide="user"></i></div>
+                <div class="icon-btn cart-badge"><i data-lucide="shopping-bag"></i></div>
+                <a href="#shop" class="btn btn-primary btn-sm">Get Access</a>
+                <div class="hamburger" onclick="toggleMobile()">
+                    <i data-lucide="menu"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="menu-backdrop" id="menuBackdrop" onclick="toggleMobile()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-close" onclick="toggleMobile()"><i data-lucide="x" style="width: 20px;"></i></div>
+        <a href="#shop" onclick="toggleMobile()">Shop Compounds</a>
+        <a href="#science" onclick="toggleMobile()">The Science</a>
+        <a href="#quality" onclick="toggleMobile()">Quality Standards</a>
+        <a href="#research" onclick="toggleMobile()">Research Lab</a>
+        <a href="#faq" onclick="toggleMobile()">Support & FAQ</a>
+        <a href="#" onclick="toggleMobile()">Contact Team</a>
+        <a href="#shop" class="btn btn-primary" style="margin-top: 1.5rem;" onclick="toggleMobile()">Get Access</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="eyebrow">Advanced Peptide Science</span>
+                <h1 class="headline-hero">Precision<br>Engineered<br>For The Next<br>Generation.</h1>
+                <p class="body-large">High-purity peptide compounds engineered with precision, unparalleled transparency, and rigorous modern quality standards for the world's leading research institutions.</p>
+                <div class="hero-ctas">
+                    <a href="#shop" class="btn btn-primary">Explore Catalog <i data-lucide="arrow-right" class="arrow" style="width:14px;"></i></a>
+                    <a href="#science" class="btn btn-secondary">Discover The Science</a>
+                </div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <div class="num">99%+</div>
+                        <div class="lbl">Purity Standard</div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="num">24h</div>
+                        <div class="lbl">Batch Verification</div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="num">50+</div>
+                        <div class="lbl">Research Partners</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="tech-annotation a-1">99.4% PURITY</div>
+                <div class="tech-annotation a-2">BATCH VERIFIED</div>
+                <div class="tech-annotation a-3">RESEARCH GRADE</div>
+                <div class="tech-annotation a-4">FDA cGMP LAB</div>
+
+                <div class="vial-comp">
+                    <div class="vial-cap"></div>
+                    <div class="vial-label">
+                        <div class="vial-label-title">BPC-157</div>
+                        <div class="vial-label-sub">Purity: 99.4% · 5mg</div>
+                        <div class="vial-label-barcode"></div>
+                        <div class="vial-label-id">LOT SP-8922</div>
+                    </div>
+                    <div class="vial-liquid">
+                        <div class="vial-bubbles">
+                            <div class="bubble" style="width:4px;height:4px;left:30%;bottom:0;animation-delay:0s;"></div>
+                            <div class="bubble" style="width:3px;height:3px;left:60%;bottom:0;animation-delay:1s;"></div>
+                            <div class="bubble" style="width:5px;height:5px;left:45%;bottom:0;animation-delay:2s;"></div>
+                            <div class="bubble" style="width:3px;height:3px;left:75%;bottom:0;animation-delay:3s;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-cue">
+            <div class="line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- TRUST MARQUEE -->
+    <div class="trust-strip">
+        <div class="container">
+            <div class="trust-label-bar">
+                <span>Trusted by research teams at leading institutions worldwide</span>
+            </div>
+        </div>
+        <div class="trust-marquee">
+            <div class="trust-track">
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="building-2"></i></span> BioGenesis Labs</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="atom"></i></span> Helix Therapeutics</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="microscope"></i></span> Stanford Research</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="flask-conical"></i></span> Catalyst Bio</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="dna"></i></span> Meridian Institute</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="syringe"></i></span> Apex Pharmacology</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="hexagon"></i></span> Vector Sciences</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="leaf"></i></span> Verda Biotech</div>
+                <!-- Duplicate for seamless loop -->
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="building-2"></i></span> BioGenesis Labs</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="atom"></i></span> Helix Therapeutics</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="microscope"></i></span> Stanford Research</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="flask-conical"></i></span> Catalyst Bio</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="dna"></i></span> Meridian Institute</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="syringe"></i></span> Apex Pharmacology</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="hexagon"></i></span> Vector Sciences</div>
+                <div class="trust-item"><span class="icon-circle"><i data-lucide="leaf"></i></span> Verda Biotech</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid reveal reveal-stagger">
+                <div class="stat-card">
+                    <div class="stat-num" data-target="99"><span class="unit">%+</span></div>
+                    <div class="stat-label">Purity Standard</div>
+                    <div class="stat-desc">HPLC verified across every batch before release.</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-target="50"><span class="unit">K+</span></div>
+                    <div class="stat-label">Vials Delivered</div>
+                    <div class="stat-desc">To 200+ research institutions across 30 countries.</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-target="12"><span class="unit">+</span></div>
+                    <div class="stat-label">Research Categories</div>
+                    <div class="stat-desc">Spanning metabolic to regenerative applications.</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-target="100"><span class="unit">%</span></div>
+                    <div class="stat-label">Batch Transparency</div>
+                    <div class="stat-desc">Full COA documentation, always publicly accessible.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section id="shop" class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="header-text">
+                    <span class="eyebrow">Featured Catalog</span>
+                    <h2 class="headline-section">Precision Compounds.<br>Purpose-Built.</h2>
+                    <p class="body-large">Explore our curated collection of peptide compounds engineered for modern research and analytical testing.</p>
+                </div>
+                <div class="header-actions">
+                    <a href="#" class="btn btn-secondary">View All <i data-lucide="arrow-right" style="width:14px;"></i></a>
+                </div>
+            </div>
+
+            <div class="category-nav reveal">
+                <button class="cat-btn active">All Compounds</button>
+                <button class="cat-btn">Metabolic</button>
+                <button class="cat-btn">Recovery</button>
+                <button class="cat-btn">Growth</button>
+                <button class="cat-btn">Regenerative</button>
+                <button class="cat-btn">Neuroscience</button>
+                <button class="cat-btn">Mitochondrial</button>
+            </div>
+
+            <div class="product-grid reveal reveal-stagger">
+                <div class="product-card">
+                    <span class="badge-purity">99.4% PURITY</span>
+                    <div class="product-image-container">
+                        <div class="mini-vial">
+                            <div class="mini-cap"></div>
+                            <div class="mini-label"></div>
+                            <div class="mini-liquid"></div>
+                        </div>
+                    </div>
+                    <div class="product-category">Recovery & Repair</div>
+                    <h3 class="product-title">BPC-157</h3>
+                    <p class="product-desc">Body Protection Compound for cellular research applications and tissue regeneration studies.</p>
+                    <div class="product-specs">
+                        <span><i data-lucide="beaker" style="width:11px;"></i> 5mg</span>
+                        <span><i data-lucide="layers" style="width:11px;"></i> Lyophilized</span>
+                    </div>
+                    <div class="product-meta">
+                        <span class="product-price">$54.00</span>
+                        <a href="#" class="view-btn">View <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-purity">99.1% PURITY</span>
+                    <div class="product-image-container">
+                        <div class="mini-vial">
+                            <div class="mini-cap"></div>
+                            <div class="mini-label"></div>
+                            <div class="mini-liquid"></div>
+                        </div>
+                    </div>
+                    <div class="product-category">Growth & Endocrine</div>
+                    <h3 class="product-title">CJC-1295 / Ipamorelin</h3>
+                    <p class="product-desc">Synergistic combination targeting metabolic receptors and growth pathways.</p>
+                    <div class="product-specs">
+                        <span><i data-lucide="beaker" style="width:11px;"></i> 2/2mg</span>
+                        <span><i data-lucide="layers" style="width:11px;"></i> Lyophilized</span>
+                    </div>
+                    <div class="product-meta">
+                        <span class="product-price">$72.00</span>
+                        <a href="#" class="view-btn">View <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-purity">99.8% PURITY</span>
+                    <span class="badge-new">NEW</span>
+                    <div class="product-image-container">
+                        <div class="mini-vial">
+                            <div class="mini-cap"></div>
+                            <div class="mini-label"></div>
+                            <div class="mini-liquid"></div>
+                        </div>
+                    </div>
+                    <div class="product-category">Skin & Regenerative</div>
+                    <h3 class="product-title">GHK-Cu</h3>
+                    <p class="product-desc">Copper peptide complex for regenerative tissue and extracellular matrix research.</p>
+                    <div class="product-specs">
+                        <span><i data-lucide="beaker" style="width:11px;"></i> 50mg</span>
+                        <span><i data-lucide="layers" style="width:11px;"></i> Lyophilized</span>
+                    </div>
+                    <div class="product-meta">
+                        <span class="product-price">$48.00</span>
+                        <a href="#" class="view-btn">View <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-purity">99.5% PURITY</span>
+                    <div class="product-image-container">
+                        <div class="mini-vial">
+                            <div class="mini-cap"></div>
+                            <div class="mini-label"></div>
+                            <div class="mini-liquid"></div>
+                        </div>
+                    </div>
+                    <div class="product-category">Cognitive & Neural</div>
+                    <h3 class="product-title">Selank</h3>
+                    <p class="product-desc">Synthetic heptapeptide for studying serotonin modulation and BDNF expression.</p>
+                    <div class="product-specs">
+                        <span><i data-lucide="beaker" style="width:11px;"></i> 5mg</span>
+                        <span><i data-lucide="layers" style="width:11px;"></i> Lyophilized</span>
+                    </div>
+                    <div class="product-meta">
+                        <span class="product-price">$42.00</span>
+                        <a href="#" class="view-btn">View <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-purity">99.6% PURITY</span>
+                    <span class="badge-new">NEW</span>
+                    <div class="product-image-container">
+                        <div class="mini-vial">
+                            <div class="mini-cap"></div>
+                            <div class="mini-label"></div>
+                            <div class="mini-liquid"></div>
+                        </div>
+                    </div>
+                    <div class="product-category">Metabolic</div>
+                    <h3 class="product-title">Tirzepatide</h3>
+                    <p class="product-desc">Dual GIP/GLP-1 receptor agonist for advanced metabolic pathway research.</p>
+                    <div class="product-specs">
+                        <span><i data-lucide="beaker" style="width:11px;"></i> 10mg</span>
+                        <span><i data-lucide="layers" style="width:11px;"></i> Lyophilized</span>
+                    </div>
+                    <div class="product-meta">
+                        <span class="product-price">$86.00</span>
+                        <a href="#" class="view-btn">View <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-purity">99.3% PURITY</span>
+                    <div class="product-image-container">
+                        <div class="mini-vial">
+                            <div class="mini-cap"></div>
+                            <div class="mini-label"></div>
+                            <div class="mini-liquid"></div>
+                        </div>
+                    </div>
+                    <div class="product-category">Longevity & Mito</div>
+                    <h3 class="product-title">SS-31 (Elamipretide)</h3>
+                    <p class="product-desc">Mitochondrial-targeted peptide for cellular energy and cardiolipin research.</p>
+                    <div class="product-specs">
+                        <span><i data-lucide="beaker" style="width:11px;"></i> 10mg</span>
+                        <span><i data-lucide="layers" style="width:11px;"></i> Lyophilized</span>
+                    </div>
+                    <div class="product-meta">
+                        <span class="product-price">$98.00</span>
+                        <a href="#" class="view-btn">View <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT SPOTLIGHT -->
+    <section class="spotlight section-padding">
+        <div class="container spotlight-grid">
+            <div class="spotlight-visual reveal">
+                <div class="big-vial">
+                    <div class="vial-cap"></div>
+                    <div class="vial-label">
+                        <div class="vial-label-title" style="font-size: 28px;">BPC-157</div>
+                        <div class="vial-label-sub">99.4% Purity Verified</div>
+                        <div class="vial-label-barcode"></div>
+                        <div class="vial-label-id">LOT SP-8922 · 5MG</div>
+                    </div>
+                    <div class="vial-liquid"></div>
+                </div>
+            </div>
+            <div class="spotlight-info reveal">
+                <span class="eyebrow eyebrow-light">Compound Spotlight</span>
+                <h2 class="headline-section">BPC-157.<br>The Research Standard.</h2>
+                <p class="body-large">Our flagship compound. Each batch of BPC-157 is HPLC and Mass Spectrometry verified, with complete documentation and structural confirmation available before purchase.</p>
+                <div class="spotlight-features">
+                    <div class="feat-item">
+                        <div class="feat-icon"><i data-lucide="shield-check"></i></div>
+                        <div class="feat-text">
+                            <strong>99.4% Purity</strong>
+                            <span>HPLC verified, MS confirmed</span>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon"><i data-lucide="snowflake"></i></div>
+                        <div class="feat-text">
+                            <strong>Lyophilized</strong>
+                            <span>Cold-chain preserved integrity</span>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon"><i data-lucide="file-check-2"></i></div>
+                        <div class="feat-text">
+                            <strong>Full COA</strong>
+                            <span>Accessible via batch ID</span>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon"><i data-lucide="package-check"></i></div>
+                        <div class="feat-text">
+                            <strong>Sterile Vial</strong>
+                            <span>Sealed & tamper evident</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="spotlight-cta">
+                    <a href="#" class="btn btn-primary" style="background: var(--white); color: var(--dark);">View BPC-157 <i data-lucide="arrow-right" class="arrow" style="width:14px;"></i></a>
+                    <a href="#" class="btn btn-light">View COA</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE SCIENCE -->
+    <section id="science" class="science-section section-padding">
+        <div class="container science-grid">
+            <div class="science-visual reveal">
+                <div class="cell-grid">
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                </div>
+                <div class="center-label">
+                    <div class="big">99.4%</div>
+                    <div>CELLULAR BINDING</div>
+                </div>
+            </div>
+
+            <div class="science-content reveal">
+                <span class="eyebrow">The Science</span>
+                <h2 class="headline-section" style="font-size: 3rem;">Small Molecules.<br>Significant Questions.</h2>
+                <p class="body-large">Peptides act as highly specific signaling molecules, initiating cascades of biological actions at the cellular level. We engineer our compounds to ensure uncompromised structural integrity for accurate research.</p>
+
+                <div class="science-list">
+                    <div class="science-item">
+                        <span class="science-num">01 / SIGNALING</span>
+                        <h4 class="science-title">Precision Signaling</h4>
+                        <p class="science-text">Targeting specific cellular receptors with exact amino acid sequencing for predictable bioactivity.</p>
+                    </div>
+                    <div class="science-item">
+                        <span class="science-num">02 / BINDING</span>
+                        <h4 class="science-title">Targeted Cellular Interaction</h4>
+                        <p class="science-text">Facilitating distinct biological cascades without off-target interference or pathway contamination.</p>
+                    </div>
+                    <div class="science-item">
+                        <span class="science-num">03 / DISCOVERY</span>
+                        <h4 class="science-title">Research-Driven Discovery</h4>
+                        <p class="science-text">Enabling modern laboratory environments to push the boundaries of biotechnology forward.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE MOLECULAR -->
+    <section class="molecular-section section-padding">
+        <div class="container" style="position: relative; z-index: 2;">
+            <span class="eyebrow eyebrow-light">Interactive Data</span>
+            <h2 class="headline-section" style="color: white; font-size: 2.5rem;">Zoom Into The Science</h2>
+            <p style="color: rgba(255,255,255,0.6); max-width: 540px; margin: 0 auto;">Hover over the molecular core to examine typical binding pathways and signaling data points.</p>
+
+            <div class="molecular-container reveal">
+                <div class="molecule-core">
+                    <i data-lucide="atom"></i>
+                </div>
+                <div class="molecule-node n-1"><span class="node-label">Receptor</span><i data-lucide="target"></i></div>
+                <div class="molecule-node n-2"><span class="node-label">Peptide</span><i data-lucide="dna"></i></div>
+                <div class="molecule-node n-3"><span class="node-label">Pathway</span><i data-lucide="git-merge"></i></div>
+                <div class="molecule-node n-4"><span class="node-label">Signal</span><i data-lucide="zap"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESEARCH AREAS -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="header-text">
+                    <h2 class="headline-section">Explore By<br>Research Area</h2>
+                </div>
+                <div class="header-actions">
+                    <a href="#" class="btn btn-secondary">All Areas <i data-lucide="arrow-right" style="width:14px;"></i></a>
+                </div>
+            </div>
+
+            <div class="research-cards reveal reveal-stagger">
+                <div class="res-card">
+                    <div class="res-icon"><i data-lucide="activity"></i></div>
+                    <div class="res-num">01 / METABOLIC</div>
+                    <h3 class="res-title">Metabolic</h3>
+                    <p class="res-desc">Compounds targeting metabolic pathways, insulin sensitivity, and lipolysis mechanisms.</p>
+                    <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+                </div>
+                <div class="res-card">
+                    <div class="res-icon"><i data-lucide="heart-pulse"></i></div>
+                    <div class="res-num">02 / RECOVERY</div>
+                    <h3 class="res-title">Recovery</h3>
+                    <p class="res-desc">Sequences designed for observing tissue regeneration, inflammation reduction, and healing.</p>
+                    <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+                </div>
+                <div class="res-card">
+                    <div class="res-icon"><i data-lucide="trending-up"></i></div>
+                    <div class="res-num">03 / GROWTH</div>
+                    <h3 class="res-title">Growth</h3>
+                    <p class="res-desc">Endocrine secretagogues mimicking ghrelin and somatostatin interactions.</p>
+                    <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+                </div>
+                <div class="res-card">
+                    <div class="res-icon"><i data-lucide="brain"></i></div>
+                    <div class="res-num">04 / NEUROSCIENCE</div>
+                    <h3 class="res-title">Neuroscience</h3>
+                    <p class="res-desc">Nootropic structures for studying cognitive function and neural plasticity.</p>
+                    <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+                </div>
+                <div class="res-card">
+                    <div class="res-icon"><i data-lucide="sparkles"></i></div>
+                    <div class="res-num">05 / REGENERATIVE</div>
+                    <h3 class="res-title">Regenerative</h3>
+                    <p class="res-desc">Topical and systemic candidates for extracellular matrix remodeling.</p>
+                    <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+                </div>
+                <div class="res-card">
+                    <div class="res-icon"><i data-lucide="battery-charging"></i></div>
+                    <div class="res-num">06 / MITOCHONDRIAL</div>
+                    <h3 class="res-title">Mitochondrial</h3>
+                    <p class="res-desc">Advanced sequences targeting cellular energy synthesis and optimization.</p>
+                    <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUALITY ASSURANCE -->
+    <section id="quality" class="quality-section section-padding">
+        <div class="container">
+            <div class="quality-header reveal">
+                <span class="eyebrow eyebrow-light">Analytical Precision</span>
+                <h2 class="headline-section" style="color: white; font-size: clamp(2rem, 3.5vw, 3.5rem);">Every Batch.<br>Verified.</h2>
+                <p class="body-large" style="color: rgba(255,255,255,0.7);">Our commitment to research integrity begins with rigorous analytical testing. We do not guess. We verify. Every compound, every batch, every time.</p>
+            </div>
+
+            <div class="quality-grid reveal reveal-stagger">
+                <div class="q-module">
+                    <div class="q-icon"><i data-lucide="bar-chart-3"></i></div>
+                    <span class="q-num">01 / HPLC</span>
+                    <h4 class="q-title">HPLC Testing</h4>
+                    <p class="q-text">High-Performance Liquid Chromatography ensuring purity analysis for every batch.</p>
+                </div>
+                <div class="q-module">
+                    <div class="q-icon"><i data-lucide="radar"></i></div>
+                    <span class="q-num">02 / MS</span>
+                    <h4 class="q-title">Mass Spectrometry</h4>
+                    <p class="q-text">Identity verification and exact molecular weight sequence confirmation.</p>
+                </div>
+                <div class="q-module">
+                    <div class="q-icon"><i data-lucide="qr-code"></i></div>
+                    <span class="q-num">03 / TRACE</span>
+                    <h4 class="q-title">Batch Traceability</h4>
+                    <p class="q-text">Strictly documented batch-level information from synthesis to final vial.</p>
+                </div>
+                <div class="q-module">
+                    <div class="q-icon"><i data-lucide="file-check-2"></i></div>
+                    <span class="q-num">04 / COA</span>
+                    <h4 class="q-title">Certified Analysis</h4>
+                    <p class="q-text">Analytical documentation available seamlessly for all qualifying products.</p>
+                </div>
+            </div>
+
+            <div class="batch-ui-container reveal">
+                <div class="batch-tag"><i data-lucide="lock" style="width: 12px;"></i> SECURE PORTAL</div>
+                <h3 style="font-size: clamp(1.5rem, 2.5vw, 2.25rem); font-family: var(--font-display); margin-bottom: 1rem; color: var(--white);">Know exactly what you're working with.</h3>
+                <p style="color: rgba(255,255,255,0.6); max-width: 560px; margin: 0 auto;">Enter your product batch number to instantly verify HPLC and MS analytical results, downloadable as PDF.</p>
+
+                <form class="batch-input-group" onsubmit="event.preventDefault();">
+                    <input type="text" class="batch-input" placeholder="ENTER BATCH ID (e.g. SP-8472)">
+                    <button class="batch-btn">VERIFY <i data-lucide="arrow-right"></i></button>
+                </form>
+                <div class="batch-samples">
+                    Try a sample batch: <strong>SP-8922</strong> · <strong>SP-7104</strong> · <strong>SP-6215</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="compare-section section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="header-text">
+                    <span class="eyebrow">Why Symbiotic</span>
+                    <h2 class="headline-section">A Different Standard.</h2>
+                </div>
+            </div>
+            <div class="compare-table reveal">
+                <div class="compare-head">
+                    <div>Capability</div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="dna" style="width: 16px; color: var(--mint);"></i> Symbiotic</div>
+                    <div>Generic Suppliers</div>
+                    <div>Overseas Vendors</div>
+                </div>
+                <div class="compare-row compare-featured">
+                    <div>HPLC & MS Purity Verification</div>
+                    <div><i data-lucide="check-circle-2" class="check"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                </div>
+                <div class="compare-row compare-featured">
+                    <div>Public Batch Verification Portal</div>
+                    <div><i data-lucide="check-circle-2" class="check"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                </div>
+                <div class="compare-row">
+                    <div>Certificate of Analysis Included</div>
+                    <div><i data-lucide="check-circle-2" class="check"></i></div>
+                    <div>Partial</div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                </div>
+                <div class="compare-row">
+                    <div>Climate-Controlled Shipping</div>
+                    <div><i data-lucide="check-circle-2" class="check"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                </div>
+                <div class="compare-row">
+                    <div>Same-Day Verification Turnaround</div>
+                    <div><i data-lucide="check-circle-2" class="check"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                </div>
+                <div class="compare-row">
+                    <div>Custom Synthesis for Institutions</div>
+                    <div><i data-lucide="check-circle-2" class="check"></i></div>
+                    <div><i data-lucide="x" class="x-mark"></i></div>
+                    <div>Limited</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section-padding" style="background: var(--white);">
+        <div class="container">
+            <div class="reveal" style="text-align: center; margin-bottom: 1rem;">
+                <span class="eyebrow" style="justify-content: center;">The Process</span>
+                <h2 class="headline-section" style="display: block;">Seamless Acquisition</h2>
+                <p class="body-large" style="margin: 0 auto;">From research request to verified delivery, every step is engineered for clarity and compliance.</p>
+            </div>
+
+            <div class="timeline reveal">
+                <div class="step">
+                    <div class="step-num">01</div>
+                    <div>
+                        <h4 class="step-title">Select</h4>
+                        <p class="step-desc">Explore our extensive catalog of engineered peptide structures.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">02</div>
+                    <div>
+                        <h4 class="step-title">Verify</h4>
+                        <p class="step-desc">Review available purity testing and analytical documentation.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">03</div>
+                    <div>
+                        <h4 class="step-title">Order</h4>
+                        <p class="step-desc">Submit your research request through our secure checkout.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">04</div>
+                    <div>
+                        <h4 class="step-title">Receive</h4>
+                        <p class="step-desc">Acquire climate-controlled delivery ready for laboratory use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="header-text">
+                    <span class="eyebrow">Research Community</span>
+                    <h2 class="headline-section">Trusted By Those Who<br>Take Science Seriously.</h2>
+                </div>
+            </div>
+
+            <div class="testimonials-grid reveal reveal-stagger">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+                    </div>
+                    <p class="testimonial-text">"The consistency of molecular weights verified across multiple mass spectrometry runs has made Symbiotic our exclusive source for clinical laboratory models."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DR</div>
+                        <div class="author-info">
+                            <strong>Dr. Rachel Donovan</strong>
+                            <span>Lead Technician, Independent Biotech CRO</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+                    </div>
+                    <p class="testimonial-text">"Purity documentation is flawless. The solubility and reaction predictability perfectly match theoretical expectations across our entire pipeline."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MK</div>
+                        <div class="author-info">
+                            <strong>Dr. Marcus Kim</strong>
+                            <span>Principal Investigator, Academic Institute</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+                    </div>
+                    <p class="testimonial-text">"Their batch verification portal is unmatched. We've integrated their COA system directly into our laboratory documentation — saves us hours every week."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SA</div>
+                        <div class="author-info">
+                            <strong>Dr. Sarah Aldridge</strong>
+                            <span>Director of Research, Pharma Discovery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DATA & METRICS -->
+    <section class="section-padding" style="background: var(--white);">
+        <div class="container split-section">
+            <div class="reveal">
+                <span class="eyebrow">Quality Metrics</span>
+                <h2 class="headline-section" style="font-size: 2.5rem;">Data Tells The Story.</h2>
+                <p class="body-large">We believe transparency is non-negotiable. Our aggregate testing data reflects a commitment to the highest echelon of research standards.</p>
+
+                <div class="data-card">
+                    <div class="data-meta">
+                        <span>Target Purity Standard</span>
+                        <span class="pct">99.4%</span>
+                    </div>
+                    <div class="data-bar-bg"><div class="data-bar-fill" data-width="99"></div></div>
+                </div>
+                <div class="data-card">
+                    <div class="data-meta">
+                        <span>Batch Verification Rate</span>
+                        <span class="pct">100%</span>
+                    </div>
+                    <div class="data-bar-bg"><div class="data-bar-fill" data-width="100"></div></div>
+                </div>
+                <div class="data-card">
+                    <div class="data-meta">
+                        <span>Customer Retention</span>
+                        <span class="pct">94%</span>
+                    </div>
+                    <div class="data-bar-bg"><div class="data-bar-fill" data-width="94"></div></div>
+                </div>
+                <div class="data-card">
+                    <div class="data-meta">
+                        <span>On-Time Delivery</span>
+                        <span class="pct">98.7%</span>
+                    </div>
+                    <div class="data-bar-bg"><div class="data-bar-fill" data-width="98"></div></div>
+                </div>
+            </div>
+
+            <div class="reveal" style="padding-top: 2rem;">
+                <span class="eyebrow">By The Numbers</span>
+                <h2 class="headline-section" style="font-size: 2.5rem;">Research At Scale.</h2>
+                <p class="body-large">Numbers reflect cumulative metrics across our entire 2025–2026 operational period, audited by an independent third-party quality consultancy.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;">
+                    <div class="data-card" style="margin: 0;">
+                        <div class="stat-num" style="font-size: 2.5rem;">200+</div>
+                        <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-top: 0.3rem; font-weight: 600;">Partner Institutions</div>
+                    </div>
+                    <div class="data-card" style="margin: 0;">
+                        <div class="stat-num" style="font-size: 2.5rem;">30</div>
+                        <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-top: 0.3rem; font-weight: 600;">Countries Served</div>
+                    </div>
+                    <div class="data-card" style="margin: 0;">
+                        <div class="stat-num" style="font-size: 2.5rem;">$0</div>
+                        <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-top: 0.3rem; font-weight: 600;">Compromised Batches</div>
+                    </div>
+                    <div class="data-card" style="margin: 0;">
+                        <div class="stat-num" style="font-size: 2.5rem;">24h</div>
+                        <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-600); margin-top: 0.3rem; font-weight: 600;">COA Turnaround</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container reveal">
+            <div class="logo-strip">
+                <div class="logo-placeholder"><i data-lucide="building-2"></i> Research Labs</div>
+                <div class="logo-placeholder"><i data-lucide="atom"></i> Biotechnology</div>
+                <div class="logo-placeholder"><i data-lucide="graduation-cap"></i> Academic Inst.</div>
+                <div class="logo-placeholder"><i data-lucide="stethoscope"></i> Clinical CRO</div>
+                <div class="logo-placeholder"><i data-lucide="flask-conical"></i> Independent</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KNOWLEDGE LAB -->
+    <section id="research" class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="header-text">
+                    <span class="eyebrow">The Knowledge Lab</span>
+                    <h2 class="headline-section">Editorial Insights.</h2>
+                    <p class="body-large">Technical documentation, peer-reviewed findings, and methodology primers for the modern researcher.</p>
+                </div>
+                <div class="header-actions">
+                    <a href="#" class="btn btn-secondary">All Articles <i data-lucide="arrow-right" style="width:14px;"></i></a>
+                </div>
+            </div>
+
+            <div class="article-grid reveal">
+                <div class="article-card featured">
+                    <div class="art-img art-img-style-1">
+                        <span class="art-badge">FEATURED</span>
+                    </div>
+                    <div class="art-meta"><span>Methodology · 12 Min</span><span>Aug 18, 2026</span></div>
+                    <h3 class="art-title">Why Analytical Purity Dictates Experimental Success In Modern Peptide Research</h3>
+                    <p class="art-excerpt">A deep dive into how trace impurities under 1% can fundamentally alter signaling cascade outcomes, with practical strategies for researchers to verify molecular integrity before they begin.</p>
+                </div>
+                <div class="article-card">
+                    <div class="art-img art-img-style-2">
+                        <span class="art-badge">SCIENCE</span>
+                    </div>
+                    <div class="art-meta"><span>Mechanism · 8 Min</span><span>Aug 12, 2026</span></div>
+                    <h3 class="art-title">Understanding BPC-157: Cellular Healing Cascades</h3>
+                </div>
+                <div class="article-card">
+                    <div class="art-img art-img-style-3">
+                        <span class="art-badge">TESTING</span>
+                    </div>
+                    <div class="art-meta"><span>Protocol · 4 Min</span><span>Aug 05, 2026</span></div>
+                    <h3 class="art-title">Inside The Lab: Reading Your HPLC Results</h3>
+                </div>
+                <div class="article-card">
+                    <div class="art-img art-img-style-4">
+                        <span class="art-badge">GUIDE</span>
+                    </div>
+                    <div class="art-meta"><span>Reference · 6 Min</span><span>Jul 28, 2026</span></div>
+                    <h3 class="art-title">Reconstitution Best Practices For Lyophilized Peptides</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRESS / RECOGNITION -->
+    <section class="section-padding" style="background: var(--white);">
+        <div class="container">
+            <div class="section-header reveal" style="text-align: center; flex-direction: column; align-items: center;">
+                <div class="header-text" style="text-align: center;">
+                    <span class="eyebrow" style="justify-content: center;">Recognition</span>
+                    <h2 class="headline-section">Featured In.</h2>
+                </div>
+            </div>
+            <div class="press-grid reveal">
+                <div class="press-item"><i data-lucide="newspaper"></i><span>Nature Methods</span></div>
+                <div class="press-item"><i data-lucide="microscope"></i><span>The Scientist</span></div>
+                <div class="press-item"><i data-lucide="book-open"></i><span>Cell Press</span></div>
+                <div class="press-item"><i data-lucide="award"></i><span>BioTech Today</span></div>
+                <div class="press-item"><i data-lucide="globe"></i><span>Research Weekly</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="newsletter reveal">
+                <div>
+                    <span class="eyebrow" style="margin-bottom: 1rem;">Stay Updated</span>
+                    <h2>Research updates, delivered monthly.</h2>
+                    <p style="color: var(--gray-600); margin-top: 1rem; font-size: 14px;">Get curated insights on new compounds, methodology papers, and quality research findings. No noise.</p>
+                </div>
+                <div>
+                    <form class="newsletter-form" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="your@institution.edu" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    <small>Join 8,000+ researchers. Unsubscribe anytime. We never share your data.</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-padding" style="background: var(--white);">
+        <div class="container">
+            <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+                <span class="eyebrow" style="justify-content: center;">Support</span>
+                <h2 class="headline-section">Common Questions</h2>
+            </div>
+
+            <div class="faq-container reveal">
+                <div class="faq-item">
+                    <div class="faq-q">
+                        <span class="faq-q-text">What are your peptides intended for?</span>
+                        <div class="faq-icon-wrap"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-a"><div class="faq-a-inner">All products sold by Symbiotic Peptides are strictly for laboratory research purposes only. They are not intended for human consumption, therapeutic use, or diagnostic applications. By purchasing, you affirm that you are a qualified researcher or institution.</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">
+                        <span class="faq-q-text">Is a Certificate of Analysis (COA) provided?</span>
+                        <div class="faq-icon-wrap"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-a"><div class="faq-a-inner">Yes. We provide comprehensive analytical documentation, including HPLC and MS reports, accessible via our batch verification portal or upon request with your order. Every batch is fully traceable from synthesis to final vial.</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">
+                        <span class="faq-q-text">How are products packaged and shipped?</span>
+                        <div class="faq-icon-wrap"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-a"><div class="faq-a-inner">Lyophilized peptides are packaged securely in sterile, sealed glass vials. Depending on the fragility of the specific compound, climate-controlled shipping options are utilized to ensure structural integrity upon arrival. Same-day shipping available for orders placed before 2pm ET.</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">
+                        <span class="faq-q-text">Do you offer custom peptide synthesis?</span>
+                        <div class="faq-icon-wrap"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-a"><div class="faq-a-inner">We accommodate custom synthesis for institutional laboratories and CROs. Please contact our scientific team directly to discuss sequencing, quantity, and specific purity requirements. Lead times typically range from 4–8 weeks depending on complexity.</div></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">
+                        <span class="faq-q-text">What is your return and replacement policy?</span>
+                        <div class="faq-icon-wrap"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-a"><div class="faq-a-inner">Due to the sensitive nature of our compounds, all sales are final. However, if your order arrives compromised (broken seal, temperature excursion, analytical discrepancy), we will replace the batch at no cost. Documented evidence is required within 48 hours of receipt.</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta-section section-padding">
+        <div class="cta-glow"></div>
+        <div class="container reveal">
+            <h2 class="headline-section" style="font-size: clamp(2.25rem, 4.5vw, 4rem);">Ready to Explore<br>What's Next?</h2>
+            <p class="body-large">Discover precision compounds, transparent documentation, and a research-first approach. Trusted by 200+ institutions worldwide.</p>
+            <div class="cta-cta-buttons">
+                <a href="#shop" class="btn btn-primary" style="background: var(--white); color: var(--dark);">Explore Catalog <i data-lucide="arrow-right" class="arrow" style="width:14px;"></i></a>
+                <a href="#" class="btn btn-light">Contact Our Team</a>
+            </div>
+            <div class="cta-stats">
+                <div class="cta-stat">
+                    <div class="num">200+</div>
+                    <div class="lbl">Partner Institutions</div>
+                </div>
+                <div class="cta-stat">
+                    <div class="num">50K+</div>
+                    <div class="lbl">Vials Delivered</div>
+                </div>
+                <div class="cta-stat">
+                    <div class="num">99.4%</div>
+                    <div class="lbl">Verified Purity</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <span class="logo-mark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 15c6.667-6 13.333 0 20-6"/>
+                                <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/>
+                                <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/>
+                                <path d="M2 9c6.667 6 13.333 0 20 6"/>
+                            </svg>
+                        </span>
+                        SYMBIOTIC
+                    </a>
+                    <p>Precision engineered for the next generation of biological research. Trusted by leading institutions worldwide.</p>
+                    <div class="social-links">
+                        <a class="social-link"><i data-lucide="linkedin"></i></a>
+                        <a class="social-link"><i data-lucide="twitter"></i></a>
+                        <a class="social-link"><i data-lucide="github"></i></a>
+                        <a class="social-link"><i data-lucide="youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#">All Peptides</a></li>
+                        <li><a href="#">Metabolic</a></li>
+                        <li><a href="#">Regenerative</a></li>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Science</h4>
+                    <ul>
+                        <li><a href="#">Research Lab</a></li>
+                        <li><a href="#">Quality Standards</a></li>
+                        <li><a href="#">Batch Testing</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-left">
+                    <div>&copy; 2026 Symbiotic Peptides. All Rights Reserved.</div>
+                    <strong>·</strong>
+                    <div>Strictly for Research & Laboratory Use Only. Not for human consumption.</div>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <i data-lucide="lock" style="width: 14px;"></i>
+                    <span>SSL Secured · GDPR Compliant</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <div class="back-top" id="backTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <i data-lucide="arrow-up"></i>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile menu
+        function toggleMobile() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+            document.getElementById('menuBackdrop').classList.toggle('open');
+        }
+        window.toggleMobile = toggleMobile;
+
+        // Sticky Navbar
+        const navbar = document.getElementById('navbar');
+        const darkSections = document.querySelectorAll('.molecular-section, .quality-section, .cta-section, .spotlight');
+
+        window.addEventListener('scroll', () => {
+            const sy = window.scrollY;
+            if (sy > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+
+            let isDark = false;
+            darkSections.forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top < 80 && rect.bottom > 80) isDark = true;
+            });
+            if (isDark && sy > 50) navbar.classList.add('dark-mode');
+            else navbar.classList.remove('dark-mode');
+
+            // Back to top
+            document.getElementById('backTop').classList.toggle('visible', sy > 600);
+        });
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const bars = entry.target.querySelectorAll('.data-bar-fill');
+                    bars.forEach(bar => {
+                        const w = bar.getAttribute('data-width');
+                        setTimeout(() => bar.style.width = w + '%', 300);
+                    });
+                    // Counter animation
+                    const nums = entry.target.querySelectorAll('.stat-num[data-target]');
+                    nums.forEach(animateCounter);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Counter
+        function animateCounter(el) {
+            const target = parseInt(el.getAttribute('data-target'));
+            const unit = el.querySelector('.unit')?.outerHTML || '';
+            const duration = 1800;
+            const start = performance.now();
+            const tick = (now) => {
+                const t = Math.min(1, (now - start) / duration);
+                const eased = 1 - Math.pow(1 - t, 3);
+                el.innerHTML = Math.floor(target * eased) + unit;
+                if (t < 1) requestAnimationFrame(tick);
+                else el.innerHTML = target + unit;
+            };
+            requestAnimationFrame(tick);
+        }
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-q');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(faq => {
+                    faq.classList.remove('active');
+                    faq.querySelector('.faq-a').style.maxHeight = null;
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                    const answer = item.querySelector('.faq-a');
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+
+        // Category filter (visual only)
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
