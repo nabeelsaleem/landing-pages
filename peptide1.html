@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SymbioticPeptides — Precision Peptide Science for Research</title>
+<meta name="description" content="High-purity, research-grade peptides verified by HPLC and mass spectrometry. Full analytical documentation with every order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   FUTURE BIOLOGY — Design System
+   SymbioticPeptides · redesign
+   ============================================================ */
+
+:root{
+  /* --- color: green system --- */
+  --dark:      #04120D;   /* near-black green */
+  --deep:      #0C3624;   /* deep forest green */
+  --deep-2:    #0F4530;   /* slightly lighter deep green for gradients */
+  --primary:   #0E7A46;   /* brand emerald */
+  --primary-2: #35B478;   /* lighter emerald — accents on dark */
+  --primary-3: #DDEDE3;   /* emerald-tinted line on dark */
+  --mint:      #E1F5E8;   /* soft mint section bg */
+  --mint-2:    #F2FBF5;   /* pale mint */
+  --paper:     #FAFAF7;   /* warm off-white */
+  --white:     #FFFFFF;
+  --ink:       #081911;   /* near-black text on light */
+  --ink-soft:  rgba(8,25,17,0.64);
+  --ink-faint: rgba(8,25,17,0.44);
+  --line:      rgba(8,25,17,0.12);
+  --line-2:    rgba(8,25,17,0.08);
+  --on-dark:       #F4FAF6;
+  --on-dark-soft:  rgba(244,250,246,0.68);
+  --on-dark-faint: rgba(244,250,246,0.42);
+  --line-dark: rgba(244,250,246,0.16);
+  --line-dark-2: rgba(244,250,246,0.09);
+
+  /* --- type --- */
+  --f-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --f-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+
+  /* --- shape / motion --- */
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 10px;
+  --ease: cubic-bezier(.22,.9,.24,1);
+  --dur-fast: 320ms;
+  --dur-med: 620ms;
+  --dur-slow: 1400ms;
+
+  --container: 1320px;
+}
+
+*,*::before,*::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  font-family: var(--f-body);
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img,svg{ display:block; max-width:100%; }
+a{ color: inherit; text-decoration:none; }
+ul{ list-style:none; margin:0; padding:0; }
+button{ font-family: inherit; cursor:pointer; }
+input{ font-family: inherit; }
+h1,h2,h3,h4,p,figure{ margin:0; }
+
+:focus-visible{
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container{
+  width:100%;
+  max-width: var(--container);
+  margin:0 auto;
+  padding: 0 40px;
+}
+
+.sr-only{
+  position:absolute; width:1px;height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+.skip-link{
+  position:absolute; left:12px; top:-60px; z-index:999;
+  background:var(--dark); color:var(--on-dark); padding:12px 18px;
+  border-radius: 8px; font-family: var(--f-mono); font-size:.8rem;
+  transition: top .2s var(--ease);
+}
+.skip-link:focus{ top:12px; }
+
+/* eyebrow / mono labels */
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family: var(--f-mono);
+  font-size: .74rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight:500;
+}
+.eyebrow::before{
+  content:"";
+  width:7px; height:7px; border-radius:50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px rgba(14,122,70,.16);
+}
+.eyebrow--dark{ color: var(--primary-2); }
+.eyebrow--dark::before{ background: var(--primary-2); box-shadow: 0 0 0 3px rgba(53,180,120,.22); }
+
+/* headline system */
+.h-display{
+  font-family: var(--f-display);
+  font-weight: 600;
+  line-height: .98;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+.h-section{
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 3.6vw, 3.4rem);
+  line-height: 1.04;
+  letter-spacing: -.015em;
+  color: var(--ink);
+}
+.h-section--dark{ color: var(--on-dark); }
+.h-sub{
+  font-size: clamp(1rem, 1.1vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  font-weight:400;
+  max-width: 46ch;
+}
+.h-sub--dark{ color: var(--on-dark-soft); }
+
+/* buttons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding: 16px 30px;
+  border-radius: 100px;
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: .92rem;
+  letter-spacing: .01em;
+  border: 1px solid transparent;
+  transition: transform var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  white-space: nowrap;
+}
+.btn-primary{
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: 0 1px 0 rgba(0,0,0,.05);
+}
+.btn-primary:hover{ background:#0B663B; transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(14,122,70,.5); }
+.btn-outline{
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-outline:hover{ border-color: var(--ink); transform: translateY(-2px); }
+.btn-outline--dark{ color: var(--on-dark); border-color: var(--line-dark); }
+.btn-outline--dark:hover{ border-color: var(--on-dark); }
+.btn-sm{ padding: 11px 20px; font-size: .82rem; }
+.btn svg{ width:15px; height:15px; transition: transform var(--dur-fast) var(--ease); }
+.btn:hover svg{ transform: translateX(3px); }
+
+/* section rhythm */
+.section{ padding: 128px 0; position:relative; }
+.section--tight{ padding: 96px 0; }
+.bg-paper{ background: var(--paper); }
+.bg-mint{ background: var(--mint); }
+.bg-white{ background: var(--white); }
+.bg-deep{ background: var(--deep); background-image: radial-gradient(circle at 15% 0%, rgba(53,180,120,.16), transparent 45%); }
+.bg-dark{ background: var(--dark); background-image: radial-gradient(circle at 85% 10%, rgba(14,122,70,.22), transparent 40%); }
+
+.grid-lines{
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(244,250,246,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,250,246,.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 85%);
+}
+
+/* reveal-on-scroll */
+.reveal{ opacity:0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal.is-visible{ opacity:1; transform: none; }
+.reveal-stagger > *{ transition-delay: calc(var(--i, 0) * 90ms); }
+
+/* ============ NAV ============ */
+.nav{
+  position: fixed; top:0; left:0; right:0; z-index: 200;
+  padding: 26px 0;
+  transition: padding var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.nav.is-scrolled{
+  padding: 14px 0;
+  background: rgba(250,250,247,.78);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 30px -20px rgba(8,25,17,.3);
+}
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; gap: 24px; }
+.brand{ display:flex; align-items:center; gap:11px; flex-shrink:0; }
+.brand-mark{ width:34px; height:34px; color: var(--primary); }
+.brand-word{ font-family: var(--f-display); font-weight:600; font-size:1.02rem; letter-spacing:-.01em; line-height:1; }
+.brand-word small{ display:block; font-family: var(--f-mono); font-weight:400; font-size:.56rem; letter-spacing:.16em; color: var(--ink-faint); margin-top:4px; }
+
+.nav-links{ display:flex; align-items:center; gap:36px; }
+.nav-links a{
+  font-size:.88rem; font-weight:500; color: var(--ink-soft);
+  position:relative; padding: 4px 0;
+  transition: color var(--dur-fast) var(--ease);
+}
+.nav-links a::after{
+  content:""; position:absolute; left:0; right:100%; bottom:-2px; height:1.5px;
+  background: var(--primary); transition: right var(--dur-fast) var(--ease);
+}
+.nav-links a:hover{ color: var(--ink); }
+.nav-links a:hover::after{ right:0; }
+
+.nav-actions{ display:flex; align-items:center; gap:6px; }
+.icon-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:50%; background:transparent; border:none; color: var(--ink);
+  transition: background var(--dur-fast) var(--ease);
+}
+.icon-btn:hover{ background: var(--line-2); }
+.icon-btn svg{ width:18px; height:18px; }
+.nav-cta{ margin-left:10px; }
+.burger{ display:none; }
+.burger svg{ width:20px; height:20px; }
+
+.mobile-menu{
+  position: fixed; inset:0; z-index: 300;
+  background: var(--dark);
+  display:flex; flex-direction:column;
+  padding: 26px 28px 40px;
+  transform: translateY(-100%);
+  transition: transform .55s var(--ease);
+}
+.mobile-menu.is-open{ transform: translateY(0); }
+.mobile-menu-top{ display:flex; align-items:center; justify-content:space-between; }
+.mobile-menu-top .brand-word{ color: var(--on-dark); }
+.mobile-menu-top .brand-word small{ color: var(--on-dark-faint); }
+.mobile-menu-top .icon-btn{ color: var(--on-dark); }
+.mobile-menu-top .icon-btn:hover{ background: var(--line-dark-2); }
+.mobile-menu nav{ display:flex; flex-direction:column; gap:6px; margin-top:56px; }
+.mobile-menu nav a{
+  font-family: var(--f-display); font-size: 2.1rem; font-weight:600;
+  color: var(--on-dark); padding: 12px 0; border-bottom:1px solid var(--line-dark-2);
+  opacity:0; transform: translateY(14px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.mobile-menu.is-open nav a{ opacity:1; transform:none; }
+.mobile-menu-foot{ margin-top:auto; display:flex; flex-direction:column; gap:18px; }
+.mobile-menu-foot .btn{ width:100%; }
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;
+  padding: 168px 0 90px;
+  background: linear-gradient(180deg, #F6FBF7 0%, var(--mint-2) 62%, var(--mint) 100%);
+  overflow:hidden;
+}
+.hero-grid{
+  display:grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items:center;
+}
+.hero-copy .eyebrow{ margin-bottom: 26px; }
+.hero-h1{
+  font-size: clamp(2.6rem, 5.6vw, 5.4rem);
+}
+.hero-h1 em{ font-style:normal; color: var(--primary); }
+.hero-sub{ margin-top: 26px; max-width: 46ch; font-size: 1.08rem; line-height:1.65; color: var(--ink-soft); }
+.hero-actions{ display:flex; gap:14px; margin-top: 40px; flex-wrap:wrap; }
+
+.hero-visual{ position:relative; height: 560px; display:flex; align-items:center; justify-content:center; }
+.hero-helix{ position:absolute; width:120%; max-width:640px; opacity:.5; left:50%; top:50%; transform:translate(-50%,-50%); animation: helixspin 90s linear infinite; }
+@keyframes helixspin{ to{ transform: translate(-50%,-50%) rotate(360deg); } }
+.hero-orbit{
+  position:absolute; width:480px; height:480px; border-radius:50%;
+  border:1px solid rgba(14,122,70,.16);
+  animation: spin 60s linear infinite;
+}
+.hero-orbit.o2{ width:380px; height:380px; border-color: rgba(14,122,70,.22); animation-duration: 44s; animation-direction:reverse; }
+@keyframes spin{ to{ transform: rotate(360deg); } }
+.hero-glow{
+  position:absolute; width:420px; height:420px; border-radius:50%;
+  background: radial-gradient(circle, rgba(14,122,70,.22), transparent 68%);
+  filter: blur(4px);
+  animation: pulse 7s ease-in-out infinite;
+}
+@keyframes pulse{ 0%,100%{ transform:scale(1); opacity:.9;} 50%{ transform:scale(1.08); opacity:1;} }
+.hero-vial{
+  position:relative; width: 168px; z-index:3;
+  animation: float 6.5s ease-in-out infinite;
+  filter: drop-shadow(0 30px 40px rgba(8,25,17,.16));
+}
+@keyframes float{ 0%,100%{ transform: translateY(0) rotate(-3deg);} 50%{ transform: translateY(-18px) rotate(1deg);} }
+
+.hero-tag{
+  position:absolute; display:flex; align-items:center; gap:8px;
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(6px);
+  border:1px solid var(--line);
+  border-radius: 100px;
+  padding: 9px 16px 9px 12px;
+  font-family: var(--f-mono); font-size:.7rem; letter-spacing:.05em; color: var(--ink);
+  box-shadow: 0 14px 30px -16px rgba(8,25,17,.25);
+  animation: tagfloat 5.5s ease-in-out infinite; z-index:4;
+}
+.hero-tag i{ width:7px; height:7px; border-radius:50%; background: var(--primary); flex-shrink:0; }
+.hero-tag .v{ color: var(--ink-faint); }
+.hero-tag--1{ top: 6%; left: -2%; animation-delay:.2s; }
+.hero-tag--2{ bottom: 20%; left: -6%; animation-delay: 1.1s; }
+.hero-tag--3{ top: 12%; right: -4%; animation-delay: .6s; }
+.hero-tag--4{ bottom: 6%; right: 2%; animation-delay: 1.6s; }
+@keyframes tagfloat{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-9px);} }
+
+.hero-particles{ position:absolute; inset:0; pointer-events:none; }
+.hero-particles i{
+  position:absolute; width:4px; height:4px; border-radius:50%; background: var(--primary);
+  opacity:.5; animation: drift 9s ease-in-out infinite;
+}
+@keyframes drift{ 0%,100%{ transform: translate(0,0); opacity:.25; } 50%{ transform: translate(16px,-26px); opacity:.85; } }
+
+/* ============ TRUST BAR ============ */
+.trust{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); background: var(--white); }
+.trust-grid{ display:grid; grid-template-columns: repeat(4,1fr); }
+.trust-item{ padding: 44px 30px; text-align:left; border-left:1px solid var(--line); }
+.trust-item:first-child{ border-left:none; }
+.trust-num{ font-family: var(--f-display); font-size: clamp(1.9rem,3vw,2.6rem); font-weight:600; color: var(--primary); letter-spacing:-.02em; }
+.trust-label{ margin-top:6px; font-family: var(--f-mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-faint); }
+
+/* ============ SECTION HEAD / CATEGORY GRID ============ */
+.section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom: 62px; }
+.section-head.center{ flex-direction:column; align-items:center; text-align:center; }
+.section-head.center .h-sub{ max-width:56ch; }
+.section-head .eyebrow{ margin-bottom:18px; }
+.cat-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+.cat-card{
+  position:relative; padding: 34px 28px; border-radius: var(--radius-lg);
+  background: var(--white); border:1px solid var(--line);
+  transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  overflow:hidden;
+}
+.cat-card::before{
+  content:""; position:absolute; inset:0; opacity:0;
+  background: linear-gradient(160deg, rgba(14,122,70,.08), transparent 60%);
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.cat-card:hover{ transform: translateY(-6px); border-color: rgba(14,122,70,.35); box-shadow: 0 24px 48px -28px rgba(8,25,17,.28); }
+.cat-card:hover::before{ opacity:1; }
+.cat-num{ font-family: var(--f-mono); font-size:.72rem; color: var(--ink-faint); letter-spacing:.06em; }
+.cat-icon{ width:38px; height:38px; margin: 18px 0 22px; color: var(--primary); }
+.cat-title{ font-family: var(--f-display); font-weight:600; font-size:1.28rem; letter-spacing:-.01em; }
+.cat-examples{ margin-top:10px; font-size:.86rem; color: var(--ink-faint); line-height:1.5; }
+.cat-arrow{ display:inline-flex; align-items:center; gap:8px; margin-top:22px; font-size:.82rem; font-weight:600; color: var(--primary); background:none; border:none; padding:0; }
+.cat-arrow svg{ width:14px; height:14px; transition: transform var(--dur-fast) var(--ease); }
+.cat-card:hover .cat-arrow svg{ transform: translateX(4px); }
+
+/* ============ CATALOG ============ */
+.filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 48px; }
+.filter-btn{
+  padding: 10px 20px; border-radius:100px; border:1px solid var(--line); background:transparent;
+  font-size:.82rem; font-weight:600; color: var(--ink-soft);
+  transition: all var(--dur-fast) var(--ease);
+}
+.filter-btn:hover{ border-color: var(--ink); }
+.filter-btn.is-active{ background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+.product-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.p-card{
+  background: var(--white); border:1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 26px 24px 24px; display:flex; flex-direction:column;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+.p-card:hover{ transform: translateY(-6px); box-shadow: 0 26px 50px -30px rgba(8,25,17,.3); border-color: rgba(14,122,70,.3); }
+.p-card.is-hidden{ display:none; }
+.p-media{ position:relative; height:172px; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at 50% 30%, var(--mint-2), transparent 70%); border-radius: var(--radius-md); margin-bottom:20px; overflow:hidden; }
+.p-media .vial{ width:74px; color: var(--primary); transition: transform var(--dur-med) var(--ease); }
+.p-card:hover .p-media .vial{ transform: scale(1.08) translateY(-4px); }
+.p-badge{ position:absolute; top:10px; left:10px; font-family: var(--f-mono); font-size:.62rem; letter-spacing:.05em; background: rgba(255,255,255,.9); border:1px solid var(--line); padding:4px 8px; border-radius: 100px; color: var(--ink-soft); }
+.p-cat{ font-family: var(--f-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color: var(--primary); }
+.p-name{ font-family: var(--f-display); font-weight:600; font-size:1.06rem; margin-top:8px; line-height:1.25; }
+.p-desc{ font-size:.82rem; color: var(--ink-faint); margin-top:6px; line-height:1.5; flex-grow:1; }
+.p-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding-top:16px; border-top:1px solid var(--line-2); }
+.p-price{ font-family: var(--f-mono); font-weight:500; font-size:.92rem; }
+.p-price span{ color: var(--ink-faint); font-size:.72rem; margin-right:3px; }
+.p-link{ display:inline-flex; align-items:center; gap:6px; font-size:.78rem; font-weight:600; color: var(--ink); background:none; border:none; padding:0; }
+.p-link svg{ width:12px; height:12px; transition: transform var(--dur-fast) var(--ease); }
+.p-card:hover .p-link svg{ transform: translateX(3px); }
+.catalog-more{ text-align:center; margin-top: 52px; }
+.catalog-note{ margin-top:20px; font-size:.76rem; color: var(--ink-faint); text-align:center; max-width:70ch; margin-left:auto; margin-right:auto; line-height:1.6; }
+
+/* ============ SCIENCE ============ */
+.science-grid{ display:grid; grid-template-columns: .85fr 1.15fr; gap: 80px; align-items:center; }
+.science-visual{ position:relative; }
+.science-items{ margin-top: 44px; position:relative; }
+.science-items::before{ content:""; position:absolute; left:29px; top:14px; bottom:14px; width:1px; background: var(--line); }
+.sci-item{ display:grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 30px 0; border-top:1px solid var(--line); position:relative; }
+.sci-item:first-child{ border-top:none; padding-top:0; }
+.sci-item:last-child{ border-bottom:1px solid var(--line); padding-bottom:30px; }
+.sci-num{ font-family: var(--f-mono); font-size:.92rem; color: var(--primary); padding-top:2px; position:relative; z-index:1; background:var(--mint); width:fit-content; height:fit-content; }
+.sci-title{ font-family: var(--f-display); font-weight:600; font-size:1.24rem; letter-spacing:-.005em; }
+.sci-text{ margin-top:8px; font-size:.94rem; color: var(--ink-soft); line-height:1.6; max-width:52ch; }
+
+/* ============ ZOOM / INTERACTIVE CHAIN ============ */
+.zoom-wrap{ margin-top: 60px; border:1px solid var(--line-dark); border-radius: var(--radius-lg); background: rgba(244,250,246,.03); padding: 40px 30px 30px; overflow:hidden; }
+.chain-svg{ width:100%; height:auto; touch-action: manipulation; }
+.residue{ cursor:pointer; }
+.residue circle.node{ transition: r var(--dur-fast) var(--ease), fill var(--dur-fast) var(--ease); fill: var(--deep-2); stroke: var(--primary-2); stroke-width:1.4; }
+.residue text{ font-family: var(--f-mono); font-size: 11px; fill: var(--on-dark-faint); transition: fill var(--dur-fast) var(--ease); }
+.residue:hover circle.node, .residue.is-active circle.node{ r:10; fill: var(--primary-2); }
+.residue:hover text, .residue.is-active text{ fill: var(--on-dark); }
+.residue:focus{ outline:none; }
+.residue:focus circle.node{ stroke: var(--on-dark); stroke-width:1.5; }
+.chain-bond{ fill:none; stroke: var(--line-dark); stroke-width:1.5; }
+
+.zoom-panel{ margin-top: 26px; padding-top: 26px; border-top:1px solid var(--line-dark-2); display:grid; grid-template-columns: 180px 1fr; gap: 26px; align-items:start; }
+.zoom-panel-code{ font-family: var(--f-mono); font-size: 2.6rem; color: var(--primary-2); font-weight:500; transition: opacity .2s var(--ease); }
+.zoom-panel-name{ font-family: var(--f-mono); font-size:.78rem; color: var(--on-dark-faint); margin-top:4px; letter-spacing:.04em; text-transform:uppercase; }
+.zoom-panel-fact{ font-size: .98rem; line-height:1.65; color: var(--on-dark-soft); max-width: 60ch; transition: opacity .2s var(--ease); }
+.zoom-hint{ margin-top:18px; font-family: var(--f-mono); font-size:.72rem; color: var(--on-dark-faint); letter-spacing:.04em; }
+
+/* ============ QUALITY ============ */
+.qa-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--line-dark-2); border:1px solid var(--line-dark-2); border-radius: var(--radius-lg); overflow:hidden; margin-top: 60px; }
+.qa-card{ background: var(--deep); padding: 38px 28px; }
+.qa-num{ font-family: var(--f-mono); font-size:.72rem; color: var(--primary-2); letter-spacing:.06em; }
+.qa-icon{ width:32px; height:32px; color: var(--primary-2); margin: 20px 0 22px; }
+.qa-title{ font-family: var(--f-display); font-weight:600; font-size: 1.1rem; color: var(--on-dark); line-height:1.25; }
+.qa-text{ margin-top:10px; font-size:.86rem; color: var(--on-dark-soft); line-height:1.55; }
+
+.compliance-row{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-top: 26px; }
+.compliance-chip{ display:flex; align-items:center; gap:12px; padding: 16px 18px; border:1px solid var(--line-dark-2); border-radius: var(--radius-sm); }
+.compliance-chip svg{ width:20px; height:20px; color: var(--primary-2); flex-shrink:0; }
+.compliance-chip span{ font-size:.8rem; color: var(--on-dark-soft); line-height:1.35; }
+
+/* ============ VERIFY BATCH ============ */
+.verify-grid{ display:grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items:center; }
+.verify-form{ display:flex; gap:10px; margin-top: 32px; flex-wrap:wrap; }
+.verify-input{
+  flex:1; min-width:220px; padding: 16px 20px; border-radius:100px; border:1px solid var(--line);
+  font-family: var(--f-mono); font-size:.88rem; background: var(--white); color: var(--ink);
+}
+.verify-input:focus{ border-color: var(--primary); }
+.verify-note{ margin-top:16px; font-size:.78rem; color: var(--ink-faint); font-family: var(--f-mono); }
+.verify-note button{ background:none; border:none; padding:0; color: var(--primary); font-family: var(--f-mono); font-size:.78rem; text-decoration:underline; }
+
+.verify-panel{ background: var(--white); border:1px solid var(--line); border-radius: var(--radius-lg); padding: 36px; box-shadow: 0 40px 70px -46px rgba(8,25,17,.3); opacity:.4; transition: opacity .4s var(--ease); }
+.verify-panel.is-active{ opacity:1; }
+.verify-panel-top{ display:flex; justify-content:space-between; align-items:center; padding-bottom:22px; border-bottom:1px solid var(--line-2); }
+.verify-status{ display:inline-flex; align-items:center; gap:8px; font-family: var(--f-mono); font-size:.74rem; color: var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; transition: color .3s var(--ease); }
+.verify-status i{ width:7px; height:7px; border-radius:50%; background: var(--ink-faint); transition: background .3s var(--ease); }
+.verify-panel.is-active .verify-status{ color: var(--primary); }
+.verify-panel.is-active .verify-status i{ background: var(--primary); }
+.verify-demo-flag{ font-family: var(--f-mono); font-size:.65rem; color: var(--ink-faint); border:1px solid var(--line); padding:3px 9px; border-radius:100px; }
+.verify-fields{ display:grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 24px; }
+.vf-label{ font-family: var(--f-mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color: var(--ink-faint); }
+.vf-value{ font-family: var(--f-display); font-size:1.06rem; font-weight:600; margin-top:6px; }
+.vf-value.ok{ color: var(--primary); }
+
+/* ============ HOW IT WORKS ============ */
+.how-track{ display:grid; grid-template-columns: repeat(4,1fr); gap: 26px; margin-top: 60px; position:relative; }
+.how-track::before{ content:""; position:absolute; top:23px; left: calc(12.5% ); right: calc(12.5%); height:1px; background: var(--line-2); }
+.how-step{ position:relative; }
+.how-index{ width:46px; height:46px; border-radius:50%; background: var(--paper); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family: var(--f-mono); font-size:.9rem; color: var(--primary); position:relative; z-index:2; }
+.how-title{ font-family: var(--f-display); font-weight:600; font-size:1.1rem; margin-top: 22px; }
+.how-text{ margin-top:10px; font-size:.88rem; color: var(--ink-soft); line-height:1.55; max-width:32ch; }
+
+/* ============ KNOWLEDGE ============ */
+.know-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+.know-card{ display:block; border-radius: var(--radius-lg); overflow:hidden; border:1px solid var(--line); background: var(--white); transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.know-card:hover{ transform: translateY(-6px); box-shadow: 0 26px 50px -32px rgba(8,25,17,.3); }
+.know-visual{ height: 170px; position:relative; background: linear-gradient(150deg, var(--deep), var(--dark)); overflow:hidden; }
+.know-visual svg{ position:absolute; inset:0; width:100%; height:100%; opacity:.6; }
+.know-body{ padding: 26px; }
+.know-cat{ font-family: var(--f-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color: var(--primary); display:flex; justify-content:space-between; }
+.know-title{ font-family: var(--f-display); font-weight:600; font-size:1.14rem; margin-top:12px; line-height:1.3; }
+.know-arrow{ margin-top:20px; display:inline-flex; align-items:center; gap:8px; font-size:.8rem; font-weight:600; }
+.know-arrow svg{ width:13px; height:13px; transition: transform var(--dur-fast) var(--ease); }
+.know-card:hover .know-arrow svg{ transform: translateX(4px); }
+
+/* ============ COMMUNITY / LOGO STRIP ============ */
+.community-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:18px; margin-top:54px; }
+.community-card{ padding:30px 26px; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.community-card:hover{ border-color: rgba(14,122,70,.32); transform: translateY(-4px); }
+.community-icon{ width:28px; height:28px; color: var(--primary); margin-bottom:18px; }
+.community-title{ font-family: var(--f-display); font-weight:600; font-size:1rem; }
+.community-text{ margin-top:8px; font-size:.82rem; color: var(--ink-faint); line-height:1.5; }
+.logo-row{ display:flex; flex-wrap:wrap; gap:16px 38px; justify-content:center; margin-top:58px; padding-top:44px; border-top:1px solid var(--line); }
+.logo-tag{ font-family: var(--f-mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color: var(--ink-faint); }
+
+/* ============ CTA ============ */
+.cta-section{ position:relative; overflow:hidden; text-align:center; }
+.cta-vial{ width:110px; margin:0 auto 36px; color: var(--primary-2); animation: float 6.5s ease-in-out infinite; }
+.cta-section .h-sub--dark{ margin-left:auto; margin-right:auto; }
+.cta-actions{ display:flex; gap:14px; justify-content:center; margin-top: 38px; flex-wrap:wrap; }
+.cta-glow{ position:absolute; top:50%; left:50%; width:800px; height:800px; transform:translate(-50%,-50%); background: radial-gradient(circle, rgba(53,180,120,.16), transparent 65%); pointer-events:none; }
+
+/* ============ FAQ ============ */
+.faq-list{ max-width: 860px; margin: 0 auto; }
+.faq-item{ border-bottom:1px solid var(--line); }
+.faq-q{ width:100%; display:flex; justify-content:space-between; align-items:center; gap:24px; padding: 26px 4px; background:none; border:none; text-align:left; }
+.faq-q span{ font-family: var(--f-display); font-weight:600; font-size:1.06rem; color: var(--ink); }
+.faq-icon{ width:22px; height:22px; flex-shrink:0; position:relative; }
+.faq-icon::before,.faq-icon::after{ content:""; position:absolute; background: var(--ink); border-radius:2px; transition: transform var(--dur-fast) var(--ease); }
+.faq-icon::before{ width:14px; height:1.6px; top:50%; left:50%; transform: translate(-50%,-50%); }
+.faq-icon::after{ width:1.6px; height:14px; top:50%; left:50%; transform: translate(-50%,-50%); }
+.faq-item.is-open .faq-icon::after{ transform: translate(-50%,-50%) rotate(90deg) scaleY(0); }
+.faq-a{ max-height:0; overflow:hidden; transition: max-height .5s var(--ease); }
+.faq-a p{ padding: 0 4px 28px; font-size:.94rem; color: var(--ink-soft); line-height:1.65; max-width:70ch; }
+
+/* ============ FOOTER ============ */
+.footer{ padding: 90px 0 34px; }
+.footer-top{ display:grid; grid-template-columns: 1.3fr .7fr .7fr .7fr .7fr 1fr; gap: 30px; padding-bottom: 70px; border-bottom:1px solid var(--line-dark-2); }
+.footer-brand .brand{ margin-bottom:20px; }
+.footer-brand .brand-mark{ color: var(--primary-2); }
+.footer-brand .brand-word{ color: var(--on-dark); }
+.footer-brand .brand-word small{ color: var(--on-dark-faint); }
+.footer-tagline{ font-size:.9rem; color: var(--on-dark-soft); line-height:1.6; max-width: 34ch; margin-top:18px; }
+.footer-col h4{ font-family: var(--f-mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color: var(--on-dark-faint); margin-bottom: 20px; }
+.footer-col ul{ display:flex; flex-direction:column; gap:13px; }
+.footer-col a{ font-size:.88rem; color: var(--on-dark-soft); transition: color var(--dur-fast) var(--ease); }
+.footer-col a:hover{ color: var(--on-dark); }
+.footer-news p{ font-size:.86rem; color: var(--on-dark-soft); line-height:1.55; margin-bottom:18px; }
+.news-form{ display:flex; border-bottom:1px solid var(--line-dark); padding-bottom:10px; }
+.news-form input{ flex:1; background:none; border:none; color: var(--on-dark); font-size:.88rem; outline:none; }
+.news-form input::placeholder{ color: var(--on-dark-faint); }
+.news-form button{ background:none; border:none; color: var(--on-dark); }
+.news-form button svg{ width:18px; height:18px; }
+.news-msg{ margin-top:10px; font-family: var(--f-mono); font-size:.72rem; color: var(--primary-2); opacity:0; transition: opacity .3s var(--ease); }
+.news-msg.is-visible{ opacity:1; }
+
+.social-row{ display:flex; gap:10px; margin-top:22px; }
+.social-btn{ width:38px; height:38px; border-radius:50%; border:1px solid var(--line-dark-2); display:flex; align-items:center; justify-content:center; color: var(--on-dark-soft); transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.social-btn:hover{ border-color: var(--on-dark); color: var(--on-dark); }
+.social-btn svg{ width:16px; height:16px; }
+
+.footer-bottom{ display:flex; justify-content:space-between; align-items:flex-start; gap:30px; padding-top: 34px; flex-wrap:wrap; }
+.footer-disclaimer{ font-size:.76rem; line-height:1.6; color: var(--on-dark-faint); max-width: 70ch; }
+.footer-copy{ font-family: var(--f-mono); font-size:.74rem; color: var(--on-dark-faint); white-space:nowrap; }
+.footer-legal{ display:flex; gap:20px; }
+.footer-legal a{ font-size:.78rem; color: var(--on-dark-faint); }
+.footer-legal a:hover{ color: var(--on-dark); }
+
+/* vial svg color helper */
+.vial{ color: var(--primary); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1080px){
+  .container{ padding: 0 26px; }
+  .hero-grid{ grid-template-columns:1fr; }
+  .hero-visual{ height: 420px; order:-1; }
+  .hero-copy{ text-align:left; }
+  .trust-grid{ grid-template-columns: repeat(2,1fr); }
+  .trust-item:nth-child(3){ border-left:none; }
+  .trust-item{ border-top:1px solid var(--line); }
+  .trust-item:nth-child(1),.trust-item:nth-child(2){ border-top:none; }
+  .cat-grid{ grid-template-columns: repeat(2,1fr); }
+  .product-grid{ grid-template-columns: repeat(2,1fr); }
+  .science-grid{ grid-template-columns:1fr; gap:50px; }
+  .qa-grid{ grid-template-columns: repeat(2,1fr); }
+  .compliance-row{ grid-template-columns: repeat(2,1fr); }
+  .verify-grid{ grid-template-columns:1fr; gap:50px; }
+  .how-track{ grid-template-columns: repeat(2,1fr); row-gap:50px; }
+  .how-track::before{ display:none; }
+  .know-grid{ grid-template-columns: repeat(2,1fr); }
+  .community-grid{ grid-template-columns: repeat(2,1fr); }
+  .footer-top{ grid-template-columns: 1fr 1fr 1fr; row-gap:50px; }
+  .nav-links{ display:none; }
+}
+
+@media (max-width: 700px){
+  .container{ padding: 0 20px; }
+  .section{ padding: 84px 0; }
+  .burger{ display:inline-flex; }
+  .nav-cta{ display:none; }
+  .section-head{ flex-direction:column; align-items:flex-start; gap:18px; }
+  .section-head.center{ align-items:center; }
+  .trust-grid{ grid-template-columns: repeat(2,1fr); }
+  .cat-grid{ grid-template-columns: 1fr; }
+  .product-grid{ grid-template-columns: repeat(2,1fr); gap:14px; }
+  .p-name{ font-size:.92rem; }
+  .qa-grid{ grid-template-columns: 1fr; }
+  .compliance-row{ grid-template-columns: 1fr; }
+  .how-track{ grid-template-columns: 1fr; row-gap:40px; }
+  .know-grid{ grid-template-columns: 1fr; }
+  .community-grid{ grid-template-columns: 1fr; }
+  .footer-top{ grid-template-columns: 1fr; gap:44px; }
+  .footer-bottom{ flex-direction:column; }
+  .zoom-panel{ grid-template-columns: 1fr; }
+  .hero-actions .btn, .cta-actions .btn{ width:100%; }
+  .hero-actions,.cta-actions{ flex-direction:column; }
+  .verify-form{ flex-direction:column; }
+  .verify-form .btn{ width:100%; }
+  .verify-fields{ grid-template-columns: 1fr 1fr; }
+  .zoom-wrap{ padding: 26px 18px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ SVG SPRITE ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <linearGradient id="vialGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#35B478"/>
+    <stop offset="100%" stop-color="#0C3624"/>
+  </linearGradient>
+
+  <symbol id="i-vial" viewBox="0 0 120 260">
+    <rect x="34" y="4" width="52" height="12" rx="3" fill="#9AA8A4"/>
+    <rect x="28" y="14" width="64" height="28" rx="6" fill="#C7D1CD"/>
+    <rect x="24" y="40" width="72" height="196" rx="22" fill="url(#vialGrad)"/>
+    <rect x="24" y="150" width="72" height="86" rx="22" fill="rgba(255,255,255,.13)"/>
+    <rect x="30" y="60" width="8" height="150" rx="4" fill="rgba(255,255,255,.16)"/>
+  </symbol>
+
+  <symbol id="i-mark" viewBox="0 0 32 32">
+    <path d="M16 2 L28 9 V23 L16 30 L4 23 V9 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="16" cy="16" r="4" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M21 21 L16.6 16.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c1.4-4 4.3-6 7.5-6s6.1 2 7.5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2.2l1 12.4A2 2 0 0 0 8.2 18.2h9.6a2 2 0 0 0 2-1.7L21 8H6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="21.5" r="1.3" fill="currentColor"/><circle cx="17" cy="21.5" r="1.3" fill="currentColor"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 13l5 5L20 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 2h6M10 2v6.2L4.6 18.4A2 2 0 0 0 6.4 21.4h11.2a2 2 0 0 0 1.8-3L14 8.2V2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 15h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3.6v6.1c0 5.1-3.4 8.6-8 10.3-4.6-1.7-8-5.2-8-10.3V5.6L12 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 12.2l2.4 2.4 4.6-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M15 2v5h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 4.7-9 4.7-9-4.7L12 3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M3 12.7L12 17.4l9-4.7M3 17.4L12 22.1l9-4.7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 12h13M11 6l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-social-a" viewBox="0 0 24 24"><path d="M20 5.2c-.7.3-1.5.6-2.3.7.8-.5 1.4-1.3 1.7-2.3-.8.5-1.7.8-2.6 1a4.1 4.1 0 0 0-7 3.7A11.6 11.6 0 0 1 1.7 4.1a4.1 4.1 0 0 0 1.3 5.4c-.7 0-1.3-.2-1.9-.5v.1a4.1 4.1 0 0 0 3.3 4 4.2 4.2 0 0 1-1.9.1 4.1 4.1 0 0 0 3.8 2.8A8.2 8.2 0 0 1 0 17.5a11.6 11.6 0 0 0 6.3 1.8c7.5 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2z" fill="currentColor"/></symbol>
+  <symbol id="i-social-b" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor"/></symbol>
+  <symbol id="i-social-c" viewBox="0 0 24 24"><path d="M14.5 9V6.8c0-.9.6-1.1 1-1.1h2.4V2.2L14.6 2.2C11.6 2.2 10 4 10 6.6V9H7.5v3.6H10V22h4.5v-9.4h3l.6-3.6h-3.6z" fill="currentColor"/></symbol>
+
+  <symbol id="i-cat-metabolic" viewBox="0 0 40 40"><path d="M8 30c4-14 10-20 24-22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="30" r="2.4" fill="currentColor"/><circle cx="32" cy="8" r="2.4" fill="currentColor"/><path d="M14 26c6-2 10-6 12-12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 4"/></symbol>
+  <symbol id="i-cat-recovery" viewBox="0 0 40 40"><path d="M6 22c4 6 10 10 14 10s10-4 14-10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 22a14 8 0 0 1 28 0" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M20 16v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-cat-growth" viewBox="0 0 40 40"><path d="M10 32V16M20 32V8M30 32V20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M6 32h28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-cat-neuro" viewBox="0 0 40 40"><circle cx="12" cy="14" r="2" fill="currentColor"/><circle cx="27" cy="10" r="2" fill="currentColor"/><circle cx="30" cy="26" r="2" fill="currentColor"/><circle cx="13" cy="29" r="2" fill="currentColor"/><path d="M12 14L27 10M27 10L30 26M30 26L13 29M13 29L12 14M12 14L30 26" stroke="currentColor" stroke-width="1" opacity=".6"/></symbol>
+  <symbol id="i-cat-skin" viewBox="0 0 40 40"><path d="M20 6c8 6 12 12 12 18a12 12 0 0 1-24 0c0-6 4-12 12-18z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cat-mito" viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="15" ry="9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 20c3-4 6-6 6-6M32 20c-3 4-6 6-6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M14 20h12" stroke="currentColor" stroke-width="1.3" stroke-dasharray="1.5 3" stroke-linecap="round"/></symbol>
+</defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#main" class="brand" aria-label="SymbioticPeptides home">
+      <svg class="brand-mark" aria-hidden="true"><use href="#i-mark"/></svg>
+      <span class="brand-word">SYMBIOTIC<small>PEPTIDE SCIENCE</small></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#peptides">Shop</a>
+      <a href="#research">Peptides</a>
+      <a href="#science">Science</a>
+      <a href="#quality">Research</a>
+      <a href="#knowledge">Resources</a>
+      <a href="#faq">About</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="Search"><svg><use href="#i-search"/></svg></button>
+      <button class="icon-btn" aria-label="Account"><svg><use href="#i-user"/></svg></button>
+      <button class="icon-btn" aria-label="Cart, 0 items"><svg><use href="#i-cart"/></svg></button>
+      <a href="#peptides" class="btn btn-primary btn-sm nav-cta">Explore Peptides</a>
+      <button class="icon-btn burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-top">
+    <span class="brand">
+      <svg class="brand-mark" aria-hidden="true"><use href="#i-mark"/></svg>
+      <span class="brand-word">SYMBIOTIC<small>PEPTIDE SCIENCE</small></span>
+    </span>
+    <button class="icon-btn" id="burgerClose" aria-label="Close menu"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <nav aria-label="Mobile">
+    <a href="#peptides" class="mm-link">Shop</a>
+    <a href="#research" class="mm-link">Peptides</a>
+    <a href="#science" class="mm-link">Science</a>
+    <a href="#quality" class="mm-link">Research</a>
+    <a href="#knowledge" class="mm-link">Resources</a>
+    <a href="#faq" class="mm-link">About</a>
+  </nav>
+  <div class="mobile-menu-foot">
+    <a href="#peptides" class="btn btn-primary">Explore Peptides</a>
+    <div class="social-row">
+      <a href="#" class="social-btn" aria-label="X / Twitter"><svg><use href="#i-social-a"/></svg></a>
+      <a href="#" class="social-btn" aria-label="Instagram"><svg><use href="#i-social-b"/></svg></a>
+      <a href="#" class="social-btn" aria-label="Facebook"><svg><use href="#i-social-c"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Advanced Peptide Science</span>
+        <h1 class="h-display hero-h1">PRECISION<br>ENGINEERED<br>FOR THE <em>NEXT</em><br>GENERATION.</h1>
+        <p class="hero-sub">High-purity peptide compounds engineered with precision, transparency, and rigorous quality standards — every batch documented, every result verifiable.</p>
+        <div class="hero-actions">
+          <a href="#peptides" class="btn btn-primary">Explore Peptides <svg><use href="#i-arrow"/></svg></a>
+          <a href="#science" class="btn btn-outline">Discover the Science</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <svg class="hero-helix" viewBox="0 0 300 300">
+          <g fill="none" stroke="#0E7A46" stroke-width="1.4" opacity=".55">
+            <path d="M60 20 C 120 70, 120 130, 60 180 S 0 290, 60 280"/>
+            <path d="M240 20 C 180 70, 180 130, 240 180 S 300 290, 240 280"/>
+          </g>
+          <g stroke="#0E7A46" stroke-width="1" opacity=".3">
+            <line x1="70" y1="40" x2="230" y2="40"/>
+            <line x1="90" y1="80" x2="210" y2="80"/>
+            <line x1="95" y1="120" x2="205" y2="120"/>
+            <line x1="80" y1="160" x2="220" y2="160"/>
+            <line x1="55" y1="200" x2="245" y2="200"/>
+            <line x1="65" y1="240" x2="235" y2="240"/>
+          </g>
+        </svg>
+        <div class="hero-orbit"></div>
+        <div class="hero-orbit o2"></div>
+        <div class="hero-glow"></div>
+        <svg class="hero-vial" viewBox="0 0 120 260"><use href="#i-vial"/></svg>
+
+        <div class="hero-tag hero-tag--1"><i></i>99%+ <span class="v">PURITY</span></div>
+        <div class="hero-tag hero-tag--2"><i></i>BATCH <span class="v">VERIFIED</span></div>
+        <div class="hero-tag hero-tag--3"><i></i>RESEARCH <span class="v">GRADE</span></div>
+        <div class="hero-tag hero-tag--4"><i></i>HPLC <span class="v">TESTED</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST BAR ============ -->
+  <section class="trust">
+    <div class="container trust-grid">
+      <div class="trust-item"><div class="trust-num" data-count="99">0</div><div class="trust-label">Quality Standard</div></div>
+      <div class="trust-item"><div class="trust-num" data-count="50" data-suffix="K+">0</div><div class="trust-label">Products Delivered</div></div>
+      <div class="trust-item"><div class="trust-num" data-count="12" data-suffix="+">0</div><div class="trust-label">Research Categories</div></div>
+      <div class="trust-item"><div class="trust-num" data-count="100" data-suffix="%">0</div><div class="trust-label">Batch Transparency</div></div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH AREAS ============ -->
+  <section class="section bg-mint" id="research">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Research Areas</span>
+          <h2 class="h-section">Explore by<br>research area.</h2>
+        </div>
+        <p class="h-sub">Six focus areas spanning our current catalog — each compound organized by the biological system it's studied in relation to.</p>
+      </div>
+
+      <div class="cat-grid reveal-stagger">
+        <div class="cat-card reveal" style="--i:0">
+          <span class="cat-num">01</span>
+          <svg class="cat-icon"><use href="#i-cat-metabolic"/></svg>
+          <h3 class="cat-title">Metabolic</h3>
+          <p class="cat-examples">Compounds studied for roles in energy metabolism and metabolic signaling.</p>
+          <button class="cat-arrow" data-filter-goto="metabolic">Explore <svg><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="cat-card reveal" style="--i:1">
+          <span class="cat-num">02</span>
+          <svg class="cat-icon"><use href="#i-cat-recovery"/></svg>
+          <h3 class="cat-title">Recovery</h3>
+          <p class="cat-examples">Peptides associated with tissue repair and recovery pathways.</p>
+          <button class="cat-arrow" data-filter-goto="recovery">Explore <svg><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="cat-card reveal" style="--i:2">
+          <span class="cat-num">03</span>
+          <svg class="cat-icon"><use href="#i-cat-growth"/></svg>
+          <h3 class="cat-title">Growth &amp; Endocrine</h3>
+          <p class="cat-examples">Research compounds related to growth-hormone and endocrine signaling.</p>
+          <button class="cat-arrow" data-filter-goto="growth">Explore <svg><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="cat-card reveal" style="--i:3">
+          <span class="cat-num">04</span>
+          <svg class="cat-icon"><use href="#i-cat-neuro"/></svg>
+          <h3 class="cat-title">Neuroscience</h3>
+          <p class="cat-examples">Compounds studied within cognitive and nervous-system research contexts.</p>
+          <button class="cat-arrow" data-filter-goto="nootropic">Explore <svg><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="cat-card reveal" style="--i:4">
+          <span class="cat-num">05</span>
+          <svg class="cat-icon"><use href="#i-cat-skin"/></svg>
+          <h3 class="cat-title">Skin &amp; Regenerative</h3>
+          <p class="cat-examples">Peptides examined for roles in dermal structure and regeneration.</p>
+          <button class="cat-arrow" data-filter-goto="skin">Explore <svg><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="cat-card reveal" style="--i:5">
+          <span class="cat-num">06</span>
+          <svg class="cat-icon"><use href="#i-cat-mito"/></svg>
+          <h3 class="cat-title">Mitochondrial</h3>
+          <p class="cat-examples">Compounds studied in relation to mitochondrial function and cellular energy.</p>
+          <button class="cat-arrow" data-filter-goto="regenerative">Explore <svg><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED PEPTIDES / CATALOG ============ -->
+  <section class="section bg-white" id="peptides">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">The Collection</span>
+          <h2 class="h-section">Precision compounds.<br>Purpose-built.</h2>
+        </div>
+        <p class="h-sub">Explore our curated collection of peptide compounds, each manufactured to research-grade purity standards with full documentation.</p>
+      </div>
+
+      <div class="filter-row" id="filterRow" role="tablist" aria-label="Filter peptides by category">
+        <button class="filter-btn is-active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="metabolic">Metabolic</button>
+        <button class="filter-btn" data-filter="recovery">Recovery</button>
+        <button class="filter-btn" data-filter="growth">Growth</button>
+        <button class="filter-btn" data-filter="nootropic">Nootropic</button>
+        <button class="filter-btn" data-filter="skin">Skin &amp; Hair</button>
+        <button class="filter-btn" data-filter="regenerative">Regenerative</button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+
+        <div class="p-card" data-cat="recovery">
+          <div class="p-media"><span class="p-badge">99.1% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Recovery</span>
+          <h3 class="p-name">BPC-157</h3>
+          <p class="p-desc">Studied in tissue-repair research models. 5mg lyophilized vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$52.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+        <div class="p-card" data-cat="recovery">
+          <div class="p-media"><span class="p-badge">98.7% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Recovery</span>
+          <h3 class="p-name">TB-500</h3>
+          <p class="p-desc">Researched for its role in cellular migration and repair pathways. 5mg vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$58.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+        <div class="p-card" data-cat="growth">
+          <div class="p-media"><span class="p-badge">99.4% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Growth &amp; Endocrine</span>
+          <h3 class="p-name">Ipamorelin</h3>
+          <p class="p-desc">A selective secretagogue studied in endocrine signaling research. 5mg vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$46.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+        <div class="p-card" data-cat="growth">
+          <div class="p-media"><span class="p-badge">99.0% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Growth &amp; Endocrine</span>
+          <h3 class="p-name">CJC-1295</h3>
+          <p class="p-desc">Studied for extended half-life growth-hormone releasing activity. 5mg vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$54.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+        <div class="p-card" data-cat="skin">
+          <div class="p-media"><span class="p-badge">99.2% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Skin &amp; Regenerative</span>
+          <h3 class="p-name">GHK-Cu</h3>
+          <p class="p-desc">A copper-binding peptide studied in dermal-structure research. 50mg vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$38.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+        <div class="p-card" data-cat="regenerative">
+          <div class="p-media"><span class="p-badge">98.9% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Mitochondrial</span>
+          <h3 class="p-name">Epitalon</h3>
+          <p class="p-desc">Researched in relation to cellular aging and mitochondrial pathways. 10mg vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$44.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+        <div class="p-card" data-cat="nootropic">
+          <div class="p-media"><span class="p-badge">99.3% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Neuroscience</span>
+          <h3 class="p-name">Selank</h3>
+          <p class="p-desc">Studied within cognitive and nervous-system research contexts. 5mg vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$49.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+        <div class="p-card" data-cat="metabolic">
+          <div class="p-media"><span class="p-badge">99.5% PURITY</span><svg class="vial"><use href="#i-vial"/></svg></div>
+          <span class="p-cat">Metabolic</span>
+          <h3 class="p-name">AOD-9604</h3>
+          <p class="p-desc">A modified fragment studied for roles in lipid-metabolism research. 5mg vial.</p>
+          <div class="p-foot"><span class="p-price"><span>from</span>$56.00</span><button class="p-link">View <svg><use href="#i-arrow"/></svg></button></div>
+        </div>
+
+      </div>
+
+      <div class="catalog-more"><a href="#" class="btn btn-outline">View Full Catalog <svg><use href="#i-arrow"/></svg></a></div>
+      <p class="catalog-note">For laboratory and research use only. Not for human consumption. See our documentation and FAQ for full research-use terms.</p>
+    </div>
+  </section>
+
+  <!-- ============ THE SCIENCE ============ -->
+  <section class="section bg-mint" id="science">
+    <div class="container science-grid">
+      <div class="science-visual reveal">
+        <svg viewBox="0 0 380 460" style="width:100%">
+          <defs>
+            <linearGradient id="sciGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0E7A46"/>
+              <stop offset="100%" stop-color="#0C3624"/>
+            </linearGradient>
+          </defs>
+          <rect x="20" y="20" width="340" height="420" rx="24" fill="url(#sciGrad)"/>
+          <g stroke="rgba(255,255,255,.28)" stroke-width="1.2" fill="none">
+            <path d="M60 380 C 120 340,120 300,60 260 S 0 180,60 140"/>
+            <path d="M320 380 C 260 340,260 300,320 260 S 380 180,320 140"/>
+          </g>
+          <g fill="rgba(255,255,255,.55)">
+            <circle cx="60" cy="380" r="5"/><circle cx="60" cy="260" r="5"/><circle cx="60" cy="140" r="5"/>
+            <circle cx="320" cy="380" r="5"/><circle cx="320" cy="260" r="5"/><circle cx="320" cy="140" r="5"/>
+          </g>
+          <svg x="150" y="180" width="80" height="80" viewBox="0 0 120 260"><use href="#i-vial"/></svg>
+        </svg>
+      </div>
+
+      <div class="reveal">
+        <span class="eyebrow">The Science</span>
+        <h2 class="h-section">Small molecules.<br>Significant questions.</h2>
+        <p class="h-sub" style="margin-top:20px; max-width:56ch;">Peptides are short chains of amino acids that occur naturally throughout biological systems. Because they interact with specific receptors, researchers use synthetic peptides to study precise cellular processes under controlled conditions.</p>
+
+        <div class="science-items">
+          <div class="sci-item reveal">
+            <span class="sci-num">01</span>
+            <div>
+              <h3 class="sci-title">Precision Signaling</h3>
+              <p class="sci-text">Each compound is synthesized to bind a defined set of receptors, allowing researchers to isolate a single signaling pathway from the surrounding biological noise.</p>
+            </div>
+          </div>
+          <div class="sci-item reveal">
+            <span class="sci-num">02</span>
+            <div>
+              <h3 class="sci-title">Targeted Cellular Interaction</h3>
+              <p class="sci-text">Sequence-specific binding means researchers can model how a single molecular interaction propagates through a cell or tissue system.</p>
+            </div>
+          </div>
+          <div class="sci-item reveal">
+            <span class="sci-num">03</span>
+            <div>
+              <h3 class="sci-title">Research-Driven Discovery</h3>
+              <p class="sci-text">Every compound in our catalog is manufactured to support legitimate laboratory research, with analytical documentation available for each batch.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ZOOM INTO THE SCIENCE ============ -->
+  <section class="section bg-dark" id="molecular">
+    <div class="grid-lines"></div>
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow eyebrow--dark">Interactive</span>
+        <h2 class="h-section h-section--dark">Zoom into the science.</h2>
+        <p class="h-sub h-sub--dark">A peptide is a short chain of amino-acid residues, linked end to end. Select a residue below to inspect it.</p>
+      </div>
+
+      <div class="zoom-wrap reveal">
+        <svg class="chain-svg" viewBox="0 0 900 150" role="img" aria-label="Interactive peptide residue chain">
+          <path class="chain-bond" d="M60 100 Q 145 40 230 100 Q 315 160 400 100 Q 485 40 570 100 Q 655 160 740 100 Q 800 65 840 100"/>
+
+          <g class="residue" tabindex="0" role="button" data-code="Gly" data-name="Glycine" data-fact="The smallest amino acid — its lack of a side chain gives peptide backbones extra flexibility at this position.">
+            <circle class="node" cx="60" cy="100" r="7"/><text x="60" y="125" text-anchor="middle">Gly</text>
+          </g>
+          <g class="residue" tabindex="0" role="button" data-code="Pro" data-name="Proline" data-fact="Its ring structure restricts rotation, often introducing a kink or turn in the peptide's folded shape.">
+            <circle class="node" cx="230" cy="100" r="7"/><text x="230" y="125" text-anchor="middle">Pro</text>
+          </g>
+          <g class="residue" tabindex="0" role="button" data-code="Lys" data-name="Lysine" data-fact="A positively charged residue frequently found at receptor-binding interfaces in signaling peptides.">
+            <circle class="node" cx="400" cy="100" r="7"/><text x="400" y="125" text-anchor="middle">Lys</text>
+          </g>
+          <g class="residue" tabindex="0" role="button" data-code="Cys" data-name="Cysteine" data-fact="Can form disulfide bridges with other cysteine residues, stabilizing a peptide's three-dimensional structure.">
+            <circle class="node" cx="570" cy="100" r="7"/><text x="570" y="125" text-anchor="middle">Cys</text>
+          </g>
+          <g class="residue" tabindex="0" role="button" data-code="Leu" data-name="Leucine" data-fact="A hydrophobic residue that often sits within the core of a folded peptide, away from surrounding water.">
+            <circle class="node" cx="740" cy="100" r="7"/><text x="740" y="125" text-anchor="middle">Leu</text>
+          </g>
+        </svg>
+
+        <div class="zoom-panel">
+          <div>
+            <div class="zoom-panel-code" id="zoomCode">—</div>
+            <div class="zoom-panel-name" id="zoomName">Select a residue</div>
+          </div>
+          <p class="zoom-panel-fact" id="zoomFact">Each point along the chain represents one amino-acid residue. Hover or select a node to view what makes it structurally distinct.</p>
+        </div>
+        <p class="zoom-hint">Hover or tap a residue to inspect · keyboard accessible</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUALITY ASSURANCE ============ -->
+  <section class="section bg-deep" id="quality">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow eyebrow--dark">Quality Assurance</span>
+          <h2 class="h-section h-section--dark">Every batch.<br>Verified.</h2>
+        </div>
+        <p class="h-sub h-sub--dark">Every production run passes through independent analytical testing before it ships — purity, identity, and documentation, on record for every order.</p>
+      </div>
+
+      <div class="qa-grid reveal">
+        <div class="qa-card">
+          <span class="qa-num">01</span>
+          <svg class="qa-icon"><use href="#i-flask"/></svg>
+          <h3 class="qa-title">HPLC Testing</h3>
+          <p class="qa-text">Purity analysis performed for every batch prior to release.</p>
+        </div>
+        <div class="qa-card">
+          <span class="qa-num">02</span>
+          <svg class="qa-icon"><use href="#i-target"/></svg>
+          <h3 class="qa-title">Mass Spectrometry</h3>
+          <p class="qa-text">Identity verification and sequence confirmation for each compound.</p>
+        </div>
+        <div class="qa-card">
+          <span class="qa-num">03</span>
+          <svg class="qa-icon"><use href="#i-layers"/></svg>
+          <h3 class="qa-title">Batch Traceability</h3>
+          <p class="qa-text">Documented, batch-level information retained for every production run.</p>
+        </div>
+        <div class="qa-card">
+          <span class="qa-num">04</span>
+          <svg class="qa-icon"><use href="#i-doc"/></svg>
+          <h3 class="qa-title">Certificate of Analysis</h3>
+          <p class="qa-text">Analytical documentation available with qualifying products.</p>
+        </div>
+      </div>
+
+      <div class="compliance-row reveal">
+        <div class="compliance-chip"><svg><use href="#i-shield"/></svg><span>Third-party lab verified</span></div>
+        <div class="compliance-chip"><svg><use href="#i-check"/></svg><span>&ge;99% purity threshold</span></div>
+        <div class="compliance-chip"><svg><use href="#i-flask"/></svg><span>Cold-chain shipping</span></div>
+        <div class="compliance-chip"><svg><use href="#i-doc"/></svg><span>Research-use documentation</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VERIFY A BATCH ============ -->
+  <section class="section bg-white" id="verify">
+    <div class="container verify-grid">
+      <div class="reveal">
+        <span class="eyebrow">Traceability</span>
+        <h2 class="h-section">Know exactly what<br>you're working with.</h2>
+        <p class="h-sub" style="margin-top:20px;">Every product ships with a batch ID tied to its analytical record. Enter a batch number to preview how the verification portal works.</p>
+
+        <div class="verify-form">
+          <input type="text" class="verify-input" id="verifyInput" placeholder="Enter batch ID — e.g. SP-7734-A" aria-label="Batch ID">
+          <button class="btn btn-primary" id="verifyBtn">Verify Batch</button>
+        </div>
+        <p class="verify-note">Try the demo: <button id="verifyDemoBtn">SP-7734-A</button></p>
+      </div>
+
+      <div class="verify-panel reveal" id="verifyPanel">
+        <div class="verify-panel-top">
+          <span class="verify-status" id="verifyStatus"><i></i>Awaiting Batch ID</span>
+          <span class="verify-demo-flag">Demo Preview</span>
+        </div>
+        <div class="verify-fields">
+          <div><div class="vf-label">Batch ID</div><div class="vf-value" id="vfBatch">—</div></div>
+          <div><div class="vf-label">Peptide</div><div class="vf-value" id="vfPeptide">—</div></div>
+          <div><div class="vf-label">Purity</div><div class="vf-value ok" id="vfPurity">—</div></div>
+          <div><div class="vf-label">Test Date</div><div class="vf-value" id="vfDate">—</div></div>
+          <div><div class="vf-label">HPLC</div><div class="vf-value ok" id="vfHplc">—</div></div>
+          <div><div class="vf-label">Mass Spec</div><div class="vf-value ok" id="vfMs">—</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section bg-mint" id="how">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">How It Works</span>
+        <h2 class="h-section">From catalog to<br>documentation.</h2>
+      </div>
+      <div class="how-track reveal">
+        <div class="how-step"><div class="how-index">01</div><h3 class="how-title">Select</h3><p class="how-text">Explore the peptide catalog by research area or compound name.</p></div>
+        <div class="how-step"><div class="how-index">02</div><h3 class="how-title">Verify</h3><p class="how-text">Review available HPLC and mass-spectrometry documentation.</p></div>
+        <div class="how-step"><div class="how-index">03</div><h3 class="how-title">Order</h3><p class="how-text">Submit your order through our secure checkout process.</p></div>
+        <div class="how-step"><div class="how-index">04</div><h3 class="how-title">Receive</h3><p class="how-text">Receive your product with its associated batch documentation.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KNOWLEDGE LAB ============ -->
+  <section class="section bg-white" id="knowledge">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Education</span>
+          <h2 class="h-section">The Knowledge Lab.</h2>
+        </div>
+        <p class="h-sub">Editorial breakdowns of the science behind our catalog, written for researchers and the scientifically curious.</p>
+      </div>
+
+      <div class="know-grid reveal">
+        <a href="#" class="know-card">
+          <div class="know-visual"><svg viewBox="0 0 300 170"><circle cx="60" cy="40" r="26" fill="none" stroke="#35B478" stroke-width="1.2"/><circle cx="220" cy="130" r="40" fill="none" stroke="#35B478" stroke-width="1.2"/><path d="M40 140 Q150 60 260 40" fill="none" stroke="#35B478" stroke-width="1"/></svg></div>
+          <div class="know-body">
+            <div class="know-cat"><span>Research</span><span>6 min read</span></div>
+            <h3 class="know-title">Understanding Peptide Research</h3>
+            <span class="know-arrow">Read Article <svg><use href="#i-arrow"/></svg></span>
+          </div>
+        </a>
+        <a href="#" class="know-card">
+          <div class="know-visual"><svg viewBox="0 0 300 170"><rect x="40" y="30" width="220" height="4" fill="#35B478" opacity=".5"/><rect x="40" y="60" width="160" height="4" fill="#35B478" opacity=".4"/><rect x="40" y="90" width="190" height="4" fill="#35B478" opacity=".3"/><rect x="40" y="120" width="120" height="4" fill="#35B478" opacity=".2"/></svg></div>
+          <div class="know-body">
+            <div class="know-cat"><span>Testing</span><span>5 min read</span></div>
+            <h3 class="know-title">Why Analytical Purity Matters</h3>
+            <span class="know-arrow">Read Article <svg><use href="#i-arrow"/></svg></span>
+          </div>
+        </a>
+        <a href="#" class="know-card">
+          <div class="know-visual"><svg viewBox="0 0 300 170"><path d="M20 140 L80 60 L140 110 L200 40 L280 90" fill="none" stroke="#35B478" stroke-width="1.4"/><circle cx="80" cy="60" r="3" fill="#35B478"/><circle cx="200" cy="40" r="3" fill="#35B478"/></svg></div>
+          <div class="know-body">
+            <div class="know-cat"><span>Methods</span><span>7 min read</span></div>
+            <h3 class="know-title">Inside HPLC Testing</h3>
+            <span class="know-arrow">Read Article <svg><use href="#i-arrow"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH COMMUNITY ============ -->
+  <section class="section bg-mint">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Research Community</span>
+        <h2 class="h-section">Trusted by people who<br>take science seriously.</h2>
+        <p class="h-sub">Our catalog is used across a range of research settings.</p>
+      </div>
+
+      <div class="community-grid reveal">
+        <div class="community-card"><svg class="community-icon"><use href="#i-flask"/></svg><h3 class="community-title">Research Labs</h3><p class="community-text">Independent and institutional laboratory teams.</p></div>
+        <div class="community-card"><svg class="community-icon"><use href="#i-layers"/></svg><h3 class="community-title">Universities</h3><p class="community-text">Academic departments and graduate research groups.</p></div>
+        <div class="community-card"><svg class="community-icon"><use href="#i-target"/></svg><h3 class="community-title">Biotechnology</h3><p class="community-text">Biotech teams sourcing compounds for internal studies.</p></div>
+        <div class="community-card"><svg class="community-icon"><use href="#i-user"/></svg><h3 class="community-title">Independent Researchers</h3><p class="community-text">Individual researchers working outside formal institutions.</p></div>
+      </div>
+
+      <div class="logo-row reveal">
+        <span class="logo-tag">Research Labs</span>
+        <span class="logo-tag">Biotech</span>
+        <span class="logo-tag">Academic</span>
+        <span class="logo-tag">CRO</span>
+        <span class="logo-tag">Independent Research</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section bg-dark cta-section">
+    <div class="cta-glow" aria-hidden="true"></div>
+    <div class="grid-lines"></div>
+    <div class="container reveal">
+      <span class="eyebrow eyebrow--dark">Get Started</span>
+      <svg class="cta-vial" viewBox="0 0 120 260" style="margin-top:24px;"><use href="#i-vial"/></svg>
+      <h2 class="h-section h-section--dark">Ready to explore<br>what's next?</h2>
+      <p class="h-sub h-sub--dark" style="margin-top:18px;">Discover precision compounds, transparent documentation, and a research-first approach to peptide science.</p>
+      <div class="cta-actions">
+        <a href="#peptides" class="btn btn-primary">Explore Catalog <svg><use href="#i-arrow"/></svg></a>
+        <a href="#faq" class="btn btn-outline btn-outline--dark">Contact Our Team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section bg-white" id="faq">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="h-section">Common questions.</h2>
+      </div>
+
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q"><span>What are your peptides intended for?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>All products in our catalog are intended strictly for laboratory research use. They are not manufactured, labeled, or sold for human or veterinary consumption.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How are products tested?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>Every batch is analyzed using HPLC for purity and mass spectrometry for identity confirmation prior to release.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Is a Certificate of Analysis provided?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>A Certificate of Analysis is available with qualifying products and can be requested through the batch verification portal or by contacting our team.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How is batch information verified?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>Each batch is assigned a unique ID linked to its analytical record, which can be looked up through our verification tool above.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>What is the ordering process?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>Browse the catalog, add products to your cart, and complete checkout. You'll receive order and documentation details by email.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How are products packaged and shipped?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>Products are packaged to maintain stability in transit, with cold-chain shipping options available where applicable.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Do you offer custom synthesis?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>Custom synthesis requests are evaluated case by case. Contact our team with your specifications to discuss feasibility.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How can I contact your team?</span><span class="faq-icon"></span></button>
+          <div class="faq-a"><p>Reach us through the contact form linked in our footer, or by email — our team typically responds within one business day.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer bg-dark">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand">
+          <svg class="brand-mark" aria-hidden="true"><use href="#i-mark"/></svg>
+          <span class="brand-word">SYMBIOTIC<small>PEPTIDE SCIENCE</small></span>
+        </span>
+        <p class="footer-tagline">Research-grade peptide compounds, engineered with precision and documented at every batch.</p>
+        <div class="social-row">
+          <a href="#" class="social-btn" aria-label="X / Twitter"><svg><use href="#i-social-a"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><svg><use href="#i-social-b"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Facebook"><svg><use href="#i-social-c"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul><li><a href="#peptides">All Peptides</a></li><li><a href="#research">Categories</a></li><li><a href="#peptides">Featured Products</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Science</h4>
+        <ul><li><a href="#science">Research</a></li><li><a href="#quality">Quality</a></li><li><a href="#quality">Testing</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul><li><a href="#">About</a></li><li><a href="#faq">Contact</a></li><li><a href="#faq">FAQ</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul><li><a href="#">Shipping</a></li><li><a href="#">Policies</a></li><li><a href="#knowledge">Resources</a></li></ul>
+      </div>
+
+      <div class="footer-news">
+        <h4 style="font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-faint);margin-bottom:20px;">Newsletter</h4>
+        <p>Research notes and new-batch announcements, occasionally.</p>
+        <form class="news-form" id="newsForm">
+          <input type="email" placeholder="you@lab.edu" required aria-label="Email address">
+          <button type="submit" aria-label="Subscribe"><svg><use href="#i-mail"/></svg></button>
+        </form>
+        <p class="news-msg" id="newsMsg">Thanks — you're subscribed.</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">Products sold by SymbioticPeptides are intended for laboratory and research use only. Not for human or veterinary use, consumption, or diagnostic purposes. By purchasing, you confirm you are a qualified researcher or institution and agree to our research-use terms.</p>
+      <div>
+        <p class="footer-copy">© 2026 SymbioticPeptides</p>
+        <div class="footer-legal" style="margin-top:10px;">
+          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Shipping</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Nav scroll state ---------- */
+  var nav = document.getElementById('nav');
+  function onScroll(){
+    if(window.scrollY > 12){ nav.classList.add('is-scrolled'); }
+    else{ nav.classList.remove('is-scrolled'); }
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- Mobile menu ---------- */
+  var burgerBtn = document.getElementById('burgerBtn');
+  var burgerClose = document.getElementById('burgerClose');
+  var mobileMenu = document.getElementById('mobileMenu');
+  function openMenu(){
+    mobileMenu.classList.add('is-open');
+    burgerBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    mobileMenu.classList.remove('is-open');
+    burgerBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  burgerBtn.addEventListener('click', openMenu);
+  burgerClose.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+
+  /* ---------- Scroll reveal ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.14, rootMargin:'0px 0px -60px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* ---------- Trust bar counters ---------- */
+  var counters = document.querySelectorAll('.trust-num');
+  var countersDone = false;
+  function animateCounters(){
+    if(countersDone) return;
+    countersDone = true;
+    counters.forEach(function(el){
+      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+      var suffix = el.getAttribute('data-suffix') || (target === 99 ? '%+' : '');
+      var start = 0;
+      var duration = 1400;
+      var startTime = null;
+      function step(ts){
+        if(!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(start + (target - start) * eased);
+        el.textContent = current + suffix;
+        if(progress < 1){ requestAnimationFrame(step); }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  if('IntersectionObserver' in window && counters.length){
+    var trustIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ animateCounters(); trustIo.disconnect(); }
+      });
+    }, {threshold:.5});
+    trustIo.observe(document.querySelector('.trust'));
+  } else { animateCounters(); }
+
+  /* ---------- Hero particles ---------- */
+  var particleWrap = document.getElementById('heroParticles');
+  if(particleWrap){
+    for(var p=0; p<14; p++){
+      var dot = document.createElement('i');
+      dot.style.left = (Math.random()*100) + '%';
+      dot.style.top = (Math.random()*100) + '%';
+      dot.style.animationDelay = (Math.random()*6) + 's';
+      dot.style.animationDuration = (7 + Math.random()*5) + 's';
+      particleWrap.appendChild(dot);
+    }
+  }
+
+  /* ---------- Category → filter deep links ---------- */
+  document.querySelectorAll('[data-filter-goto]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var val = btn.getAttribute('data-filter-goto');
+      var target = document.querySelector('.filter-btn[data-filter="'+val+'"]');
+      if(target){ target.click(); }
+      document.getElementById('peptides').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  /* ---------- Product filtering ---------- */
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var productCards = document.querySelectorAll('.p-card');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var val = btn.getAttribute('data-filter');
+      productCards.forEach(function(card){
+        var cat = card.getAttribute('data-cat');
+        card.classList.toggle('is-hidden', val !== 'all' && cat !== val);
+      });
+    });
+  });
+
+  /* ---------- Molecular zoom interaction ---------- */
+  var residues = document.querySelectorAll('.residue');
+  var zoomCode = document.getElementById('zoomCode');
+  var zoomName = document.getElementById('zoomName');
+  var zoomFact = document.getElementById('zoomFact');
+  function setResidue(r){
+    residues.forEach(function(x){ x.classList.remove('is-active'); });
+    r.classList.add('is-active');
+    zoomCode.textContent = r.getAttribute('data-code');
+    zoomName.textContent = r.getAttribute('data-name');
+    zoomFact.textContent = r.getAttribute('data-fact');
+  }
+  residues.forEach(function(r){
+    r.addEventListener('mouseenter', function(){ setResidue(r); });
+    r.addEventListener('focus', function(){ setResidue(r); });
+    r.addEventListener('click', function(){ setResidue(r); });
+    r.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); setResidue(r); }
+    });
+  });
+
+  /* ---------- Verify a batch (demo) ---------- */
+  var verifyBtn = document.getElementById('verifyBtn');
+  var verifyDemoBtn = document.getElementById('verifyDemoBtn');
+  var verifyInput = document.getElementById('verifyInput');
+  var verifyPanel = document.getElementById('verifyPanel');
+  var verifyStatus = document.getElementById('verifyStatus');
+  var demoData = {
+    batch:'SP-7734-A', peptide:'BPC-157', purity:'99.1%',
+    date:'2026-06-12', hplc:'Pass', ms:'Confirmed'
+  };
+  function runVerify(){
+    verifyPanel.classList.add('is-active');
+    verifyStatus.innerHTML = '<i></i>Batch Verified';
+    document.getElementById('vfBatch').textContent = demoData.batch;
+    document.getElementById('vfPeptide').textContent = demoData.peptide;
+    document.getElementById('vfPurity').textContent = demoData.purity;
+    document.getElementById('vfDate').textContent = demoData.date;
+    document.getElementById('vfHplc').textContent = demoData.hplc;
+    document.getElementById('vfMs').textContent = demoData.ms;
+  }
+  verifyBtn.addEventListener('click', function(){
+    if(verifyInput.value.trim() === ''){ verifyInput.value = demoData.batch; }
+    runVerify();
+  });
+  verifyDemoBtn.addEventListener('click', function(){
+    verifyInput.value = demoData.batch;
+    runVerify();
+  });
+
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    var q = item.querySelector('.faq-q');
+    var a = item.querySelector('.faq-a');
+    q.addEventListener('click', function(){
+      var isOpen = item.classList.contains('is-open');
+      document.querySelectorAll('.faq-item.is-open').forEach(function(openItem){
+        if(openItem !== item){
+          openItem.classList.remove('is-open');
+          openItem.querySelector('.faq-a').style.maxHeight = null;
+        }
+      });
+      if(isOpen){
+        item.classList.remove('is-open');
+        a.style.maxHeight = null;
+      } else {
+        item.classList.add('is-open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ---------- Newsletter ---------- */
+  var newsForm = document.getElementById('newsForm');
+  var newsMsg = document.getElementById('newsMsg');
+  newsForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    newsMsg.classList.add('is-visible');
+    newsForm.reset();
+  });
+
+})();
+</script>
+</body>
+</html>
