@@ -1,0 +1,4150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symbiotic Peptides — Precision Engineered for Modern Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg: #F8FAF6;
+  --bg-alt: #FFFFFF;
+  --bg-soft: #EFFBF3;
+  --bg-dark: #031C14;
+  --bg-mid: #023B27;
+  --primary: #087A45;
+  --primary-bright: #0A9550;
+  --primary-deep: #054D2C;
+  --accent: #DDF8E9;
+  --accent-warm: #E8F5EC;
+  --text: #031C14;
+  --text-soft: #2A4A3C;
+  --text-muted: #6B7C75;
+  --text-faint: #A8B5AF;
+  --border: rgba(8, 122, 69, 0.12);
+  --border-strong: rgba(8, 122, 69, 0.25);
+  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-dark-strong: rgba(255, 255, 255, 0.18);
+  --shadow-sm: 0 2px 8px rgba(3, 28, 20, 0.04);
+  --shadow-md: 0 8px 24px rgba(3, 28, 20, 0.06);
+  --shadow-lg: 0 20px 50px rgba(3, 28, 20, 0.10);
+  --shadow-green: 0 12px 32px rgba(8, 122, 69, 0.18);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: all 0.5s var(--ease);
+}
+
+/* ============================================================
+   2. RESET
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+a { text-decoration: none; color: inherit; }
+ul, ol { list-style: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+img { max-width: 100%; display: block; }
+section { position: relative; }
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 4%;
+}
+
+/* ============================================================
+   3. TYPOGRAPHY
+   ============================================================ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+.eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--primary);
+}
+.eyebrow-light { color: var(--accent); }
+.eyebrow-light::before { background: var(--accent); }
+.eyebrow-centered { justify-content: center; }
+
+.headline-hero {
+  font-size: clamp(2.8rem, 7vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+.headline-section {
+  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+.headline-tertiary {
+  font-size: clamp(1.5rem, 2vw, 1.75rem);
+  margin-bottom: 1rem;
+}
+.body-large {
+  font-size: clamp(1rem, 1.1vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 580px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.body-default {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.text-mono { font-family: var(--font-mono); }
+.text-mint { color: var(--accent); }
+.text-primary { color: var(--primary); }
+
+/* ============================================================
+   4. BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 1.8rem;
+  font-family: var(--font-display);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: var(--transition);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.btn i { width: 14px; height: 14px; }
+.btn-primary {
+  background: var(--primary);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  background: var(--bg-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-green);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+}
+.btn-outline:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+.btn-light {
+  background: transparent;
+  color: var(--bg);
+  border-color: rgba(255,255,255,0.4);
+}
+.btn-light:hover {
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--bg);
+}
+.btn-ghost {
+  background: rgba(255,255,255,0.06);
+  color: var(--bg);
+  border-color: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.btn-sm { padding: 0.7rem 1.2rem; font-size: 11px; }
+.btn-lg { padding: 1.2rem 2.4rem; font-size: 13px; }
+
+/* ============================================================
+   5. ANNOUNCEMENT BAR
+   ============================================================ */
+.announcement {
+  background: var(--bg-dark);
+  color: var(--bg);
+  padding: 0.6rem 0;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+  position: relative;
+  z-index: 200;
+}
+.announcement-track {
+  display: flex;
+  gap: 4rem;
+  animation: scroll-x 30s linear infinite;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+.announcement-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0.85;
+}
+.announcement-item::after {
+  content: '◆';
+  color: var(--primary-bright);
+  margin-left: 4rem;
+}
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   6. NAVIGATION
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 36px;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  transition: var(--transition);
+  padding: 1.4rem 0;
+}
+nav.scrolled {
+  background: rgba(248, 250, 246, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border);
+  top: 0;
+}
+nav.scrolled.dark-mode {
+  background: rgba(3, 28, 20, 0.88);
+  border-bottom-color: var(--border-dark);
+  color: var(--bg);
+}
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 102;
+}
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.logo-mark::before, .logo-mark::after {
+  content: '';
+  position: absolute;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.logo-mark::before { width: 8px; height: 8px; top: 6px; left: 8px; }
+.logo-mark::after { width: 5px; height: 5px; bottom: 7px; right: 7px; }
+.logo span { font-weight: 400; opacity: 0.6; margin-left: 0.2rem; }
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  font-size: 13px;
+  font-weight: 500;
+}
+.nav-links a {
+  position: relative;
+  padding: 0.4rem 0;
+  opacity: 0.85;
+  transition: var(--transition);
+}
+.nav-links a:hover { opacity: 1; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--primary);
+  transition: width 0.4s var(--ease);
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.nav-icon-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition);
+  position: relative;
+}
+.nav-icon-btn:hover {
+  background: var(--accent);
+  color: var(--primary);
+}
+.nav-icon-btn i { width: 17px; height: 17px; }
+.cart-count {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--primary);
+  color: var(--bg);
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+}
+.hamburger { display: none; cursor: pointer; padding: 8px; }
+.hamburger i { width: 22px; height: 22px; }
+
+/* ============================================================
+   7. HERO
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 140px 0 80px;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse at 75% 30%, rgba(221, 248, 233, 0.7) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(8, 122, 69, 0.06) 0%, transparent 50%);
+}
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(8, 122, 69, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 122, 69, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.hero-content { opacity: 0; animation: fadeUp 1s var(--ease) forwards 0.2s; }
+.hero-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--primary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  background: var(--accent);
+  border-radius: 100px;
+}
+.hero-tagline .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--primary);
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.hero-title-accent {
+  color: var(--primary);
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+.hero-meta {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.hero-meta-num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+}
+.hero-meta-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.hero-visual {
+  position: relative;
+  height: 620px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeLeft 1s var(--ease) forwards 0.4s;
+}
+#moleculeCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.vial-comp {
+  position: relative;
+  width: 200px;
+  height: 380px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,255,255,0.3));
+  backdrop-filter: blur(12px);
+  border-radius: 24px 24px 12px 12px;
+  border: 1px solid rgba(255,255,255,0.7);
+  box-shadow: 
+    0 40px 80px rgba(8, 122, 69, 0.18),
+    inset 0 0 30px rgba(255,255,255,0.6),
+    inset -10px 0 20px rgba(8, 122, 69, 0.08);
+  animation: float 6s ease-in-out infinite;
+  z-index: 2;
+}
+.vial-cap {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 44px;
+  background: linear-gradient(to right, #d8d8d8, #f5f5f5, #c8c8c8);
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.vial-cap::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  right: 12px;
+  height: 4px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+}
+.vial-liquid {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  height: 58%;
+  background: linear-gradient(to top, var(--primary-deep), var(--primary), var(--primary-bright));
+  border-radius: 0 0 8px 8px;
+  opacity: 0.92;
+  overflow: hidden;
+}
+.vial-liquid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent);
+}
+.vial-liquid::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: -50%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 4s infinite;
+}
+@keyframes shimmer {
+  0% { left: -50%; }
+  100% { left: 150%; }
+}
+.vial-label {
+  position: absolute;
+  top: 50px;
+  left: -14px;
+  right: -14px;
+  height: 130px;
+  background: var(--bg-dark);
+  border-radius: 6px;
+  color: var(--bg);
+  padding: 18px;
+  font-family: var(--font-display);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+  transform: rotate(-2deg);
+}
+.vial-label-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-bright);
+}
+.vial-label-title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+}
+.vial-label-sub {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+.vial-label-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  font-size: 9px;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  opacity: 0.7;
+}
+.vial-barcode {
+  position: absolute;
+  bottom: 12px;
+  left: 18px;
+  right: 18px;
+  height: 20px;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 2px, transparent 2px 4px, var(--accent) 4px 5px, transparent 5px 8px);
+  opacity: 0.6;
+}
+.tech-annotation {
+  position: absolute;
+  background: rgba(255,255,255,0.95);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+  animation: float 7s ease-in-out infinite reverse;
+  border: 1px solid var(--border);
+}
+.tech-annotation::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  background: var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(8, 122, 69, 0.15);
+}
+.a-1 { top: 18%; right: -8%; animation-delay: 0s; }
+.a-2 { bottom: 28%; left: -12%; animation-delay: 1s; }
+.a-3 { top: 65%; right: -18%; animation-delay: 2s; }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  z-index: 5;
+}
+.scroll-hint-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--text-muted), transparent);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-hint-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--primary);
+  animation: scroll-down 2s infinite;
+}
+@keyframes scroll-down {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+/* ============================================================
+   8. TRUST STRIP
+   ============================================================ */
+.trust-strip {
+  background: var(--bg-dark);
+  color: var(--bg);
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.trust-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+.trust-item {
+  text-align: left;
+  padding: 0 2rem;
+  border-left: 1px solid var(--border-dark);
+}
+.trust-item:first-child { border-left: none; padding-left: 0; }
+.trust-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.03em;
+}
+.trust-number .plus { color: var(--primary-bright); }
+.trust-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-mono);
+}
+.trust-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.4rem;
+}
+
+/* ============================================================
+   9. SECTION COMMON
+   ============================================================ */
+.section-padding { padding: 8rem 0; }
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 5rem;
+  gap: 2rem;
+}
+.section-header-left { max-width: 720px; }
+.section-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+/* ============================================================
+   10. PEPTIDE CATALOG
+   ============================================================ */
+.catalog-section { background: var(--bg-alt); }
+.category-nav {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 3rem;
+  scrollbar-width: none;
+}
+.category-nav::-webkit-scrollbar { display: none; }
+.cat-btn {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 0.7rem 1.4rem;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  font-family: var(--font-display);
+  color: var(--text-soft);
+}
+.cat-btn:hover { border-color: var(--primary); color: var(--primary); }
+.cat-btn.active {
+  background: var(--bg-dark);
+  color: var(--bg);
+  border-color: var(--bg-dark);
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.product-card {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 1.8rem;
+  transition: var(--transition);
+  border: 1px solid var(--border);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+  background: var(--bg-alt);
+}
+.product-image-container {
+  height: 260px;
+  background: linear-gradient(135deg, var(--bg-soft), var(--accent));
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+.product-image-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(8, 122, 69, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 122, 69, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.mini-vial {
+  width: 70px;
+  height: 140px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 10px 10px 5px 5px;
+  border: 1px solid rgba(0,0,0,0.08);
+  position: relative;
+  box-shadow: inset -6px 0 12px rgba(0,0,0,0.04), 0 8px 16px rgba(0,0,0,0.06);
+  transition: var(--transition);
+  z-index: 2;
+}
+.product-card:hover .mini-vial { transform: scale(1.08) rotate(-2deg); }
+.mini-cap {
+  position: absolute;
+  top: -12px;
+  left: -3px;
+  right: -3px;
+  height: 18px;
+  background: linear-gradient(to right, #d0d0d0, #f0f0f0, #c0c0c0);
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.mini-label {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.mini-liquid {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  height: 40%;
+  background: linear-gradient(to top, var(--primary-deep), var(--primary-bright));
+  border-radius: 0 0 4px 4px;
+}
+.badge-purity {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--bg-dark);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0.4rem 0.7rem;
+  border-radius: 100px;
+  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
+  z-index: 3;
+}
+.badge-new {
+  background: var(--primary-bright);
+  color: var(--bg);
+}
+.product-category {
+  font-size: 10px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-mono);
+}
+.product-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+}
+.product-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.product-attrs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.product-attr {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.6rem;
+  background: var(--bg-soft);
+  border-radius: 4px;
+}
+.product-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.product-price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.product-price .currency { color: var(--text-muted); font-size: 0.85rem; }
+.view-btn {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  transition: var(--transition);
+}
+.view-btn i { transition: var(--transition); }
+.product-card:hover .view-btn i { transform: translateX(4px); }
+
+/* ============================================================
+   11. THE SCIENCE
+   ============================================================ */
+.science-section {
+  background: var(--bg-alt);
+  position: relative;
+  overflow: hidden;
+}
+.science-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.science-visual {
+  position: relative;
+  height: 620px;
+  background: var(--bg-dark);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#scienceCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.science-visual-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--accent);
+}
+.science-visual-overlay h3 {
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  opacity: 0.8;
+}
+.science-visual-overlay .num {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 300;
+  margin: 1rem 0;
+  color: var(--bg);
+}
+.science-visual-overlay .desc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  max-width: 200px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.science-corner {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  opacity: 0.5;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+.science-corner.tl { top: 1.5rem; left: 1.5rem; }
+.science-corner.tr { top: 1.5rem; right: 1.5rem; }
+.science-corner.bl { bottom: 1.5rem; left: 1.5rem; }
+.science-corner.br { bottom: 1.5rem; right: 1.5rem; }
+
+.science-list {
+  margin-top: 3rem;
+  position: relative;
+}
+.science-list::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+.science-item {
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 2.5rem;
+  transition: var(--transition);
+}
+.science-item:hover { padding-left: 3.4rem; }
+.science-item::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 6px;
+  width: 11px;
+  height: 11px;
+  background: var(--bg-alt);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  transition: var(--transition);
+}
+.science-item:hover::before {
+  background: var(--primary);
+  box-shadow: 0 0 0 6px var(--accent);
+}
+.science-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: block;
+  letter-spacing: 0.1em;
+}
+.science-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-display);
+}
+.science-text {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   12. METHODOLOGY
+   ============================================================ */
+.methodology-section {
+  background: var(--bg-dark);
+  color: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.methodology-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 80% 20%, rgba(8, 122, 69, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(8, 122, 69, 0.08) 0%, transparent 50%);
+}
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+.method-card {
+  background: var(--bg-dark);
+  padding: 2.5rem 2rem;
+  transition: var(--transition);
+  position: relative;
+}
+.method-card:hover { background: rgba(8, 122, 69, 0.08); }
+.method-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(8, 122, 69, 0.15);
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  transition: var(--transition);
+}
+.method-card:hover .method-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+}
+.method-icon i { width: 22px; height: 22px; }
+.method-step {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--primary-bright);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+.method-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: var(--bg);
+}
+.method-desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+}
+
+/* ============================================================
+   13. INTERACTIVE MOLECULAR VIEWER
+   ============================================================ */
+.molecular-section {
+  background: var(--bg-mid);
+  color: var(--bg);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+.molecular-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+}
+.molecular-container {
+  position: relative;
+  height: 560px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+#molecularCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.molecule-controls {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-dark-strong);
+  padding: 0.5rem;
+  border-radius: 100px;
+  z-index: 5;
+}
+.mol-ctrl-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+}
+.mol-ctrl-btn.active, .mol-ctrl-btn:hover {
+  background: var(--primary);
+  color: var(--bg);
+}
+.mol-info-panel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+  max-width: 260px;
+  z-index: 5;
+}
+.mol-info-panel h4 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.mol-info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-dark);
+  font-family: var(--font-mono);
+}
+.mol-info-row:last-child { border-bottom: none; }
+.mol-info-row .label { color: rgba(255,255,255,0.5); }
+.mol-info-row .val { color: var(--accent); }
+
+/* ============================================================
+   14. RESEARCH AREAS
+   ============================================================ */
+.research-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.res-card {
+  background: var(--bg-alt);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+.res-card:hover {
+  background: var(--bg-dark);
+  color: var(--bg);
+  transform: translateY(-4px);
+  border-color: var(--bg-dark);
+}
+.res-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(8, 122, 69, 0.08), transparent 70%);
+  transform: translate(50%, -50%);
+  transition: var(--transition);
+}
+.res-card:hover::before {
+  background: radial-gradient(circle, rgba(8, 122, 69, 0.3), transparent 70%);
+}
+.res-num {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--primary);
+  opacity: 0.4;
+  margin-bottom: 1rem;
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+.res-card:hover .res-num { color: var(--accent); opacity: 1; }
+.res-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--bg-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+.res-card:hover .res-icon {
+  background: rgba(255,255,255,0.08);
+  color: var(--accent);
+}
+.res-icon i { width: 20px; height: 20px; }
+.res-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  position: relative;
+  z-index: 2;
+}
+.res-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+.res-card:hover .res-desc { color: rgba(255,255,255,0.6); }
+.res-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+.res-tag {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 0.3rem 0.6rem;
+  background: var(--bg-soft);
+  color: var(--text-muted);
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: var(--transition);
+}
+.res-card:hover .res-tag {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+}
+.res-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+}
+.res-card:hover .res-arrow {
+  background: var(--primary);
+  color: var(--bg);
+  border-color: var(--primary);
+  transform: rotate(-45deg);
+}
+.res-arrow i { width: 16px; height: 16px; }
+
+/* ============================================================
+   15. QUALITY & BATCH VERIFICATION
+   ============================================================ */
+.quality-section {
+  background: var(--bg-dark);
+  color: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.quality-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 5rem;
+  position: relative;
+  z-index: 2;
+}
+.q-module {
+  padding: 2.5rem 2rem;
+  background: var(--bg-dark);
+  transition: var(--transition);
+  position: relative;
+}
+.q-module:hover { background: rgba(8, 122, 69, 0.08); }
+.q-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(8, 122, 69, 0.15);
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+.q-icon i { width: 20px; height: 20px; }
+.q-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+  display: block;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.q-title {
+  font-size: 1.15rem;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  color: var(--bg);
+}
+.q-text {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+}
+
+.batch-ui-container {
+  background: linear-gradient(135deg, var(--bg-mid), var(--bg-dark));
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 24px;
+  padding: 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+.batch-ui-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(8, 122, 69, 0.15), transparent 50%);
+  pointer-events: none;
+}
+.batch-content { position: relative; z-index: 2; }
+.batch-input-group {
+  display: flex;
+  max-width: 540px;
+  margin: 2rem auto 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 100px;
+  padding: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+.batch-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--bg);
+  padding: 0.9rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+.batch-input::placeholder { color: rgba(255,255,255,0.3); }
+.batch-btn {
+  background: var(--primary);
+  color: var(--bg);
+  border-radius: 100px;
+  padding: 0 1.8rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 12px;
+  transition: var(--transition);
+}
+.batch-btn:hover { background: var(--accent); color: var(--bg-dark); }
+.batch-result {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  display: none;
+}
+.batch-result.show { display: block; }
+.batch-result.success {
+  background: rgba(8, 122, 69, 0.15);
+  color: var(--accent);
+  border: 1px solid var(--primary);
+}
+.batch-result.error {
+  background: rgba(255, 100, 100, 0.1);
+  color: #ff8888;
+  border: 1px solid rgba(255, 100, 100, 0.3);
+}
+
+/* ============================================================
+   16. HOW IT WORKS / TIMELINE
+   ============================================================ */
+.timeline-section { background: var(--bg-alt); }
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  position: relative;
+  margin-top: 4rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 5%;
+  width: 90%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-strong), var(--border-strong), transparent);
+  z-index: 1;
+}
+.step {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+}
+.step-num {
+  width: 56px;
+  height: 56px;
+  background: var(--bg);
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+  position: relative;
+}
+.step:hover .step-num {
+  background: var(--primary);
+  color: var(--bg);
+  box-shadow: 0 0 0 8px var(--accent);
+}
+.step-num::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--primary-bright);
+  border-radius: 50%;
+}
+.step-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+  font-family: var(--font-display);
+}
+.step-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ============================================================
+   17. CERTIFICATIONS
+   ============================================================ */
+.cert-section { background: var(--bg); }
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+.cert-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.cert-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.cert-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1.2rem;
+  background: var(--bg-soft);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  transition: var(--transition);
+}
+.cert-card:hover .cert-icon {
+  background: var(--primary);
+  color: var(--bg);
+}
+.cert-icon i { width: 24px; height: 24px; }
+.cert-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+}
+.cert-code {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   18. PRICING TIERS
+   ============================================================ */
+.pricing-section {
+  background: var(--bg-alt);
+  position: relative;
+  overflow: hidden;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.price-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  transition: var(--transition);
+  overflow: hidden;
+}
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+.price-card.featured {
+  background: var(--bg-dark);
+  color: var(--bg);
+  border-color: var(--bg-dark);
+}
+.price-card.featured .price-amount { color: var(--accent); }
+.price-card.featured .price-feature { color: rgba(255,255,255,0.7); }
+.price-card.featured .price-feature i { color: var(--accent); }
+.price-card.featured .price-divider { border-color: var(--border-dark-strong); }
+.price-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary-bright);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.price-tier {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.price-card.featured .price-tier { color: var(--accent); }
+.price-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.price-amount .currency {
+  font-size: 1.2rem;
+  vertical-align: top;
+  opacity: 0.6;
+  margin-right: 0.2rem;
+}
+.price-period {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: 0.4rem;
+}
+.price-card.featured .price-period { color: rgba(255,255,255,0.5); }
+.price-description {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 1.5rem 0 2rem;
+  line-height: 1.6;
+}
+.price-card.featured .price-description { color: rgba(255,255,255,0.5); }
+.price-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 2rem 0;
+}
+.price-features { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2.5rem; }
+.price-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+.price-feature i {
+  width: 16px;
+  height: 16px;
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.price-card.featured .price-feature i { color: var(--accent); }
+.price-cta { width: 100%; }
+
+/* ============================================================
+   19. DATA & TESTIMONIALS
+   ============================================================ */
+.split-section {
+  background: var(--bg);
+}
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+.data-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.8rem;
+  margin-bottom: 1rem;
+  transition: var(--transition);
+}
+.data-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.data-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+}
+.data-card-value {
+  font-family: var(--font-display);
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+.data-card-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.data-bar-bg {
+  height: 6px;
+  background: var(--bg-soft);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.data-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary), var(--primary-bright));
+  width: 0;
+  transition: width 1.5s var(--ease);
+  border-radius: 3px;
+}
+
+.testimonial-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: var(--transition);
+}
+.testimonial-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+.testimonial-quote-mark {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--accent);
+  position: absolute;
+  top: 1.2rem;
+  right: 1.8rem;
+  opacity: 0.8;
+}
+.testimonial-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+.testimonial-meta { flex: 1; }
+.testimonial-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+.testimonial-role {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.testimonial-rating {
+  display: flex;
+  gap: 2px;
+  color: var(--primary);
+}
+.testimonial-rating i { width: 14px; height: 14px; fill: var(--primary); }
+
+.logo-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 0;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.logo-placeholder {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--text-faint);
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+.logo-placeholder:hover { color: var(--primary); }
+
+/* ============================================================
+   20. SCIENTIFIC BOARD
+   ============================================================ */
+.team-section { background: var(--bg-alt); }
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+.team-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.team-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+.team-image {
+  height: 280px;
+  background: linear-gradient(135deg, var(--bg-soft), var(--accent));
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.team-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(8, 122, 69, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 122, 69, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.team-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2rem;
+  z-index: 2;
+  position: relative;
+  border: 4px solid var(--bg-alt);
+}
+.team-info {
+  padding: 1.5rem;
+}
+.team-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+}
+.team-role {
+  font-size: 11px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  margin-bottom: 0.8rem;
+}
+.team-bio {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   21. KNOWLEDGE LAB
+   ============================================================ */
+.knowledge-section { background: var(--bg); }
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.article-card {
+  cursor: pointer;
+  transition: var(--transition);
+}
+.article-card:hover { transform: translateY(-4px); }
+.art-img {
+  height: 260px;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--bg-mid), var(--primary));
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.art-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.art-img-content {
+  position: relative;
+  z-index: 2;
+  color: var(--accent);
+  font-family: var(--font-display);
+  text-align: center;
+  padding: 1rem;
+}
+.art-img-content i {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+.art-img-content .art-img-title {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.art-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+}
+.art-meta .art-cat { color: var(--primary); font-weight: 600; }
+.art-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition: var(--transition);
+  font-family: var(--font-display);
+  line-height: 1.3;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.02em;
+}
+.article-card:hover .art-title { color: var(--primary); }
+.art-excerpt {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   22. FAQ
+   ============================================================ */
+.faq-section { background: var(--bg-alt); }
+.faq-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 4rem;
+  align-items: flex-start;
+}
+.faq-sidebar { position: sticky; top: 100px; }
+.faq-sidebar-card {
+  background: var(--bg-dark);
+  color: var(--bg);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-top: 2rem;
+}
+.faq-sidebar-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: var(--bg);
+}
+.faq-sidebar-card p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+.faq-contact-btn {
+  width: 100%;
+  background: var(--primary);
+  color: var(--bg);
+  padding: 0.9rem;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: var(--transition);
+}
+.faq-contact-btn:hover { background: var(--accent); color: var(--bg-dark); }
+.faq-list { display: flex; flex-direction: column; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+  cursor: pointer;
+}
+.faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.05rem;
+  font-family: var(--font-display);
+  gap: 1rem;
+  transition: var(--transition);
+}
+.faq-item:hover .faq-q { color: var(--primary); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s var(--ease);
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+.faq-a-inner { padding-top: 1rem; }
+.faq-icon {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.faq-icon i { width: 14px; height: 14px; transition: transform 0.4s var(--ease); }
+.faq-item.active .faq-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+}
+.faq-item.active .faq-icon i { transform: rotate(45deg); }
+
+/* ============================================================
+   23. NEWSLETTER
+   ============================================================ */
+.newsletter-section {
+  background: var(--bg-dark);
+  color: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.newsletter-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(8, 122, 69, 0.15), transparent 60%);
+  pointer-events: none;
+}
+.newsletter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 100px;
+  padding: 0.4rem;
+  backdrop-filter: blur(10px);
+}
+.newsletter-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--bg);
+  padding: 0.9rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+}
+.newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
+.newsletter-features {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.newsletter-features span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.newsletter-features i { width: 14px; height: 14px; color: var(--accent); }
+
+/* ============================================================
+   24. FINAL CTA
+   ============================================================ */
+.cta-section {
+  background: var(--bg-mid);
+  color: var(--bg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(8, 122, 69, 0.25), transparent 60%);
+  pointer-events: none;
+}
+.cta-content { position: relative; z-index: 2; }
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+.cta-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border-dark-strong);
+  flex-wrap: wrap;
+}
+.cta-stat {
+  text-align: center;
+}
+.cta-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.cta-stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   25. FOOTER
+   ============================================================ */
+footer {
+  background: var(--bg-dark);
+  color: var(--bg);
+  padding: 6rem 0 2rem;
+  border-top: 1px solid var(--border-dark);
+  position: relative;
+  overflow: hidden;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+.footer-col h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+.footer-col ul li { margin-bottom: 0.7rem; }
+.footer-col ul li a {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.88rem;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.footer-col ul li a:hover { color: var(--accent); }
+.footer-col ul li a::before {
+  content: '→';
+  opacity: 0;
+  transition: var(--transition);
+}
+.footer-col ul li a:hover::before { opacity: 1; }
+.footer-brand p {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.88rem;
+  max-width: 280px;
+  margin: 1.5rem 0;
+  line-height: 1.7;
+}
+.footer-social {
+  display: flex;
+  gap: 0.5rem;
+}
+.footer-social a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-dark-strong);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.6);
+  transition: var(--transition);
+}
+.footer-social a:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+}
+.footer-social i { width: 16px; height: 16px; }
+.footer-bottom {
+  border-top: 1px solid var(--border-dark);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-disclaimer {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-dark);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   26. ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.5); opacity: 0.7; }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.9s var(--ease);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   27. RESPONSIVE
+   ============================================================ */
+@media (max-width: 1200px) {
+  .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+  .footer-col:nth-child(5) { display: none; }
+  .cert-grid { grid-template-columns: repeat(3, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-visual { height: 500px; }
+  .science-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .science-visual { height: 400px; }
+  .split-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .method-grid { grid-template-columns: repeat(2, 1fr); }
+  .quality-grid { grid-template-columns: repeat(2, 1fr); }
+  .research-cards { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 4rem auto 0; }
+  .faq-layout { grid-template-columns: 1fr; }
+  .faq-sidebar { position: static; }
+  .newsletter-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .timeline { grid-template-columns: repeat(2, 1fr); gap: 3rem 2rem; }
+  .timeline::before { display: none; }
+  .article-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-actions { display: none; }
+  .hamburger { display: block; }
+  .hero { padding: 120px 0 60px; }
+  .hero-meta { flex-wrap: wrap; gap: 1.5rem; }
+  .hero-meta-item { flex: 1; min-width: 120px; }
+  .section-padding { padding: 5rem 0; }
+  .section-header { flex-direction: column; align-items: flex-start; }
+  .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; }
+  .trust-item { border-left: none; padding: 0; }
+  .method-grid, .quality-grid, .research-cards, .article-grid, .team-grid { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+  .timeline { grid-template-columns: 1fr; }
+  .batch-ui-container { padding: 2rem 1.5rem; }
+  .batch-input-group { flex-direction: column; border-radius: 16px; }
+  .batch-btn { padding: 1rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .mol-info-panel { display: none; }
+  .cta-stats { gap: 1.5rem; }
+  .cta-stat-num { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement">
+  <div class="announcement-track">
+    <span class="announcement-item">Free shipping on orders over $250</span>
+    <span class="announcement-item">New: TB-500 research grade now in stock</span>
+    <span class="announcement-item">Every batch verified by HPLC + MS</span>
+    <span class="announcement-item">Institutional accounts available</span>
+    <span class="announcement-item">Free shipping on orders over $250</span>
+    <span class="announcement-item">New: TB-500 research grade now in stock</span>
+    <span class="announcement-item">Every batch verified by HPLC + MS</span>
+    <span class="announcement-item">Institutional accounts available</span>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <div class="container nav-container">
+    <a href="#" class="logo">
+      <div class="logo-mark"></div>
+      SYMBIOTIC<span>peptides</span>
+    </a>
+    <div class="nav-links">
+      <a href="#catalog">Catalog</a>
+      <a href="#science">Science</a>
+      <a href="#quality">Quality</a>
+      <a href="#research">Research</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#knowledge">Journal</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn"><i data-lucide="search"></i></button>
+      <button class="nav-icon-btn"><i data-lucide="user"></i></button>
+      <button class="nav-icon-btn">
+        <i data-lucide="shopping-bag"></i>
+        <span class="cart-count">2</span>
+      </button>
+      <a href="#catalog" class="btn btn-primary btn-sm">Explore</a>
+    </div>
+    <div class="hamburger"><i data-lucide="menu"></i></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <span class="hero-tagline">
+        <span class="dot"></span>
+        Advanced Peptide Science · Est. 2018
+      </span>
+      <h1 class="headline-hero">
+        Precision<br>
+        Engineered<br>
+        For The <span class="hero-title-accent">Next</span><br>
+        Generation.
+      </h1>
+      <p class="body-large">
+        High-purity peptide compounds engineered with molecular precision, radical transparency, and rigorous analytical verification — built for laboratories that refuse to compromise.
+      </p>
+      <div class="hero-ctas">
+        <a href="#catalog" class="btn btn-primary">
+          Explore Catalog
+          <i data-lucide="arrow-right"></i>
+        </a>
+        <a href="#science" class="btn btn-outline">
+          Discover The Science
+        </a>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="hero-meta-num">99.4%</div>
+          <div class="hero-meta-label">Avg. Purity</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-num">12,847</div>
+          <div class="hero-meta-label">Batches Verified</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-num">48h</div>
+          <div class="hero-meta-label">Lab Turnaround</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <canvas id="moleculeCanvas"></canvas>
+      <div class="tech-annotation a-1">99.4% PURITY</div>
+      <div class="tech-annotation a-2">HPLC VERIFIED</div>
+      <div class="tech-annotation a-3">RESEARCH GRADE</div>
+      
+      <div class="vial-comp">
+        <div class="vial-cap"></div>
+        <div class="vial-label">
+          <div class="vial-label-bar"></div>
+          <div class="vial-label-title">BPC-157</div>
+          <div class="vial-label-sub">Purity: >99.4% · 15mg</div>
+          <div class="vial-label-meta">
+            <span>LOT SP-8472</span>
+            <span>EXP 12/26</span>
+          </div>
+          <div class="vial-barcode"></div>
+        </div>
+        <div class="vial-liquid"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-hint-line"></div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item reveal">
+        <div class="trust-number" data-count="99"><span class="plus">+</span></div>
+        <div class="trust-label">Quality Standard</div>
+        <div class="trust-desc">HPLC-verified purity</div>
+      </div>
+      <div class="trust-item reveal" style="transition-delay: 0.1s">
+        <div class="trust-number" data-count="50">K<span class="plus">+</span></div>
+        <div class="trust-label">Products Delivered</div>
+        <div class="trust-desc">To research institutions</div>
+      </div>
+      <div class="trust-item reveal" style="transition-delay: 0.2s">
+        <div class="trust-number" data-count="12"><span class="plus">+</span></div>
+        <div class="trust-label">Research Categories</div>
+        <div class="trust-desc">Continuously expanding</div>
+      </div>
+      <div class="trust-item reveal" style="transition-delay: 0.3s">
+        <div class="trust-number" data-count="100">%</div>
+        <div class="trust-label">Batch Transparency</div>
+        <div class="trust-desc">Full COA available</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CATALOG -->
+<section id="catalog" class="catalog-section section-padding">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-left">
+        <span class="eyebrow">Featured Compounds</span>
+        <h2 class="headline-section">Precision Compounds.<br>Purpose-Built.</h2>
+        <p class="body-large">A curated collection of peptide compounds engineered for modern research. Every entry is held to the same uncompromising analytical standard.</p>
+      </div>
+      <div class="section-header-right">
+        <a href="#" class="btn btn-outline btn-sm">
+          View Full Catalog
+          <i data-lucide="arrow-up-right"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div class="category-nav reveal">
+      <button class="cat-btn active">All Compounds</button>
+      <button class="cat-btn">Recovery</button>
+      <button class="cat-btn">Growth</button>
+      <button class="cat-btn">Metabolic</button>
+      <button class="cat-btn">Regenerative</button>
+      <button class="cat-btn">Neuroscience</button>
+      <button class="cat-btn">Mitochondrial</button>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card reveal">
+        <div class="badge-purity">99.4% PURITY</div>
+        <div class="product-image-container">
+          <div class="mini-vial">
+            <div class="mini-cap"></div>
+            <div class="mini-label">BPC-157</div>
+            <div class="mini-liquid"></div>
+          </div>
+        </div>
+        <div class="product-category">Recovery & Repair</div>
+        <h3 class="product-title">BPC-157</h3>
+        <p class="product-desc">Body Protection Compound for cellular repair and tissue regeneration research applications.</p>
+        <div class="product-attrs">
+          <span class="product-attr">15mg</span>
+          <span class="product-attr">Lyophilized</span>
+          <span class="product-attr">≥99%</span>
+        </div>
+        <div class="product-meta">
+          <span class="product-price"><span class="currency">$</span>54.00</span>
+          <a href="#" class="view-btn">View Product <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="product-card reveal" style="transition-delay: 0.1s;">
+        <div class="badge-purity">99.1% PURITY</div>
+        <div class="product-image-container">
+          <div class="mini-vial">
+            <div class="mini-cap"></div>
+            <div class="mini-label">CJC-1295</div>
+            <div class="mini-liquid"></div>
+          </div>
+        </div>
+        <div class="product-category">Growth & Endocrine</div>
+        <h3 class="product-title">CJC-1295 / Ipamorelin</h3>
+        <p class="product-desc">Synergistic combination for metabolic receptor targeting and growth hormone axis research.</p>
+        <div class="product-attrs">
+          <span class="product-attr">12mg</span>
+          <span class="product-attr">Blend</span>
+          <span class="product-attr">≥99%</span>
+        </div>
+        <div class="product-meta">
+          <span class="product-price"><span class="currency">$</span>72.00</span>
+          <a href="#" class="view-btn">View Product <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="product-card reveal" style="transition-delay: 0.2s;">
+        <div class="badge-purity badge-new">NEW · 99.8%</div>
+        <div class="product-image-container">
+          <div class="mini-vial">
+            <div class="mini-cap"></div>
+            <div class="mini-label">GHK-Cu</div>
+            <div class="mini-liquid"></div>
+          </div>
+        </div>
+        <div class="product-category">Skin & Regenerative</div>
+        <h3 class="product-title">GHK-Cu</h3>
+        <p class="product-desc">Copper peptide complex for regenerative tissue research and extracellular matrix studies.</p>
+        <div class="product-attrs">
+          <span class="product-attr">50mg</span>
+          <span class="product-attr">Copper</span>
+          <span class="product-attr">≥99%</span>
+        </div>
+        <div class="product-meta">
+          <span class="product-price"><span class="currency">$</span>48.00</span>
+          <a href="#" class="view-btn">View Product <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="badge-purity">99.6% PURITY</div>
+        <div class="product-image-container">
+          <div class="mini-vial">
+            <div class="mini-cap"></div>
+            <div class="mini-label">TB-500</div>
+            <div class="mini-liquid"></div>
+          </div>
+        </div>
+        <div class="product-category">Recovery & Repair</div>
+        <h3 class="product-title">TB-500</h3>
+        <p class="product-desc">Synthetic thymosin beta-4 fragment for cellular motility and wound healing research.</p>
+        <div class="product-attrs">
+          <span class="product-attr">10mg</span>
+          <span class="product-attr">Fragment</span>
+          <span class="product-attr">≥99%</span>
+        </div>
+        <div class="product-meta">
+          <span class="product-price"><span class="currency">$</span>89.00</span>
+          <a href="#" class="view-btn">View Product <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="product-card reveal" style="transition-delay: 0.1s;">
+        <div class="badge-purity">99.3% PURITY</div>
+        <div class="product-image-container">
+          <div class="mini-vial">
+            <div class="mini-cap"></div>
+            <div class="mini-label">SEMAGLUTIDE</div>
+            <div class="mini-liquid"></div>
+          </div>
+        </div>
+        <div class="product-category">Metabolic</div>
+        <h3 class="product-title">Semaglutide</h3>
+        <p class="product-desc">GLP-1 receptor agonist for metabolic pathway and insulin sensitivity research.</p>
+        <div class="product-attrs">
+          <span class="product-attr">5mg</span>
+          <span class="product-attr">GLP-1</span>
+          <span class="product-attr">≥99%</span>
+        </div>
+        <div class="product-meta">
+          <span class="product-price"><span class="currency">$</span>165.00</span>
+          <a href="#" class="view-btn">View Product <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="product-card reveal" style="transition-delay: 0.2s;">
+        <div class="badge-purity">99.5% PURITY</div>
+        <div class="product-image-container">
+          <div class="mini-vial">
+            <div class="mini-cap"></div>
+            <div class="mini-label">MOTS-c</div>
+            <div class="mini-liquid"></div>
+          </div>
+        </div>
+        <div class="product-category">Mitochondrial</div>
+        <h3 class="product-title">MOTS-c</h3>
+        <p class="product-desc">Mitochondrial-derived peptide for metabolic homeostasis and exercise physiology research.</p>
+        <div class="product-attrs">
+          <span class="product-attr">10mg</span>
+          <span class="product-attr">Mito</span>
+          <span class="product-attr">≥99%</span>
+        </div>
+        <div class="product-meta">
+          <span class="product-price"><span class="currency">$</span>118.00</span>
+          <a href="#" class="view-btn">View Product <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE SCIENCE -->
+<section id="science" class="science-section section-padding">
+  <div class="container science-grid">
+    <div class="science-visual reveal">
+      <canvas id="scienceCanvas"></canvas>
+      <div class="science-corner tl">CELLULAR · BINDING</div>
+      <div class="science-corner tr">REV 04.2026</div>
+      <div class="science-corner bl">MAG × 80,000</div>
+      <div class="science-corner br">SAMPLE 8472</div>
+      <div class="science-visual-overlay">
+        <h3>Receptor Affinity</h3>
+        <div class="num">0.42<span style="font-size: 1.5rem;">nM</span></div>
+        <div class="desc">Mean binding affinity across verified batches</div>
+      </div>
+    </div>
+    
+    <div class="science-content reveal">
+      <span class="eyebrow">The Science</span>
+      <h2 class="headline-section">Small Molecules.<br>Significant Questions.</h2>
+      <p class="body-large">Peptides act as highly specific signaling molecules — initiating cascades of biological actions at the cellular level. We engineer our compounds to ensure uncompromised structural integrity for accurate research outcomes.</p>
+      
+      <div class="science-list">
+        <div class="science-item">
+          <span class="science-num">01 / SIGNALING</span>
+          <h4 class="science-title">Precision Signaling</h4>
+          <p class="science-text">Targeting specific cellular receptors with exact amino acid sequencing for reproducible experimental outcomes.</p>
+        </div>
+        <div class="science-item">
+          <span class="science-num">02 / INTERACTION</span>
+          <h4 class="science-title">Targeted Cellular Interaction</h4>
+          <p class="science-text">Facilitating distinct biological cascades without off-target interference or unwanted secondary responses.</p>
+        </div>
+        <div class="science-item">
+          <span class="science-num">03 / DISCOVERY</span>
+          <h4 class="science-title">Research-Driven Discovery</h4>
+          <p class="science-text">Enabling modern laboratory environments to push the boundaries of biotechnology and translational research.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="methodology-section section-padding">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-left">
+        <span class="eyebrow eyebrow-light">Methodology</span>
+        <h2 class="headline-section" style="color: var(--bg);">From Synthesis<br>To Verified Vial.</h2>
+        <p class="body-large" style="color: rgba(255,255,255,0.6);">A four-stage engineering process designed to preserve molecular integrity and deliver verifiable quality at every step.</p>
+      </div>
+    </div>
+    
+    <div class="method-grid reveal">
+      <div class="method-card">
+        <div class="method-icon"><i data-lucide="flask-conical"></i></div>
+        <div class="method-step">Stage 01</div>
+        <h4 class="method-title">Solid-Phase Synthesis</h4>
+        <p class="method-desc">Fmoc chemistry with automated synthesizers ensuring precise amino acid coupling and sequence fidelity.</p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon"><i data-lucide="layers"></i></div>
+        <div class="method-step">Stage 02</div>
+        <h4 class="method-title">Purification</h4>
+        <p class="method-desc">Reverse-phase HPLC purification to isolate target sequences and remove truncation byproducts.</p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon"><i data-lucide="scan-line"></i></div>
+        <div class="method-step">Stage 03</div>
+        <h4 class="method-title">Analytical Verification</h4>
+        <p class="method-desc">HPLC purity analysis paired with mass spectrometry for molecular weight and identity confirmation.</p>
+      </div>
+      <div class="method-card">
+        <div class="method-icon"><i data-lucide="package"></i></div>
+        <div class="method-step">Stage 04</div>
+        <h4 class="method-title">Lyophilized Packaging</h4>
+        <p class="method-desc">Sterile vial packaging under controlled atmosphere, preserving peptide stability for the long term.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE MOLECULAR VIEWER -->
+<section class="molecular-section section-padding">
+  <div class="container">
+    <div class="reveal" style="text-align: center; margin-bottom: 2rem;">
+      <span class="eyebrow eyebrow-light eyebrow-centered">Interactive · Live Data</span>
+      <h2 class="headline-section" style="color: var(--bg);">Examine The Structure.</h2>
+      <p style="color: rgba(255,255,255,0.6); max-width: 540px; margin: 1.5rem auto 0;">A live molecular visualization. Switch between compounds to see how peptide architecture changes — and how that change shapes function.</p>
+    </div>
+    
+    <div class="molecular-container reveal">
+      <canvas id="molecularCanvas"></canvas>
+      
+      <div class="mol-info-panel">
+        <h4>Active Compound</h4>
+        <div class="mol-info-row"><span class="label">Sequence</span><span class="val" id="molSeq">GEPPPGKPADDAGLV</span></div>
+        <div class="mol-info-row"><span class="label">MW</span><span class="val" id="molMw">1419.5 g/mol</span></div>
+        <div class="mol-info-row"><span class="label">Residues</span><span class="val" id="molRes">15</span></div>
+        <div class="mol-info-row"><span class="label">Purity</span><span class="val">99.4%</span></div>
+        <div class="mol-info-row"><span class="label">Format</span><span class="val">Lyophilized</span></div>
+      </div>
+      
+      <div class="molecule-controls">
+        <button class="mol-ctrl-btn active" data-compound="bpc">BPC-157</button>
+        <button class="mol-ctrl-btn" data-compound="ghk">GHK-Cu</button>
+        <button class="mol-ctrl-btn" data-compound="tb500">TB-500</button>
+        <button class="mol-ctrl-btn" data-compound="mots">MOTS-c</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH AREAS -->
+<section id="research" class="section-padding">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-left">
+        <span class="eyebrow">Research Domains</span>
+        <h2 class="headline-section">Explore By<br>Research Area.</h2>
+        <p class="body-large">Six domains of active inquiry. Each compound is categorized by its primary mechanism — so you can find exactly what your hypothesis demands.</p>
+      </div>
+    </div>
+    
+    <div class="research-cards">
+      <div class="res-card reveal">
+        <div class="res-num">01</div>
+        <div class="res-icon"><i data-lucide="activity"></i></div>
+        <h3 class="res-title">Metabolic</h3>
+        <p class="res-desc">Compounds targeting metabolic pathways, insulin sensitivity, and lipolysis mechanisms.</p>
+        <div class="res-tags">
+          <span class="res-tag">GLP-1</span>
+          <span class="res-tag">Insulin</span>
+        </div>
+        <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+      </div>
+      <div class="res-card reveal" style="transition-delay: 0.1s;">
+        <div class="res-num">02</div>
+        <div class="res-icon"><i data-lucide="heart-pulse"></i></div>
+        <h3 class="res-title">Recovery</h3>
+        <p class="res-desc">Sequences designed for observing tissue regeneration, inflammation reduction, and healing cascades.</p>
+        <div class="res-tags">
+          <span class="res-tag">BPC-157</span>
+          <span class="res-tag">TB-500</span>
+        </div>
+        <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+      </div>
+      <div class="res-card reveal" style="transition-delay: 0.2s;">
+        <div class="res-num">03</div>
+        <div class="res-icon"><i data-lucide="trending-up"></i></div>
+        <h3 class="res-title">Growth</h3>
+        <p class="res-desc">Endocrine secretagogues mimicking ghrelin and somatostatin interactions for growth research.</p>
+        <div class="res-tags">
+          <span class="res-tag">CJC-1295</span>
+          <span class="res-tag">Ipamorelin</span>
+        </div>
+        <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+      </div>
+      <div class="res-card reveal">
+        <div class="res-num">04</div>
+        <div class="res-icon"><i data-lucide="brain"></i></div>
+        <h3 class="res-title">Neuroscience</h3>
+        <p class="res-desc">Nootropic structures for studying cognitive function, neural plasticity, and memory formation.</p>
+        <div class="res-tags">
+          <span class="res-tag">Dihexa</span>
+          <span class="res-tag">Cerebrolysin</span>
+        </div>
+        <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+      </div>
+      <div class="res-card reveal" style="transition-delay: 0.1s;">
+        <div class="res-num">05</div>
+        <div class="res-icon"><i data-lucide="sparkles"></i></div>
+        <h3 class="res-title">Regenerative</h3>
+        <p class="res-desc">Topical and systemic candidates for extracellular matrix remodeling and tissue engineering.</p>
+        <div class="res-tags">
+          <span class="res-tag">GHK-Cu</span>
+          <span class="res-tag">Matrix</span>
+        </div>
+        <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+      </div>
+      <div class="res-card reveal" style="transition-delay: 0.2s;">
+        <div class="res-num">06</div>
+        <div class="res-icon"><i data-lucide="zap"></i></div>
+        <h3 class="res-title">Mitochondrial</h3>
+        <p class="res-desc">Advanced sequences targeting cellular energy synthesis, AMPK pathways, and metabolic optimization.</p>
+        <div class="res-tags">
+          <span class="res-tag">MOTS-c</span>
+          <span class="res-tag">SS-31</span>
+        </div>
+        <div class="res-arrow"><i data-lucide="arrow-right"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY ASSURANCE -->
+<section id="quality" class="quality-section section-padding">
+  <div class="container">
+    <div class="reveal" style="margin-bottom: 4rem;">
+      <span class="eyebrow eyebrow-light">Analytical Precision</span>
+      <h2 class="headline-section" style="color: var(--bg);">Every Batch.<br>Verified.</h2>
+      <p class="body-large" style="color: rgba(255,255,255,0.7);">Our commitment to research integrity begins with rigorous analytical testing. We do not guess. We verify — and we publish the results.</p>
+    </div>
+    
+    <div class="quality-grid reveal">
+      <div class="q-module">
+        <div class="q-icon"><i data-lucide="bar-chart-3"></i></div>
+        <span class="q-num">01 / HPLC</span>
+        <h4 class="q-title">HPLC Testing</h4>
+        <p class="q-text">High-Performance Liquid Chromatography ensuring purity analysis for every batch, with retention time precision.</p>
+      </div>
+      <div class="q-module">
+        <div class="q-icon"><i data-lucide="atom"></i></div>
+        <span class="q-num">02 / MS</span>
+        <h4 class="q-title">Mass Spectrometry</h4>
+        <p class="q-text">Identity verification and exact molecular weight sequence confirmation via ESI-MS analysis.</p>
+      </div>
+      <div class="q-module">
+        <div class="q-icon"><i data-lucide="file-search"></i></div>
+        <span class="q-num">03 / TRACE</span>
+        <h4 class="q-title">Batch Traceability</h4>
+        <p class="q-text">Strictly documented batch-level information from synthesis to final vial, accessible by lot number.</p>
+      </div>
+      <div class="q-module">
+        <div class="q-icon"><i data-lucide="badge-check"></i></div>
+        <span class="q-num">04 / COA</span>
+        <h4 class="q-title">Certified Analysis</h4>
+        <p class="q-text">Analytical documentation available seamlessly for all qualifying products, downloadable by batch ID.</p>
+      </div>
+    </div>
+
+    <div class="batch-ui-container reveal">
+      <div class="batch-content">
+        <span class="eyebrow eyebrow-light eyebrow-centered">Batch Verification Portal</span>
+        <h3 style="font-size: 2.2rem; font-family: var(--font-display); margin-bottom: 1rem; color: var(--bg);">Know exactly what you're working with.</h3>
+        <p style="color: rgba(255,255,255,0.6); max-width: 540px; margin: 0 auto;">Enter your product batch number to instantly retrieve HPLC and MS analytical results.</p>
+        
+        <form class="batch-input-group" onsubmit="event.preventDefault(); verifyBatch();">
+          <input type="text" id="batchInput" class="batch-input" placeholder="ENTER BATCH ID (e.g. SP-8472)">
+          <button type="submit" class="batch-btn">VERIFY</button>
+        </form>
+        <div id="batchResult" class="batch-result"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="timeline-section section-padding">
+  <div class="container">
+    <div class="reveal" style="text-align: center; margin-bottom: 1rem;">
+      <span class="eyebrow eyebrow-centered">The Process</span>
+      <h2 class="headline-section">Seamless Acquisition.</h2>
+      <p class="body-large" style="margin: 1.5rem auto 0;">From selection to delivery, every step is engineered for clarity and speed — so you can return to the bench.</p>
+    </div>
+    
+    <div class="timeline reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4 class="step-title">Select</h4>
+        <p class="step-desc">Explore our extensive catalog of engineered peptide structures, filtered by research domain.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4 class="step-title">Verify</h4>
+        <p class="step-desc">Review available purity testing and analytical documentation before committing.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4 class="step-title">Order</h4>
+        <p class="step-desc">Submit your research request through our secure institutional checkout.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4 class="step-title">Receive</h4>
+        <p class="step-desc">Acquire climate-controlled delivery ready for laboratory use within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="cert-section section-padding">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-left">
+        <span class="eyebrow">Compliance & Standards</span>
+        <h2 class="headline-section">Built To Standard.</h2>
+        <p class="body-large">Independent verification of our processes, facilities, and quality systems by recognized regulatory and industry bodies.</p>
+      </div>
+    </div>
+    
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <div class="cert-icon"><i data-lucide="shield-check"></i></div>
+        <div class="cert-name">ISO 9001:2015</div>
+        <div class="cert-code">Quality Management</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><i data-lucide="lab"></i></div>
+        <div class="cert-name">ISO 17025</div>
+        <div class="cert-code">Testing & Calibration</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><i data-lucide="globe"></i></div>
+        <div class="cert-name">cGMP Compliant</div>
+        <div class="cert-code">Manufacturing Practice</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><i data-lucide="file-check"></i></div>
+        <div class="cert-name">FDA Registered</div>
+        <div class="cert-code">Facility Registration</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><i data-lucide="leaf"></i></div>
+        <div class="cert-name">USP Reference</div>
+        <div class="cert-code">Pharmacopeial Standards</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing-section section-padding">
+  <div class="container">
+    <div class="reveal" style="text-align: center; margin-bottom: 1rem;">
+      <span class="eyebrow eyebrow-centered">Institutional Tiers</span>
+      <h2 class="headline-section">Built For Every Lab.</h2>
+      <p class="body-large" style="margin: 1.5rem auto 0;">From individual investigators to multi-site research institutions — pricing structures that scale with your work.</p>
+    </div>
+    
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-tier">Tier 01</div>
+        <h3 class="price-name">Researcher</h3>
+        <div class="price-amount"><span class="currency">$</span>54<span class="price-period">/compound</span></div>
+        <p class="price-description">For individual investigators and small laboratory groups beginning their peptide research journey.</p>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><i data-lucide="check"></i>Access to standard catalog</div>
+          <div class="price-feature"><i data-lucide="check"></i>Certificate of Analysis included</div>
+          <div class="price-feature"><i data-lucide="check"></i>Standard shipping (5-7 days)</div>
+          <div class="price-feature"><i data-lucide="check"></i>Email support</div>
+        </div>
+        <a href="#" class="btn btn-outline price-cta">Start Order</a>
+      </div>
+      
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-tier">Tier 02</div>
+        <h3 class="price-name">Laboratory</h3>
+        <div class="price-amount"><span class="currency">$</span>2,400<span class="price-period">/quarter</span></div>
+        <p class="price-description">For active research labs requiring consistent supply, priority verification, and dedicated support.</p>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><i data-lucide="check"></i>15% catalog discount</div>
+          <div class="price-feature"><i data-lucide="check"></i>Priority batch verification</div>
+          <div class="price-feature"><i data-lucide="check"></i>Cold-chain expedited shipping</div>
+          <div class="price-feature"><i data-lucide="check"></i>Dedicated account scientist</div>
+          <div class="price-feature"><i data-lucide="check"></i>Quarterly analytics review</div>
+        </div>
+        <a href="#" class="btn btn-primary price-cta">Apply For Tier</a>
+      </div>
+      
+      <div class="price-card">
+        <div class="price-tier">Tier 03</div>
+        <h3 class="price-name">Institutional</h3>
+        <div class="price-amount">Custom</div>
+        <p class="price-description">For universities, CROs, and biotech organizations requiring custom synthesis and enterprise support.</p>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><i data-lucide="check"></i>Custom peptide synthesis</div>
+          <div class="price-feature"><i data-lucide="check"></i>Volume pricing & contracts</div>
+          <div class="price-feature"><i data-lucide="check"></i>On-site analytical training</div>
+          <div class="price-feature"><i data-lucide="check"></i>Multi-user account access</div>
+          <div class="price-feature"><i data-lucide="check"></i>24/7 priority support</div>
+        </div>
+        <a href="#" class="btn btn-outline price-cta">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA & TESTIMONIALS -->
+<section class="split-section section-padding">
+  <div class="container">
+    <div class="split-grid">
+      <div class="reveal">
+        <span class="eyebrow">Quality Metrics</span>
+        <h2 class="headline-section" style="font-size: 2.6rem;">Data Tells<br>The Story.</h2>
+        <p class="body-large">We believe transparency is non-negotiable. Our aggregate testing data reflects a commitment to the highest echelon of research standards.</p>
+        
+        <div style="margin-top: 3rem;">
+          <div class="data-card">
+            <div class="data-card-header">
+              <span>Target Purity Standard</span>
+              <span class="data-card-value">99.2%</span>
+            </div>
+            <div class="data-card-label">Across 12,847 verified batches</div>
+            <div class="data-bar-bg">
+              <div class="data-bar-fill" data-width="99"></div>
+            </div>
+          </div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <span>Batch Verification Rate</span>
+              <span class="data-card-value">100%</span>
+            </div>
+            <div class="data-card-label">Every batch tested before release</div>
+            <div class="data-bar-bg">
+              <div class="data-bar-fill" data-width="100"></div>
+            </div>
+          </div>
+          <div class="data-card">
+            <div class="data-card-header">
+              <span>On-Time Delivery</span>
+              <span class="data-card-value">98.7%</span>
+            </div>
+            <div class="data-card-label">Within stated turnaround time</div>
+            <div class="data-bar-bg">
+              <div class="data-bar-fill" data-width="98"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <span class="eyebrow">Research Community</span>
+        <h2 class="headline-section" style="font-size: 2.6rem;">Trusted By Those<br>Who Take Science<br>Seriously.</h2>
+        
+        <div style="margin-top: 3rem;">
+          <div class="testimonial-card">
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">The consistency of molecular weights verified across multiple mass spectrometry runs has made Symbiotic our exclusive source for clinical laboratory models.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">DR</div>
+              <div class="testimonial-meta">
+                <div class="testimonial-name">Dr. Elena Reyes</div>
+                <div class="testimonial-role">Lead Technician · Independent Biotech CRO</div>
+              </div>
+              <div class="testimonial-rating">
+                <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="testimonial-card">
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">Purity documentation is flawless. The solubility and reaction predictability perfectly match theoretical expectations — every single time.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MK</div>
+              <div class="testimonial-meta">
+                <div class="testimonial-name">Prof. Marcus Kessler</div>
+                <div class="testimonial-role">Principal Investigator · Academic Institute</div>
+              </div>
+              <div class="testimonial-rating">
+                <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="logo-strip">
+        <div class="logo-placeholder">RESEARCH LABS</div>
+        <div class="logo-placeholder">BIOTECHNOLOGY</div>
+        <div class="logo-placeholder">ACADEMIC INST.</div>
+        <div class="logo-placeholder">CLINICAL CRO</div>
+        <div class="logo-placeholder">INDEPENDENT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCIENTIFIC BOARD -->
+<section class="team-section section-padding">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-left">
+        <span class="eyebrow">Scientific Board</span>
+        <h2 class="headline-section">The Minds<br>Behind The Molecules.</h2>
+        <p class="body-large">Our advisory board includes leading researchers in peptide chemistry, molecular biology, and analytical verification.</p>
+      </div>
+    </div>
+    
+    <div class="team-grid reveal">
+      <div class="team-card">
+        <div class="team-image">
+          <div class="team-avatar">AV</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Dr. Anika Vasquez</div>
+          <div class="team-role">Chief Science Officer</div>
+          <p class="team-bio">PhD in Biochemistry · 18 years in peptide synthesis and structural characterization.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-image">
+          <div class="team-avatar">JM</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Dr. Jonathan Mercer</div>
+          <div class="team-role">Head of Analytical</div>
+          <p class="team-bio">PhD in Analytical Chemistry · Former NIH researcher specializing in HPLC-MS methodology.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-image">
+          <div class="team-avatar">SK</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Dr. Sora Kim</div>
+          <div class="team-role">Director of Research</div>
+          <p class="team-bio">PhD in Molecular Biology · Pioneer in peptide-receptor binding affinity studies.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-image">
+          <div class="team-avatar">RT</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Dr. Rafael Tanaka</div>
+          <div class="team-role">Quality Director</div>
+          <p class="team-bio">PhD in Pharmacology · 15 years implementing cGMP quality systems for biotech.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KNOWLEDGE LAB -->
+<section id="knowledge" class="knowledge-section section-padding">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header-left">
+        <span class="eyebrow">The Knowledge Lab</span>
+        <h2 class="headline-section">Editorial Insights.</h2>
+        <p class="body-large">Technical documentation, methodology breakdowns, and editorial perspectives from our scientific team.</p>
+      </div>
+      <div class="section-header-right">
+        <a href="#" class="btn btn-outline btn-sm">
+          View All Articles
+          <i data-lucide="arrow-up-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="article-grid">
+      <div class="article-card reveal">
+        <div class="art-img">
+          <div class="art-img-content">
+            <i data-lucide="microscope"></i>
+            <div class="art-img-title">Methodology</div>
+          </div>
+        </div>
+        <div class="art-meta"><span class="art-cat">Methodology</span><span>5 Min Read</span></div>
+        <h3 class="art-title">Why Analytical Purity Dictates Experimental Success</h3>
+        <p class="art-excerpt">A deep look at how trace impurities cascade into significant experimental noise — and how to read between the lines of a COA.</p>
+      </div>
+      <div class="article-card reveal" style="transition-delay: 0.1s;">
+        <div class="art-img" style="background: linear-gradient(135deg, var(--primary), var(--bg-mid));">
+          <div class="art-img-content">
+            <i data-lucide="dna"></i>
+            <div class="art-img-title">Science</div>
+          </div>
+        </div>
+        <div class="art-meta"><span class="art-cat">Science</span><span>8 Min Read</span></div>
+        <h3 class="art-title">Understanding BPC-157: Cellular Healing Cascades</h3>
+        <p class="art-excerpt">An exploration of the mechanisms by which BPC-157 influences angiogenesis, fibroblast migration, and tissue repair.</p>
+      </div>
+      <div class="article-card reveal" style="transition-delay: 0.2s;">
+        <div class="art-img" style="background: linear-gradient(135deg, var(--bg-dark), var(--primary));">
+          <div class="art-img-content">
+            <i data-lucide="bar-chart-3"></i>
+            <div class="art-img-title">Testing</div>
+          </div>
+        </div>
+        <div class="art-meta"><span class="art-cat">Testing</span><span>4 Min Read</span></div>
+        <h3 class="art-title">Inside The Lab: Reading Your HPLC Results</h3>
+        <p class="art-excerpt">A practical guide to interpreting chromatograms, retention times, and peak purity ratios for non-analysts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section section-padding">
+  <div class="container">
+    <div class="faq-layout">
+      <div class="faq-sidebar reveal">
+        <span class="eyebrow">Support</span>
+        <h2 class="headline-section" style="font-size: 2.6rem;">Common<br>Questions.</h2>
+        <p class="body-large">Everything you need to know about our products, processes, and research standards.</p>
+        
+        <div class="faq-sidebar-card">
+          <h4>Still have questions?</h4>
+          <p>Our scientific team is available to discuss your specific research requirements and answer technical questions.</p>
+          <button class="faq-contact-btn">Contact Our Team</button>
+        </div>
+      </div>
+      
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <div class="faq-q">
+            What are your peptides intended for?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">All products sold by Symbiotic Peptides are strictly for laboratory research purposes only. They are not intended for human consumption, therapeutic use, or diagnostic applications. Purchasers must confirm research-use intent prior to order fulfillment.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Is a Certificate of Analysis (COA) provided?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Yes. We provide comprehensive analytical documentation — including HPLC purity analysis and mass spectrometry identity verification — accessible via our batch verification portal or upon request with your order confirmation.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            How are products packaged and shipped?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Lyophilized peptides are packaged in sterile, tamper-evident glass vials under controlled atmosphere. Depending on compound stability requirements, climate-controlled expedited shipping options are utilized to ensure structural integrity upon arrival.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Do you offer custom peptide synthesis?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">We accommodate custom synthesis for institutional laboratories, CROs, and biotech organizations. Please contact our scientific team directly to discuss sequencing, quantity, purity requirements, and turnaround timelines.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            What is the typical shelf life of your peptides?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Lyophilized peptides stored at -20°C maintain full potency for 24-48 months. Once reconstituted, peptides should be used within 30 days when stored at 2-8°C. Specific stability data is available on each product's COA.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            What payment methods do you accept?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">We accept institutional purchase orders, ACH transfers, and major credit cards. Net-30 terms are available for established institutional accounts following credit verification.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Can I return a product if I'm not satisfied?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Due to the nature of our products, returns are accepted only for unopened vials with intact tamper-evident seals, within 14 days of delivery. Quality concerns with documented evidence are addressed through our quality assurance team on a case-by-case basis.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Do you ship internationally?
+            <div class="faq-icon"><i data-lucide="plus"></i></div>
+          </div>
+          <div class="faq-a">
+            <div class="faq-a-inner">Yes, we ship to most countries with established research infrastructure. Import permits and customs documentation may be required depending on destination. Our logistics team coordinates all international shipments to ensure regulatory compliance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section section-padding">
+  <div class="container">
+    <div class="newsletter-grid">
+      <div class="reveal">
+        <span class="eyebrow eyebrow-light">Stay Current</span>
+        <h2 class="headline-section" style="color: var(--bg);">The Symbiotic<br>Briefing.</h2>
+        <p class="body-large" style="color: rgba(255,255,255,0.7);">Monthly technical dispatches — new compound releases, methodology updates, and research insights from our scientific board.</p>
+      </div>
+      <div class="reveal">
+        <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
+          <input type="email" class="newsletter-input" placeholder="your.email@institution.edu" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <div class="newsletter-features">
+          <span><i data-lucide="check"></i> Monthly cadence</span>
+          <span><i data-lucide="check"></i> No marketing fluff</span>
+          <span><i data-lucide="check"></i> Unsubscribe anytime</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section section-padding">
+  <div class="container reveal">
+    <div class="cta-content">
+      <span class="eyebrow eyebrow-light eyebrow-centered">Begin Your Research</span>
+      <h2 class="headline-section" style="color: var(--bg); font-size: clamp(2.5rem, 5vw, 4.5rem);">Ready to Explore<br>What's Next?</h2>
+      <p class="body-large" style="margin: 2rem auto 0; color: rgba(255,255,255,0.7);">Discover precision compounds, transparent documentation, and a research-first approach trusted by laboratories worldwide.</p>
+      <div class="cta-buttons">
+        <a href="#catalog" class="btn btn-primary btn-lg">
+          Explore Catalog
+          <i data-lucide="arrow-right"></i>
+        </a>
+        <a href="#" class="btn btn-light btn-lg">Contact Our Team</a>
+      </div>
+      
+      <div class="cta-stats">
+        <div class="cta-stat">
+          <div class="cta-stat-num">99.4%</div>
+          <div class="cta-stat-label">Average Purity</div>
+        </div>
+        <div class="cta-stat">
+          <div class="cta-stat-num">12K+</div>
+          <div class="cta-stat-label">Batches Verified</div>
+        </div>
+        <div class="cta-stat">
+          <div class="cta-stat-num">48h</div>
+          <div class="cta-stat-label">Turnaround Time</div>
+        </div>
+        <div class="cta-stat">
+          <div class="cta-stat-num">100%</div>
+          <div class="cta-stat-label">COA Transparency</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <a href="#" class="logo" style="color: var(--bg);">
+          <div class="logo-mark"></div>
+          SYMBIOTIC<span style="opacity:0.5;">peptides</span>
+        </a>
+        <p>Precision engineered for the next generation of biological research. Every batch verified, every molecule accounted for.</p>
+        <div class="footer-social">
+          <a href="#"><i data-lucide="twitter"></i></a>
+          <a href="#"><i data-lucide="linkedin"></i></a>
+          <a href="#"><i data-lucide="instagram"></i></a>
+          <a href="#"><i data-lucide="youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Catalog</h4>
+        <ul>
+          <li><a href="#">All Peptides</a></li>
+          <li><a href="#">Metabolic</a></li>
+          <li><a href="#">Regenerative</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Custom Synthesis</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Science</h4>
+        <ul>
+          <li><a href="#">Research Areas</a></li>
+          <li><a href="#">Quality Standards</a></li>
+          <li><a href="#">Batch Testing</a></li>
+          <li><a href="#">Methodology</a></li>
+          <li><a href="#">Documentation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Scientific Board</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press Kit</a></li>
+          <li><a href="#">Partner Program</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-disclaimer">
+      ⚠ All products sold by Symbiotic Peptides are strictly for laboratory research purposes only. Not for human consumption, therapeutic use, or diagnostic applications. Purchasers must be 21+ and confirm research-use intent.
+    </div>
+    
+    <div class="footer-bottom">
+      <div>&copy; 2026 Symbiotic Peptides. All Rights Reserved.</div>
+      <div>Laboratory Research Use Only · ISO 9001:2015 Certified</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Initialize Lucide Icons
+  lucide.createIcons();
+
+  // ==========================================
+  // STICKY NAVBAR + DARK MODE DETECTION
+  // ==========================================
+  const navbar = document.getElementById('navbar');
+  const darkSections = document.querySelectorAll('.methodology-section, .molecular-section, .quality-section, .newsletter-section, .cta-section, footer, .trust-strip');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+
+    let isDark = false;
+    darkSections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top < 80 && rect.bottom > 80) {
+        isDark = true;
+      }
+    });
+    
+    if (isDark && window.scrollY > 50) {
+      navbar.classList.add('dark-mode');
+    } else {
+      navbar.classList.remove('dark-mode');
+    }
+  });
+
+  // ==========================================
+  // SCROLL REVEAL ANIMATIONS
+  // ==========================================
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        
+        const bars = entry.target.querySelectorAll('.data-bar-fill');
+        bars.forEach(bar => {
+          const width = bar.getAttribute('data-width');
+          setTimeout(() => { bar.style.width = width + '%'; }, 400);
+        });
+        
+        const counters = entry.target.querySelectorAll('[data-count]');
+        counters.forEach(counter => {
+          animateCounter(counter);
+        });
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // ==========================================
+  // ANIMATED COUNTERS
+  // ==========================================
+  function animateCounter(el) {
+    const target = parseInt(el.getAttribute('data-count'));
+    const duration = 2000;
+    const start = performance.now();
+    const suffix = el.innerHTML.replace(/^<span.*<\/span>/, '');
+    const innerSpan = el.querySelector('span');
+    const spanHTML = innerSpan ? innerSpan.outerHTML : '';
+    
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(target * eased);
+      el.innerHTML = current + spanHTML;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // ==========================================
+  // FAQ ACCORDION
+  // ==========================================
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-q');
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      faqItems.forEach(faq => {
+        faq.classList.remove('active');
+        faq.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if (!isActive) {
+        item.classList.add('active');
+        const answer = item.querySelector('.faq-a');
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    });
+  });
+
+  // ==========================================
+  // CATEGORY FILTER
+  // ==========================================
+  const catBtns = document.querySelectorAll('.cat-btn');
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // ==========================================
+  // BATCH VERIFICATION
+  // ==========================================
+  function verifyBatch() {
+    const input = document.getElementById('batchInput').value.trim().toUpperCase();
+    const result = document.getElementById('batchResult');
+    
+    if (!input) {
+      result.className = 'batch-result error show';
+      result.innerHTML = '⚠ Please enter a batch ID to verify.';
+      return;
+    }
+    
+    // Simulate verification - any ID starting with SP- is valid
+    if (input.startsWith('SP-') && input.length >= 6) {
+      result.className = 'batch-result success show';
+      result.innerHTML = `✓ Batch <strong>${input}</strong> verified · Purity: 99.4% · HPLC + MS confirmed · Released 2026-03-15`;
+    } else {
+      result.className = 'batch-result error show';
+      result.innerHTML = `✕ Batch ID "${input}" not found. Please check the format (e.g. SP-8472) and try again.`;
+    }
+  }
+  window.verifyBatch = verifyBatch;
+
+  // ==========================================
+  // NEWSLETTER SUBSCRIBE
+  // ==========================================
+  function subscribeNewsletter(form) {
+    const input = form.querySelector('input');
+    const btn = form.querySelector('button');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = 'Subscribed ✓';
+    btn.style.background = 'var(--accent)';
+    btn.style.color = 'var(--bg-dark)';
+    input.value = '';
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 3000);
+  }
+  window.subscribeNewsletter = subscribeNewsletter;
+
+  // ==========================================
+  // HERO MOLECULE CANVAS
+  // ==========================================
+  const heroCanvas = document.getElementById('moleculeCanvas');
+  if (heroCanvas) {
+    const ctx = heroCanvas.getContext('2d');
+    let nodes = [];
+    let mouseX = 0, mouseY = 0;
+    let animationId;
+
+    function resizeHero() {
+      const rect = heroCanvas.parentElement.getBoundingClientRect();
+      heroCanvas.width = rect.width * window.devicePixelRatio;
+      heroCanvas.height = rect.height * window.devicePixelRatio;
+      heroCanvas.style.width = rect.width + 'px';
+      heroCanvas.style.height = rect.height + 'px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeHero();
+    window.addEventListener('resize', resizeHero);
+
+    // Create nodes
+    function initNodes() {
+      nodes = [];
+      const count = 28;
+      const w = heroCanvas.width / window.devicePixelRatio;
+      const h = heroCanvas.height / window.devicePixelRatio;
+      for (let i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: Math.random() * 3 + 2,
+          type: Math.random() > 0.7 ? 'large' : 'small'
+        });
+      }
+    }
+    initNodes();
+
+    heroCanvas.addEventListener('mousemove', (e) => {
+      const rect = heroCanvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    });
+
+    function drawHero() {
+      const w = heroCanvas.width / window.devicePixelRatio;
+      const h = heroCanvas.height / window.devicePixelRatio;
+      ctx.clearRect(0, 0, w, h);
+
+      // Draw connections
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 140) {
+            const opacity = (1 - dist / 140) * 0.25;
+            ctx.strokeStyle = `rgba(8, 122, 69, ${opacity})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      nodes.forEach(node => {
+        // Mouse interaction
+        const mdx = node.x - mouseX;
+        const mdy = node.y - mouseY;
+        const mdist = Math.sqrt(mdx*mdx + mdy*mdy);
+        if (mdist < 100) {
+          const force = (100 - mdist) / 100;
+          node.vx += (mdx / mdist) * force * 0.05;
+          node.vy += (mdy / mdist) * force * 0.05;
+        }
+
+        node.x += node.vx;
+        node.y += node.vy;
+        node.vx *= 0.99;
+        node.vy *= 0.99;
+
+        if (node.x < 0 || node.x > w) node.vx *= -1;
+        if (node.y < 0 || node.y > h) node.vy *= -1;
+        node.x = Math.max(0, Math.min(w, node.x));
+        node.y = Math.max(0, Math.min(h, node.y));
+
+        const r = Math.max(0.5, node.radius);
+        const grad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, r * 4);
+        if (node.type === 'large') {
+          grad.addColorStop(0, 'rgba(8, 122, 69, 0.9)');
+          grad.addColorStop(0.5, 'rgba(8, 122, 69, 0.3)');
+          grad.addColorStop(1, 'rgba(8, 122, 69, 0)');
+        } else {
+          grad.addColorStop(0, 'rgba(10, 149, 80, 0.7)');
+          grad.addColorStop(1, 'rgba(10, 149, 80, 0)');
+        }
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, r * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = node.type === 'large' ? '#087A45' : '#0A9550';
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationId = requestAnimationFrame(drawHero);
+    }
+    drawHero();
+  }
+
+  // ==========================================
+  // SCIENCE CANVAS (cellular visualization)
+  // ==========================================
+  const scienceCanvas = document.getElementById('scienceCanvas');
+  if (scienceCanvas) {
+    const ctx = scienceCanvas.getContext('2d');
+    let cells = [];
+
+    function resizeScience() {
+      const rect = scienceCanvas.parentElement.getBoundingClientRect();
+      scienceCanvas.width = rect.width * window.devicePixelRatio;
+      scienceCanvas.height = rect.height * window.devicePixelRatio;
+      scienceCanvas.style.width = rect.width + 'px';
+      scienceCanvas.style.height = rect.height + 'px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeScience();
+    window.addEventListener('resize', resizeScience);
+
+    function initCells() {
+      cells = [];
+      const w = scienceCanvas.width / window.devicePixelRatio;
+      const h = scienceCanvas.height / window.devicePixelRatio;
+      for (let i = 0; i < 50; i++) {
+        cells.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          radius: Math.random() * 30 + 10,
+          pulse: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.02 + 0.01
+        });
+      }
+    }
+    initCells();
+
+    function drawScience() {
+      const w = scienceCanvas.width / window.devicePixelRatio;
+      const h = scienceCanvas.height / window.devicePixelRatio;
+      ctx.clearRect(0, 0, w, h);
+
+      cells.forEach(cell => {
+        cell.pulse += cell.speed;
+        const scale = 1 + Math.sin(cell.pulse) * 0.2;
+        const r = Math.max(1, cell.radius * scale);
+        
+        const grad = ctx.createRadialGradient(cell.x, cell.y, 0, cell.x, cell.y, r);
+        grad.addColorStop(0, 'rgba(10, 149, 80, 0.4)');
+        grad.addColorStop(0.5, 'rgba(8, 122, 69, 0.2)');
+        grad.addColorStop(1, 'rgba(8, 122, 69, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cell.x, cell.y, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = `rgba(221, 248, 233, ${0.15 + Math.sin(cell.pulse) * 0.1})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(cell.x, cell.y, Math.max(1, cell.radius * 0.6), 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      requestAnimationFrame(drawScience);
+    }
+    drawScience();
+  }
+
+  // ==========================================
+  // MOLECULAR VIEWER CANVAS
+  // ==========================================
+  const molCanvas = document.getElementById('molecularCanvas');
+  if (molCanvas) {
+    const ctx = molCanvas.getContext('2d');
+    let atoms = [];
+    let bonds = [];
+    let rotation = 0;
+    let currentCompound = 'bpc';
+
+    const compounds = {
+      bpc: {
+        name: 'BPC-157',
+        seq: 'GEPPPGKPADDAGLV',
+        mw: '1419.5 g/mol',
+        residues: 15,
+        atoms: 18,
+        bonds: 22
+      },
+      ghk: {
+        name: 'GHK-Cu',
+        seq: 'GGH-Cu',
+        mw: '742.0 g/mol',
+        residues: 3,
+        atoms: 12,
+        bonds: 14
+      },
+      tb500: {
+        name: 'TB-500',
+        seq: 'LKKTETQ',
+        mw: '935.1 g/mol',
+        residues: 7,
+        atoms: 14,
+        bonds: 16
+      },
+      mots: {
+        name: 'MOTS-c',
+        seq: 'MRWQEMGYIFYPRKCL',
+        mw: '2174.5 g/mol',
+        residues: 16,
+        atoms: 22,
+        bonds: 26
+      }
+    };
+
+    function resizeMol() {
+      const rect = molCanvas.parentElement.getBoundingClientRect();
+      molCanvas.width = rect.width * window.devicePixelRatio;
+      molCanvas.height = rect.height * window.devicePixelRatio;
+      molCanvas.style.width = rect.width + 'px';
+      molCanvas.style.height = rect.height + 'px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeMol();
+    window.addEventListener('resize', resizeMol);
+
+    function initAtoms() {
+      atoms = [];
+      bonds = [];
+      const compound = compounds[currentCompound];
+      const count = compound.atoms;
+      const w = molCanvas.width / window.devicePixelRatio;
+      const h = molCanvas.height / window.devicePixelRatio;
+      const cx = w / 2;
+      const cy = h / 2;
+      const radius = Math.min(w, h) * 0.28;
+
+      for (let i = 0; i < count; i++) {
+        const angle = (i / count) * Math.PI * 2;
+        const r = radius * (0.6 + Math.random() * 0.4);
+        atoms.push({
+          x: cx + Math.cos(angle) * r,
+          y: cy + Math.sin(angle) * r,
+          baseX: cx + Math.cos(angle) * r,
+          baseY: cy + Math.sin(angle) * r,
+          radius: Math.random() * 8 + 6,
+          type: Math.random() > 0.6 ? 'N' : (Math.random() > 0.5 ? 'C' : 'O'),
+          angle: angle,
+          orbitR: r
+        });
+      }
+
+      // Create bonds between nearby atoms
+      for (let i = 0; i < atoms.length; i++) {
+        const connectCount = Math.floor(Math.random() * 2) + 1;
+        for (let j = 0; j < connectCount; j++) {
+          const target = (i + 1 + j) % atoms.length;
+          bonds.push({ from: i, to: target });
+        }
+      }
+    }
+    initAtoms();
+
+    function drawMol() {
+      const w = molCanvas.width / window.devicePixelRatio;
+      const h = molCanvas.height / window.devicePixelRatio;
+      ctx.clearRect(0, 0, w, h);
+      
+      rotation += 0.003;
+      const cx = w / 2;
+      const cy = h / 2;
+
+      // Update atom positions (rotation)
+      atoms.forEach(atom => {
+        atom.angle += 0.003;
+        atom.x = cx + Math.cos(atom.angle) * atom.orbitR;
+        atom.y = cy + Math.sin(atom.angle) * atom.orbitR * 0.7; // ellipse
+      });
+
+      // Draw bonds
+      bonds.forEach(bond => {
+        const a = atoms[bond.from];
+        const b = atoms[bond.to];
+        if (!a || !b) return;
+        
+        const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+        grad.addColorStop(0, 'rgba(221, 248, 233, 0.4)');
+        grad.addColorStop(0.5, 'rgba(10, 149, 80, 0.6)');
+        grad.addColorStop(1, 'rgba(221, 248, 233, 0.4)');
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      });
+
+      // Draw atoms
+      atoms.forEach(atom => {
+        const r = Math.max(2, atom.radius);
+        
+        // Glow
+        const glow = ctx.createRadialGradient(atom.x, atom.y, 0, atom.x, atom.y, r * 3);
+        let color1, color2;
+        if (atom.type === 'N') {
+          color1 = 'rgba(10, 149, 80, 0.8)';
+          color2 = 'rgba(10, 149, 80, 0)';
+        } else if (atom.type === 'C') {
+          color1 = 'rgba(221, 248, 233, 0.7)';
+          color2 = 'rgba(221, 248, 233, 0)';
+        } else {
+          color1 = 'rgba(8, 122, 69, 0.9)';
+          color2 = 'rgba(8, 122, 69, 0)';
+        }
+        glow.addColorStop(0, color1);
+        glow.addColorStop(1, color2);
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(atom.x, atom.y, r * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Core
+        ctx.fillStyle = atom.type === 'N' ? '#0A9550' : (atom.type === 'C' ? '#DDF8E9' : '#087A45');
+        ctx.beginPath();
+        ctx.arc(atom.x, atom.y, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Label
+        ctx.fillStyle = atom.type === 'C' ? '#031C14' : '#DDF8E9';
+        ctx.font = 'bold 10px "JetBrains Mono"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(atom.type, atom.x, atom.y);
+      });
+
+      // Draw central glow
+      const centerGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
+      centerGlow.addColorStop(0, 'rgba(8, 122, 69, 0.15)');
+      centerGlow.addColorStop(1, 'rgba(8, 122, 69, 0)');
+      ctx.fillStyle = centerGlow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 80, 0, Math.PI * 2);
+      ctx.fill();
+
+      requestAnimationFrame(drawMol);
+    }
+    drawMol();
+
+    // Compound switcher
+    document.querySelectorAll('.mol-ctrl-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mol-ctrl-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCompound = btn.getAttribute('data-compound');
+        const c = compounds[currentCompound];
+        document.getElementById('molSeq').textContent = c.seq;
+        document.getElementById('molMw').textContent = c.mw;
+        document.getElementById('molRes').textContent = c.residues;
+        initAtoms();
+      });
+    });
+  }
+
+  // ==========================================
+  // MOBILE MENU TOGGLE (basic)
+  // ==========================================
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navLinks.style.display = navLinks.style.display === 'flex' ? '' : 'flex';
+      navLinks.style.flexDirection = 'column';
+      navLinks.style.position = 'absolute';
+      navLinks.style.top = '100%';
+      navLinks.style.right = '5%';
+      navLinks.style.background = 'var(--bg-alt)';
+      navLinks.style.padding = '1.5rem 2rem';
+      navLinks.style.borderRadius = '12px';
+      navLinks.style.boxShadow = 'var(--shadow-lg)';
+      navLinks.style.border = '1px solid var(--border)';
+    });
+  }
+</script>
+</body>
+</html>
